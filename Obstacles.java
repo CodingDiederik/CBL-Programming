@@ -8,3 +8,4 @@ public class Obstacles {
 class Block extends Obstacles {
     Color color = Color.RED;
 }
+

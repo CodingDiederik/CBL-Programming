@@ -1,0 +1,23 @@
+Create classes:
+- main class: Game -> only one instance
+- player class -> one instance
+- class level -> later: make it a superclass of classes level1, level2, etc.
+    - in constructor fill the level with the desired obstacles.
+- Obstacles class: superclass of all obstacles we want to implement.
+
+In case of moving enemy's: enemy class 
+
+KeyEvent detection:
+The Game class will be it's own keyListener.
+It calls the correct method on player to update it's coordinates
+
+Rendering the level:
+frame.add(level): in level we override the paintComponent method to draw the level.
+To be able to draw the player give the created player instance made in te Game class as parameter when creating the level.
+
+PlayerMovement:
+Use a physicsmodel with accelaration, gravity etc.
+Determine te position of the player from it's center.
+
+CollisionDetection:
+TODO
