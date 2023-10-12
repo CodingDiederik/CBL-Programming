@@ -1,6 +1,6 @@
-import java.util.*;
+//import java.util.*;
 import javax.swing.*;
-import java.awt.*;
+//import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -12,7 +12,7 @@ import java.awt.event.*;
  * @studentnumber 1973169
  * 
  */
-public class Game extends JPanel implements KeyListener {
+public class Game extends JPanel {
 
     public JFrame frame;
     public Player player = new Player(); // Create a new player
@@ -20,10 +20,20 @@ public class Game extends JPanel implements KeyListener {
 
     private int width = 800; // Width of the game
     private int height = 585; // Height of the game
+
+    private boolean lose = false; // Boolean to check if the player has lost
     
+    public Listener listener = new Listener(player, level); // Create a new listener
 
-
-    JLayeredPane layeredPane = new JLayeredPane();
+    Timer timer = new Timer(120/1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) { // This method is called every 120/1000 seconds or gameloop
+                level.repaint();
+            
+                if (lose) {
+                    timer.stop();
+                }
+            }
+        });
 
     /**
      * Constructor for the game.
@@ -35,63 +45,13 @@ public class Game extends JPanel implements KeyListener {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.add(level);
-        frame.addKeyListener(this);
+        frame.addKeyListener(listener);
+    }
+
+    void run() {
+        timer.start();
+    }
         
-    }
-
-    /**
-     * Method to run the game.
-     */
-    public void run() {
-        boolean run = true;
-        boolean lose = false;
-
-        while (run) {
-            level.repaint();
-            if (lose) {
-                run = false;
-            }
-        }
-    }
-
-    /**
-     * Method to handle key presses. 
-     * LATER: should we add wait methods to control animation and speed?
-    */
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("space");
-            
-            player.spacekeyPressed = true;
-            player.jump();
-        }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            System.out.println("left");
-
-            player.isValidMove(level.level);
-
-            player.moveLeft();
-            
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("right");
-            player.moveRight();
-        }
-    }
-    
-    /**
-     * Method to handle key releases.
-    */
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            player.spacekeyPressed = false;
-            //player.verticalAcceleration = 0;
-        }
-    }
-    
-    public void keyTyped(KeyEvent e) {
-    }
-
 
     public static void main(String[] args) {
         Game game = new Game(); // Create a new game
