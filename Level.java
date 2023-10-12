@@ -6,15 +6,19 @@ import javax.swing.*;
 /**
  * The level class of the game.
 */
-public class Level extends JPanel{
+public class Level extends JPanel {
     
     int[][] level; // the level is a 2D array of integers, evey coordinate is a block or not a block
 
-    private int BLOCK_WIDTH = 50; // width of a block in pixels
-    private int BLOCK_HEIGHT = 50; // height of a block in pixels
+    private int BLOCK_WIDTH = 50; //Width of a block in pixels
+    private int BLOCK_HEIGHT = 50; //Height of a block in pixels
 
     int x0 = 0; //var to scroll the level
     
+
+    /*
+     * Constructor for objects of class Level.
+     */
     Level() {
         
         // determine dimentions of the level: 32 blocks wide, 12 blocks high
@@ -41,7 +45,7 @@ public class Level extends JPanel{
             for (int y = 0; y < level[0].length; y++) {
                 if (level[x][y] == 1) { // check if the coordinate is a block
                     // draw block the block in the JPanel
-                    Block block = new Block();
+                    Block block = new Block(); //LATER: Is this nececary?
                     g.setColor(block.color);
                     g.fillRect((x - x0) * BLOCK_WIDTH, ((level[0].length - 2) - y) //Reverse y axis
                         * BLOCK_HEIGHT, BLOCK_WIDTH, 

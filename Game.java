@@ -19,7 +19,9 @@ public class Game {
     public Level level = new Level();
 
     private int width = 800;
-    private int height = 600;
+    private int height = 585;
+
+    
 
     public Player player = new Player();
 
@@ -36,6 +38,7 @@ public class Game {
         //panel.setPreferredSize(new Dimension(width, height));
         //panel.setBackground(Color.BLACK);
         frame.add(level);
+        frame.add(player);
     }
 
     /**
@@ -45,6 +48,7 @@ public class Game {
         boolean run = true;
         boolean lose = false;
 
+        System.out.print(player.getX());
         while (run) {
 
 
