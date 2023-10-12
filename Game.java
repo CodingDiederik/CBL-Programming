@@ -31,10 +31,10 @@ public class Game {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        panel = new JPanel();
-        panel.setLayout(null);
-        panel.setPreferredSize(new Dimension(width, height));
-        panel.setBackground(Color.BLACK);
+        //panel = new JPanel();
+        //panel.setLayout(null);
+        //panel.setPreferredSize(new Dimension(width, height));
+        //panel.setBackground(Color.BLACK);
         frame.add(level);
     }
 
