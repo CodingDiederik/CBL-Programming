@@ -20,7 +20,7 @@ public class Listener implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("space");
             
-            player.spacekeyPressed = true;
+            player.isJumping = true;
             player.jump();
         }
 
@@ -50,9 +50,6 @@ public class Listener implements KeyListener {
      * Method to handle key releases.
     */
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            player.spacekeyPressed = false;
-        }
     }
     
     public void keyTyped(KeyEvent e) { // not used

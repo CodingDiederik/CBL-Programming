@@ -20,7 +20,7 @@ Determine te position of the player from it's center.
 
 Jump
 Sides:
-- liniair accelaration
+- special graph for accelaration
 - max speed
 - 
 

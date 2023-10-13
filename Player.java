@@ -15,16 +15,17 @@ public class Player extends JPanel {
     int verticalSpeed = 0; // speed of the player
     int horizontalSpeed = 0;
 
-    int verticalAcceleration;
-    int horizontalAcceleration;
+    int verticalAcceleration = 0;
+    int horizontalAcceleration = 0;
 
-    int gravity = 5; // gravity of the player
-    int MAX_SPEED = 10; // maximum speed of the player
+    int MAX_SPEED = 30; // maximum speed of the player
 
-    int change_x;
-    int change_y;
+    int change_x = 0;
+    int change_y = 0;
 
-    boolean spacekeyPressed = false;
+    boolean isJumping = false;
+    boolean isFalling = false;
+
     String previousDirection;
 
     /**
@@ -63,28 +64,81 @@ public class Player extends JPanel {
     */
     void calculateChangeXAndY(String direction) {
         // calculate the change in x coordiantes
-        if (horizontalSpeed > 0) { // Is the player moving to the right?
-            if (direction == "right") {
-                if (horizontalSpeed >= MAX_SPEED) { // first we calculate the speed to know how far the player is going to move
-                    horizontalSpeed = MAX_SPEED; 
-                } else {
-                    horizontalSpeed += horizontalAcceleration; // In the future we need to make this smooth
-                    if (horizontalSpeed >= MAX_SPEED) {
-                        horizontalSpeed = MAX_SPEED;
-                    }
-                }
+        horizontalAcceleration = horizontalAcceleration(direction); // calculate the horizontal acceleration
 
+        change_x += horizontalAcceleration;
+
+        verticalAcceleration = verticalAcceleration(); // calculate the vertical acceleration
+        change_y += verticalAcceleration;
+    }
+
+    // TODO: More advanced? Functions to calculate the acceleration
+    int accelerationCalculator(int speed) { // we take the positive site of parabole
+        // gently make the player move faster
+        if (speed < 0) {
+            if (speed > -10) {
+                return -5;
             } else {
-                horizontalSpeed = 0; // Maybe in the future make it smooth
+                return -10;
             }
 
-        } else if (horizontalSpeed < 0) { // Is the player moving to the left?
+        } else if (speed < 10) {
+            return 5;
+        } else {
+            return 10;
+        }
+        
+    }
 
-        } else { // The player is not moving horizontally
+    // TODO: More advanced? Functions to calculate the acceleration
+    int decelerationCalculator(int speed) {
+        // gently make the player move slower
+        if (speed < 0) {
+            return 15;
 
+        } else {
+            return -15;
         }
     }
 
+    /**
+     * Calculates the horizontal acceleration.
+    */
+    int horizontalAcceleration(String direction) { 
+        if (horizontalSpeed > 0) {
+            if ("right".equals(direction)) {
+                return accelerationCalculator(horizontalSpeed);
+            } else {
+                return decelerationCalculator(horizontalSpeed);
+            }
+
+        }  else  {
+            if ("left".equals(direction)) {
+                return accelerationCalculator(horizontalSpeed);
+            } else {
+                return decelerationCalculator(horizontalSpeed);
+            }
+        }
+    }
+
+    int jumpCalculator(int speed) {
+        return 10;
+    }
+
+    int gravityCalculator(int speed) {
+        return -10;
+    }
+
+    int verticalAcceleration() {
+        if (isJumping) {
+            return jumpCalculator(verticalSpeed);
+        } else if (isFalling) {
+            return gravityCalculator(verticalSpeed);
+        } else {
+            return 0;
+        }
+           
+    }
 
     /**
      * Jump method.
