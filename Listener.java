@@ -15,6 +15,7 @@ public class Listener implements KeyListener {
         this.level = level;
     }
 
+    //detect if a key is pressed
     public void keyPressed(KeyEvent e) {
         
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -24,6 +25,7 @@ public class Listener implements KeyListener {
             player.jump();
         }
 
+        //make sure the player can't move through blocks by checking if the move is valid
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             System.out.println("left");
 
@@ -37,7 +39,7 @@ public class Listener implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
             System.out.println("right");
             
-            if (player.isValidMove(level.level, "left")) {
+            if (player.isValidMove(level.level, "right")) {
                 player.moveRight();
             } else {
                 System.out.println("invalid move");

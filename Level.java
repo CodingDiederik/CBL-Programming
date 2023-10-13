@@ -11,7 +11,7 @@ public class Level extends JPanel {
     int[][] level; // the level is a 2D array of integers, evey coordinate is a block or not a block
 
     private int BLOCK_WIDTH = 50; // Width of a block in pixels
-    private int BLOCK_HEIGHT = 50; //bHeight of a block in pixels
+    private int BLOCK_HEIGHT = 50; // Height of a block in pixels
 
     int x0 = 0; //var to scroll the level
 
@@ -28,16 +28,30 @@ public class Level extends JPanel {
         // The screen is 16 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
         this.level = new int[32][12];
         
-        // fill the level with blocks: 1 = block, 0 = no block 
-        // This level now consists of a floor and a platform on the right side.
+        // fill the level with platforms and walls: 1 = block, 0 = no block
         for (int x = 0; x < this.level.length; x++) {
             for (int y = 0; y < this.level[0].length; y++) {
-                if (y == 0) {
-                    this.level[x][y] = 1;
-                } else if (y == 5 && x > 4 && x < 10) {
-                    this.level[x][y] = 1;
-                }
+                createRowBlocks(0, 0, 32);
+                createRowBlocks(5, 4, 6);
+                createCollumnBlocks(10, 0, 6);
+                createRowBlocks(17, 7, 4);
+                createCollumnBlocks(19, 6, 3);
+                createRowBlocks(20, 3, 5);
             }
+        }
+    }
+
+    //easily create a row of blocks (platform) in the level
+    void createRowBlocks(int x, int y, int length) {
+        for (int r = x; r < x + length; r++) {
+            this.level[r][y] = 1;
+        }
+    }
+
+    //easily create a column of blocks (wall) in the level
+    void createCollumnBlocks(int x, int y, int height) {
+        for (int c = y; c < y + height; c++) {
+            this.level[x][c] = 1;
         }
     }
 
@@ -66,7 +80,10 @@ public class Level extends JPanel {
             }
         }
         ImageIcon image = new ImageIcon("Assets/sprite.png");
-        g.drawImage(image.getImage(), player.x, player.y, null); 
-        //TODO: update the position to be relative to the center of the player
+        //g.drawImage(image.getImage(), (player.x - player.spriteWidth), (player.y - player.spriteHeight), null); 
+        g.setColor(Color.CYAN);
+        g.fillRect((player.x - player.spriteWidth), (player.y - player.spriteHeight), 50, 50);
+        /*Draw the image of the player. Using the width and heigth of the player, 
+        draw the center of the image to the corresponding center of the player */
     }
 }

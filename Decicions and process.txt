@@ -55,7 +55,13 @@ on ground check has to be checked all the time
 How to implement:
 Left and right movement:
 - Method: calcChangeX: Calculate how far you going to move
-  - check player speed
-  - then update accelaration
+  - 
+
+When you move while you jump or fall (/the jump or fall fuction is being executed),
+you dont have to account for the y-direction when checking for collisions in the x-direction, and vice-verca.
+This is because we implement the functionality of moving as far as you can go if a collision is detected on the intended trajectory.
+  -> if it would happen that you can overshoot the collision because of your increasing/decreasing your y-position, 
+  the game would recieve a new keyEvent, check for collisions again and not detect a collision anymore.
+  
 
 

@@ -6,11 +6,11 @@ import javax.swing.*;
  * Player class.
 */
 public class Player extends JPanel {
-    int x = 50; // start coordiantes for the player
-    int y = 50;
+    int x = 750; // start coordiantes for the player
+    int y = 400;
 
-    int spriteWidth = 50/2; // size of the player
-    int spriteHeight = 50/2;
+    int spriteWidth = 50 / 2; // size of the player
+    int spriteHeight = 50 / 2;
 
     int verticalSpeed = 0; // speed of the player
     int horizontalSpeed = 0;
@@ -20,7 +20,7 @@ public class Player extends JPanel {
 
     int MAX_SPEED = 30; // maximum speed of the player
 
-    int change_x = 0;
+    int change_x = 0; //SAME AS SPEED??
     int change_y = 0;
 
     boolean isJumping = false;
@@ -31,8 +31,8 @@ public class Player extends JPanel {
     /**
      * Checks if the player is on the ground.
     */
-    boolean isOnGround(int[][] level) { // TODO: TEST
-        if (level[x - spriteWidth][y - spriteHeight - 1] == 1 || level[x + spriteWidth][y - spriteHeight - 1] == 1) {
+    boolean isOnGround(int[][] level) { // TODO: MAKE IT WORK :) (level[][] indexes are in blocks of 50, but x and y in single pixels)
+        if (level[x - spriteWidth][y + spriteHeight - 1] == 1 || level[x + spriteWidth][y + spriteHeight - 1] == 1) {
             return true;
         } else {
             return false;
@@ -45,9 +45,14 @@ public class Player extends JPanel {
     */
     boolean isValidMove(int[][] level, String direction) {
  
-        if (direction == "left") { 
+        if ("left".equals(direction)) { 
             // now we need to check if the player can move to the left
             // for this we need to know how far the player is going to move
+            calculateChangeXAndY("left");
+            if (level[(this.x - this.spriteWidth + change_x) / 50][(this.y - this.spriteHeight) / 50] == 1) {
+            //TODO: FIGURE OUT WHAT WAY TO ROUND DOWN
+                return false;
+            } else { return true; }
 
         } else {
             // now we need to check if the player can move to the right
@@ -73,6 +78,7 @@ public class Player extends JPanel {
     }
 
     // TODO: More advanced? Functions to calculate the acceleration
+    // TODO: RESET IF STOPPED PRESSING KEY
     int accelerationCalculator(int speed) { // we take the positive site of parabole
         // gently make the player move faster
         if (speed < 0) {
@@ -173,7 +179,7 @@ public class Player extends JPanel {
         //horizontalSpeed += horizontalAcceleration;
         //
         //change_x = horizontalSpeed;
-        //x -= change_x;
+        x -= change_x;
         
     }
     
