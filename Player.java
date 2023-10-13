@@ -44,18 +44,13 @@ public class Player extends JPanel {
     */
     boolean isValidMove(int[][] level, String direction) {
  
-        if (isOnGround(level)) { // checks if the sprite is on the ground
-            if (direction == "left") { 
-                // now we need to check if the player can move to the left
-                // for this we need to know how far the player is going to move
+        if (direction == "left") { 
+            // now we need to check if the player can move to the left
+            // for this we need to know how far the player is going to move
 
-
-            } else {
-                // now we need to check if the player can move to the right
-                // for this we need to know how far the player is going to move
-
-            }
-
+        } else {
+            // now we need to check if the player can move to the right
+            // for this we need to know how far the player is going to move
 
         }
 

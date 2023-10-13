@@ -31,6 +31,7 @@ public class Game extends JPanel {
             
                 if (lose) {
                     timer.stop();
+                    //LATER: restart game
                 }
             }
         });

@@ -18,10 +18,44 @@ PlayerMovement:
 Use a physicsmodel with accelaration, gravity etc.
 Determine te position of the player from it's center.
 
+Jump
+Sides:
+- liniair accelaration
+- max speed
+- 
+
 We use a timer that refreshes the screen every 120 frames per second.
 
 CollisionDetection:
 
-This is how it works:
-    - It gets the level list and the direction the player wants to move to
-    - TODO
+This is how it has to work:
+
+
+If a sidekey is pressed: 
+- check which side
+- how much do you move? (speed)
+- Check if you collide
+- if collide --> move as far as you can go
+- if you dont collide --> move
+
+If upkey is pressed:
+- check if on ground
+- start jump
+- You have to be able to execute other functions during jump
+- if you collide with something: stop jump
+    if you start falling: (vertical speed == 0)
+     Start falling
+
+If you walk of platform
+- start falling
+- during fall: be able to execute other functions
+
+on ground check has to be checked all the time
+
+How to implement:
+Left and right movement:
+- Method: calcChangeX: Calculate how far you going to move
+  - check player speed
+  - then update accelaration
+
+
