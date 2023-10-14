@@ -18,7 +18,7 @@ public class Level extends JPanel {
     private Player player;
     
 
-    /*
+    /**
      * Constructor for objects of class Level.
      */
     public Level(Player player) {
@@ -41,14 +41,18 @@ public class Level extends JPanel {
         }
     }
 
-    //easily create a row of blocks (platform) in the level
+    /**
+     * Easily create a row of blocks (platform) in the level.
+     */
     void createRowBlocks(int x, int y, int length) {
         for (int r = x; r < x + length; r++) {
             this.level[r][y] = 1;
         }
     }
 
-    //easily create a column of blocks (wall) in the level
+    /**
+     * Easily create a column of blocks (wall) in the level.
+     */
     void createCollumnBlocks(int x, int y, int height) {
         for (int c = y; c < y + height; c++) {
             this.level[x][c] = 1;

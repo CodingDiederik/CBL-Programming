@@ -1,5 +1,8 @@
 import java.awt.Color;
 
+/**
+ * The obstacles class of the game.
+ */
 public class Obstacles {
     
 

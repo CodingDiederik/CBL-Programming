@@ -65,7 +65,6 @@ public class Player extends JPanel {
 
     /**
      * Calculates the change in x and y coordinates.
-     * @return 
     */
     void calculateChangeXAndY(String direction) {
         // calculate the change in x coordiantes
@@ -79,6 +78,10 @@ public class Player extends JPanel {
 
     // TODO: More advanced? Functions to calculate the acceleration
     // TODO: RESET IF STOPPED PRESSING KEY
+
+    /**
+     * Calculates the acceleration.
+    */
     int accelerationCalculator(int speed) { // we take the positive site of parabole
         // gently make the player move faster
         if (speed < 0) {
@@ -97,6 +100,9 @@ public class Player extends JPanel {
     }
 
     // TODO: More advanced? Functions to calculate the acceleration
+    /**
+     * Calculates the deceleration.
+    */
     int decelerationCalculator(int speed) {
         // gently make the player move slower
         if (speed < 0) {
@@ -135,6 +141,9 @@ public class Player extends JPanel {
         return -10;
     }
 
+    /**
+     * Calculates the vertical acceleration.
+     */
     int verticalAcceleration() {
         if (isJumping) {
             return jumpCalculator(verticalSpeed);
@@ -150,54 +159,14 @@ public class Player extends JPanel {
      * Jump method.
     */
     void jump() {
-        // smooth acceleration jumping
-        //
-        //if (verticalSpeed != 0) { // check if player is already jumping
-        //    // check if space key is pressed
-        //    // if space key is pressed, set verticalspeed to 10
-        //
-        //    if (spacekeyPressed) {
-        //        verticalSpeed = 10;
-        //    }
-        //
-        //
-        //} 
+        //TODO : MAKE IT WORK
+    }
+
+    /**
+     * Move method for moving.
+    */
+    void move() {
+        //TODO : MAKE IT WORK
     }
     
-    void moveLeft() {
-        // Later: let the player move smoothly to the left
-
-        // if the player is already moving to the right, increase the horizontal speed
-        // check if the maximum horizontal speed has been reached
-        //if (horizontalSpeed < 10) {
-        //    // if the maximum horizontal speed has not been reached, 
-        //    // determine the horizontal acceleration
-        //    horizontalAcceleration = 5;
-        //} else {
-        //    horizontalAcceleration = 0;
-        //}
-        //horizontalSpeed += horizontalAcceleration;
-        //
-        //change_x = horizontalSpeed;
-        x -= change_x;
-        
-    }
-    
-    void moveRight() {
-        // let the player move smoothly to the right
-
-        // if the player is already moving to the right, increase the horizontal speed
-        // check if the maximum horizontal speed has been reached
-        //if (horizontalSpeed < 10) {
-        //    // if the maximum horizontal speed has not been reached, 
-        //    // determine the horizontal acceleration
-        //    horizontalAcceleration = 10;
-        //} else {
-        //    horizontalAcceleration = 0;
-        //}
-        //horizontalSpeed += horizontalAcceleration;
-        //
-        //change_x = horizontalSpeed;
-        //x += change_x;
-    } 
 }

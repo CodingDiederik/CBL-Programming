@@ -1,7 +1,8 @@
 //import java.util.*;
+import java.awt.event.*;
 import javax.swing.*;
 //import java.awt.*;
-import java.awt.event.*;
+
 
 /**
  * The main class of the game.
@@ -25,7 +26,7 @@ public class Game extends JPanel {
     
     public Listener listener = new Listener(player, level); // Create a new listener
 
-    Timer timer = new Timer(120/1000, new ActionListener() {
+    Timer timer = new Timer(120 / 1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) { // This method is called every 120/1000 seconds or gameloop
                 level.repaint();
             

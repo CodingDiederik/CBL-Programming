@@ -5,17 +5,25 @@
 //import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The listener class of the game.
+ */
 public class Listener implements KeyListener {
 
     private Player player;
     private Level level;
 
+    /**
+     * Constructor for the listener.
+     */
     public Listener(Player player, Level level) {
         this.player = player;
         this.level = level;
     }
 
-    //detect if a key is pressed
+    /**
+    * detect if a key is pressed.
+    */
     public void keyPressed(KeyEvent e) {
         
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
