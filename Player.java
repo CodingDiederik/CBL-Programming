@@ -18,7 +18,7 @@ public class Player extends JPanel {
     int verticalAcceleration = 0;
     int horizontalAcceleration = 0;
 
-    int MAX_SPEED = 30; // maximum speed of the player
+    int MAX_SPEED = 6; // maximum speed of the player
 
     int change_x = 0; //SAME AS SPEED??
     int change_y = 0;
@@ -48,19 +48,23 @@ public class Player extends JPanel {
         if ("left".equals(direction)) { 
             // now we need to check if the player can move to the left
             // for this we need to know how far the player is going to move
-            calculateChangeXAndY("left");
+            calculateChangeXAndY(direction);
             if (level[(this.x - this.spriteWidth + change_x) / 50][(this.y - this.spriteHeight) / 50] == 1) {
-            //TODO: FIGURE OUT WHAT WAY TO ROUND DOWN
+
+                //TODO: FIGURE OUT WHAT WAY TO ROUND DOWN
                 return false;
-            } else { return true; }
+
+            } else { 
+                return true; 
+            }
 
         } else {
             // now we need to check if the player can move to the right
             // for this we need to know how far the player is going to move
+            calculateChangeXAndY(direction);
+            return true;
 
         }
-
-        return false;
     }
 
     /**
@@ -70,7 +74,16 @@ public class Player extends JPanel {
         // calculate the change in x coordiantes
         horizontalAcceleration = horizontalAcceleration(direction); // calculate the horizontal acceleration
 
-        change_x += horizontalAcceleration;
+        horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
+
+        if (horizontalSpeed > MAX_SPEED) { // check if the speed is not too high
+            horizontalSpeed = MAX_SPEED;
+        } else if (horizontalSpeed < -MAX_SPEED) {
+            horizontalSpeed = -MAX_SPEED;
+        }
+        
+        //change_x = horizontalSpeed;
+
 
         verticalAcceleration = verticalAcceleration(); // calculate the vertical acceleration
         change_y += verticalAcceleration;
@@ -86,15 +99,15 @@ public class Player extends JPanel {
         // gently make the player move faster
         if (speed < 0) {
             if (speed > -10) {
-                return -5;
+                return -1;
             } else {
-                return -10;
+                return -2;
             }
 
         } else if (speed < 10) {
-            return 5;
+            return 1;
         } else {
-            return 10;
+            return 2;
         }
         
     }
@@ -124,14 +137,14 @@ public class Player extends JPanel {
                 return decelerationCalculator(horizontalSpeed);
             }
 
-        }  else  {
-            if ("left".equals(direction)) {
-                return accelerationCalculator(horizontalSpeed);
-            } else {
-                return decelerationCalculator(horizontalSpeed);
-            }
+        } else if ("left".equals(direction)) {
+            return accelerationCalculator(horizontalSpeed);
+        } else {
+            return decelerationCalculator(horizontalSpeed);
         }
+        
     }
+    
 
     int jumpCalculator(int speed) {
         return 10;
@@ -167,6 +180,7 @@ public class Player extends JPanel {
     */
     void move() {
         //TODO : MAKE IT WORK
+        x += horizontalSpeed;
     }
     
 }

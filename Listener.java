@@ -34,11 +34,12 @@ public class Listener implements KeyListener {
         }
 
         //make sure the player can't move through blocks by checking if the move is valid
+        //TODO: FIGURE OUT HOW TO GET A SMOOTH INPUT.
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             System.out.println("left");
 
             if (player.isValidMove(level.level, "left")) {
-                player.moveLeft();
+                player.move();
             } else {
                 System.out.println("invalid move");
             }
@@ -48,7 +49,7 @@ public class Listener implements KeyListener {
             System.out.println("right");
             
             if (player.isValidMove(level.level, "right")) {
-                player.moveRight();
+                player.move();
             } else {
                 System.out.println("invalid move");
             }

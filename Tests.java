@@ -62,7 +62,7 @@ public class Tests {
         Level level = new Level(player);
         player.x = 50;
         player.y = 50;
-        player.moveLeft();
+        player.move();
         assertEquals(player.x, 49);
     }
 
@@ -73,7 +73,7 @@ public class Tests {
         Level level = new Level(player);
         player.x = 50;
         player.y = 50;
-        player.moveRight();
+        player.move();
         assertEquals(player.x, 51);
     }
 
