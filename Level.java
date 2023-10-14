@@ -31,12 +31,13 @@ public class Level extends JPanel {
         // fill the level with platforms and walls: 1 = block, 0 = no block
         for (int x = 0; x < this.level.length; x++) {
             for (int y = 0; y < this.level[0].length; y++) {
-                createRowBlocks(0, 0, 32);
-                createRowBlocks(5, 4, 6);
-                createCollumnBlocks(10, 0, 6);
-                createRowBlocks(17, 7, 4);
+                createRowBlocks(0, 11, 32);
+                createRowBlocks(5, 8, 6);
+                createCollumnBlocks(1, 11, 6);
+                createCollumnBlocks(10, 11, 6);
+                createRowBlocks(17, 5, 4);
                 createCollumnBlocks(19, 6, 3);
-                createRowBlocks(20, 3, 5);
+                createRowBlocks(20, 9, 5);
             }
         }
     }
@@ -54,10 +55,11 @@ public class Level extends JPanel {
      * Easily create a column of blocks (wall) in the level.
      */
     void createCollumnBlocks(int x, int y, int height) {
-        for (int c = y; c < y + height; c++) {
+        for (int c = y; c > y - height; c--) {
             this.level[x][c] = 1;
         }
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -71,7 +73,7 @@ public class Level extends JPanel {
                     // draw block the block in the JPanel
                     Block block = new Block(); //LATER: Is this nececary?
                     g.setColor(block.color); // set the color of the block LATER: use sprites
-                    g.fillRect((x - x0) * BLOCK_WIDTH, ((level[0].length - 2) - y) //Reverse y axis
+                    g.fillRect((x - x0) * BLOCK_WIDTH, (y) //Reverse y axis
                         * BLOCK_HEIGHT, BLOCK_WIDTH, 
                         BLOCK_HEIGHT); // draw the block: LATER: draw the sprite for the block
                     

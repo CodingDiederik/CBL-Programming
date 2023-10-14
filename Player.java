@@ -1,13 +1,14 @@
 //import java.awt.*;
 //import java.awt.event.*;
 import javax.swing.*;
+import java.lang.Math;
 
 /**
  * Player class.
 */
 public class Player extends JPanel {
-    int x = 750; // start coordiantes for the player
-    int y = 400;
+    int x = 250; // start coordiantes for the player
+    int y = 524;
 
     int spriteWidth = 50 / 2; // size of the player
     int spriteHeight = 50 / 2;
@@ -32,6 +33,7 @@ public class Player extends JPanel {
      * Checks if the player is on the ground.
     */
     boolean isOnGround(int[][] level) { // TODO: MAKE IT WORK :) (level[][] indexes are in blocks of 50, but x and y in single pixels)
+    
         if (level[x - spriteWidth][y + spriteHeight - 1] == 1 || level[x + spriteWidth][y + spriteHeight - 1] == 1) {
             return true;
         } else {
@@ -49,22 +51,51 @@ public class Player extends JPanel {
             // now we need to check if the player can move to the left
             // for this we need to know how far the player is going to move
             calculateChangeXAndY(direction);
-            if (level[(this.x - this.spriteWidth + change_x) / 50][(this.y - this.spriteHeight) / 50] == 1) {
+            
+            for (int tryx = 0; tryx > change_x + 1; tryx--) {
+                
+                if (level[((this.x - this.spriteWidth - tryx) / 50)][(this.y + this.spriteHeight) / 50] == 1) {
+                    change_x = tryx - 1;
 
-                //TODO: FIGURE OUT WHAT WAY TO ROUND DOWN
-                return false;
-
-            } else { 
-                return true; 
+                    if (tryx == 0) {
+                        change_x = 0;
+                    }
+                    horizontalSpeed = 0;
+                    System.out.println("change_x: " + change_x);
+                    move();
+                    return false;
+                }
             }
 
-        } else {
+            return true;
+            
+        } else { // direction == "right"
+        
             // now we need to check if the player can move to the right
             // for this we need to know how far the player is going to move
+            
             calculateChangeXAndY(direction);
+            for (int tryx = 0; tryx < change_x + 1; tryx++) {
+                
+                if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight) / 50] == 1) {
+                    change_x = tryx - 1;
+
+                    if (tryx == 0) {
+                        change_x = 0;
+                    }
+
+                    System.out.println("change_x: " + change_x);
+                    horizontalSpeed = 0;
+
+                    move();
+                    return false;
+                }
+            }
+
             return true;
 
         }
+        //return true;
     }
 
     /**
@@ -82,8 +113,7 @@ public class Player extends JPanel {
             horizontalSpeed = -MAX_SPEED;
         }
         
-        //change_x = horizontalSpeed;
-
+        change_x = horizontalSpeed;
 
         verticalAcceleration = verticalAcceleration(); // calculate the vertical acceleration
         change_y += verticalAcceleration;
@@ -95,19 +125,22 @@ public class Player extends JPanel {
     /**
      * Calculates the acceleration.
     */
-    int accelerationCalculator(int speed) { // we take the positive site of parabole
+    int accelerationCalculator(int speed, String direction) { // we take the positive site of parabole
         // gently make the player move faster
-        if (speed < 0) {
-            if (speed > -10) {
-                return -1;
+
+        if ("left".equals(direction)) {
+            if (speed < -10) {
+                return -5;
             } else {
-                return -2;
+                return -3;
             }
 
-        } else if (speed < 10) {
-            return 1;
         } else {
-            return 2;
+            if (speed > 10) {
+                return 5;
+            } else {
+                return 3;
+            }
         }
         
     }
@@ -132,13 +165,13 @@ public class Player extends JPanel {
     int horizontalAcceleration(String direction) { 
         if (horizontalSpeed > 0) {
             if ("right".equals(direction)) {
-                return accelerationCalculator(horizontalSpeed);
+                return accelerationCalculator(horizontalSpeed, direction);
             } else {
                 return decelerationCalculator(horizontalSpeed);
             }
 
         } else if ("left".equals(direction)) {
-            return accelerationCalculator(horizontalSpeed);
+            return accelerationCalculator(horizontalSpeed, direction);
         } else {
             return decelerationCalculator(horizontalSpeed);
         }
