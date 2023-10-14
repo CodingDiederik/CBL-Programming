@@ -20,7 +20,7 @@ public class Game extends JPanel {
     public Level level = new Level(player); // Create a new level
 
     private int width = 800; // Width of the game
-    private int height = 585; // Height of the game
+    private int height = 600; // Height of the game
 
     private boolean lose = false; // Boolean to check if the player has lost
     
