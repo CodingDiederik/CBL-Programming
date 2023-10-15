@@ -24,10 +24,16 @@ public class Game extends JPanel {
 
     private boolean lose = false; // Boolean to check if the player has lost
     
-    public Listener listener = new Listener(player, level); // Create a new listener
+    public MovementListener movementListener = new MovementListener(player, level); // Create a new listener
+    public JumpListener jumpListener = new JumpListener(player, level); // Create a new listener
 
     Timer timer = new Timer(120 / 1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) { // This method is called every 120/1000 seconds or gameloop
+                if (!movementListener.isKeyPressed) {
+                    player.notMovingHorizontal();
+                    System.out.println("not moving");
+                }
+                
                 level.repaint();
             
                 if (lose) {
@@ -47,7 +53,8 @@ public class Game extends JPanel {
         frame.setResizable(false);
         frame.setVisible(true);
         frame.add(level);
-        frame.addKeyListener(listener);
+        frame.addKeyListener(movementListener);
+        frame.addKeyListener(jumpListener);
     }
 
     void run() {

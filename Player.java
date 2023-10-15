@@ -1,7 +1,7 @@
 //import java.awt.*;
 //import java.awt.event.*;
 import javax.swing.*;
-import java.lang.Math;
+//import java.lang.Math;
 
 /**
  * Player class.
@@ -46,11 +46,12 @@ public class Player extends JPanel {
      * Checks if the player collides with an object.
     */
     boolean isValidMove(int[][] level, String direction) {
+
+         calculateChangeXAndY(direction);
  
         if ("left".equals(direction)) { 
             // now we need to check if the player can move to the left
             // for this we need to know how far the player is going to move
-            calculateChangeXAndY(direction);
             
             for (int tryx = 0; tryx > change_x + 1; tryx--) {
                 
@@ -60,9 +61,12 @@ public class Player extends JPanel {
                     if (tryx == 0) {
                         change_x = 0;
                     }
+
+                    if (tryx != 0) {
+                        move();
+                    } 
+
                     horizontalSpeed = 0;
-                    System.out.println("change_x: " + change_x);
-                    move();
                     return false;
                 }
             }
@@ -74,7 +78,6 @@ public class Player extends JPanel {
             // now we need to check if the player can move to the right
             // for this we need to know how far the player is going to move
             
-            calculateChangeXAndY(direction);
             for (int tryx = 0; tryx < change_x + 1; tryx++) {
                 
                 if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight) / 50] == 1) {
@@ -84,10 +87,12 @@ public class Player extends JPanel {
                         change_x = 0;
                     }
 
-                    System.out.println("change_x: " + change_x);
+                    if (tryx != 0) {
+                        move();
+                    }
+
                     horizontalSpeed = 0;
 
-                    move();
                     return false;
                 }
             }
@@ -151,11 +156,12 @@ public class Player extends JPanel {
     */
     int decelerationCalculator(int speed) {
         // gently make the player move slower
-        if (speed < 0) {
-            return 15;
-
+        if (speed > -3 || speed < 3) {
+            return 0;
+        } else if (speed < 0) {
+            return 3;
         } else {
-            return -15;
+            return -3;
         }
     }
 
@@ -163,7 +169,12 @@ public class Player extends JPanel {
      * Calculates the horizontal acceleration.
     */
     int horizontalAcceleration(String direction) { 
-        if (horizontalSpeed > 0) {
+
+        if ("stop".equals(direction)) {
+            return decelerationCalculator(horizontalSpeed);
+        }
+
+        if (horizontalSpeed >= 0) {
             if ("right".equals(direction)) {
                 return accelerationCalculator(horizontalSpeed, direction);
             } else {
@@ -212,8 +223,11 @@ public class Player extends JPanel {
      * Move method for moving.
     */
     void move() {
-        //TODO : MAKE IT WORK
         x += horizontalSpeed;
     }
-    
+
+    void notMovingHorizontal() {
+        horizontalSpeed = horizontalAcceleration("stop");
+        move();
+    }
 }
