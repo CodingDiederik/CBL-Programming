@@ -13,6 +13,8 @@ A Listener class is created and makes calls when certain keys are pressed.
 Rendering the level:
 frame.add(level): in level we override the paintComponent method to draw the level.
 To be able to draw the player give the created player instance made in te Game class as parameter when creating the level.
+We use the coordinatesystem of Swing to determine all positions: top-left corner of the screen is 0,0 all axis are increasing.
+We use a timer that refreshes the screen every 120 frames per second.
 
 PlayerMovement:
 Use a physicsmodel with accelaration, gravity etc.
@@ -24,12 +26,9 @@ Sides:
 - max speed
 - 
 
-We use a timer that refreshes the screen every 120 frames per second.
-
-CollisionDetection:
+COLLISIONDETECTION:
 
 This is how it has to work:
-
 
 If a sidekey is pressed: 
 - check which side
@@ -62,8 +61,4 @@ you dont have to account for the y-direction when checking for collisions in the
 This is because we implement the functionality of moving as far as you can go if a collision is detected on the intended trajectory.
   -> if it would happen that you can overshoot the collision because of your increasing/decreasing your y-position, 
   the game would recieve a new keyEvent, check for collisions again and not detect a collision anymore.
-
-
-
-
 

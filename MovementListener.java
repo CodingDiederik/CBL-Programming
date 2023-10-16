@@ -23,7 +23,9 @@ public class MovementListener implements KeyListener {
     }
 
     /**
-    * detect if a key is pressed.
+    * Detect if a key is pressed. and execute the corresponding method described in the player class.
+    * Print a message to the console to see what's going on in the program.
+    * @var isKeyPressed is used to check if a key is pressed, to reset speeds if you repress a key.
     */
     public void keyPressed(KeyEvent e) {
         

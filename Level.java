@@ -73,8 +73,7 @@ public class Level extends JPanel {
                     // draw block the block in the JPanel
                     Block block = new Block(); //LATER: Is this nececary?
                     g.setColor(block.color); // set the color of the block LATER: use sprites
-                    g.fillRect((x - x0) * BLOCK_WIDTH, (y) //Reverse y axis
-                        * BLOCK_HEIGHT, BLOCK_WIDTH, 
+                    g.fillRect((x - x0) * BLOCK_WIDTH, y * BLOCK_HEIGHT, BLOCK_WIDTH, 
                         BLOCK_HEIGHT); // draw the block: LATER: draw the sprite for the block
                     
                 }
@@ -87,7 +86,7 @@ public class Level extends JPanel {
         }
         ImageIcon image = new ImageIcon("Assets/sprite.png");
         //g.drawImage(image.getImage(), (player.x - player.spriteWidth), (player.y - player.spriteHeight), null); 
-        g.setColor(Color.CYAN);
+        g.setColor(Color.CYAN); //use a simple color for now.
         g.fillRect((player.x - player.spriteWidth), (player.y - player.spriteHeight), 50, 50);
         /*Draw the image of the player. Using the width and heigth of the player, 
         draw the center of the image to the corresponding center of the player */

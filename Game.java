@@ -15,17 +15,17 @@ import javax.swing.*;
  */
 public class Game extends JPanel {
 
-    public JFrame frame;
+    public JFrame frame; // Create a new frame
     public Player player = new Player(); // Create a new player
     public Level level = new Level(player); // Create a new level
 
-    private int width = 800; // Width of the game
-    private int height = 600; // Height of the game
+    private int width = 800; // Visible width of the game
+    private int height = 600; // Visible height of the game
 
     private boolean lose = false; // Boolean to check if the player has lost
     
-    public MovementListener movementListener = new MovementListener(player, level); // Create a new listener
-    public JumpListener jumpListener = new JumpListener(player, level); // Create a new listener
+    public MovementListener movementListener = new MovementListener(player, level); // Create a new listener for movement
+    public JumpListener jumpListener = new JumpListener(player, level); // Create a new listener for jumping
 
     Timer timer = new Timer(120 / 1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) { // This method is called every 120/1000 seconds or gameloop
