@@ -95,7 +95,6 @@ public class Player extends JPanel {
     void calculateChangeXAndY(String direction) {
 
         horizontalAcceleration = horizontalAcceleration(direction); // calculate the horizontal acceleration
-
         horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
 
         if (horizontalSpeed > MAX_SPEED) { // check if the speed is not too high
@@ -158,8 +157,10 @@ public class Player extends JPanel {
         if ("stop".equals(direction)) {
             return decelerationCalculator(horizontalSpeed); // always decelerate
         }
-
-        if (horizontalSpeed >= 0) { // if the action is wanted: accelerate else decelerate
+        if (horizontalSpeed == 0) { // if the player is not moving, accelerate
+            return accelerationCalculator(horizontalSpeed, direction);
+        }
+        if (horizontalSpeed > 0) { // if the action is wanted: accelerate else decelerate
             if ("right".equals(direction)) {
                 return accelerationCalculator(horizontalSpeed, direction);
             } else {

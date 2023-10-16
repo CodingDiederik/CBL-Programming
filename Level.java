@@ -31,6 +31,7 @@ public class Level extends JPanel {
         // fill the level with platforms and walls: 1 = block, 0 = no block
         for (int x = 0; x < this.level.length; x++) {
             for (int y = 0; y < this.level[0].length; y++) {
+                createCollumnBlocks(0, 11, 12);
                 createRowBlocks(0, 11, 32);
                 createRowBlocks(5, 8, 6);
                 createCollumnBlocks(1, 11, 6);
