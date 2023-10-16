@@ -86,10 +86,11 @@ public class Level extends JPanel {
             }
         }
         ImageIcon image = new ImageIcon("Assets/sprite.png");
-        //g.drawImage(image.getImage(), (player.x - player.spriteWidth), (player.y - player.spriteHeight), null); 
+        //g.drawImage(image.getImage(), (player.x - player.spriteWidth), (player.y - player.spriteHeight), null);
         g.setColor(Color.CYAN); //use a simple color for now.
-        g.fillRect((player.x - player.spriteWidth), (player.y - player.spriteHeight), 50, 50);
+        g.fillRect((player.x - player.spriteWidth), (player.y - player.spriteHeight + 1), 50, 50);
         /*Draw the image of the player. Using the width and heigth of the player, 
-        draw the center of the image to the corresponding center of the player */
+        draw the center of the image to the corresponding center of the player. 
+        Make it flush with the groud by adusting the y-position*/
     }
 }

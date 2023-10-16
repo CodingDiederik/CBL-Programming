@@ -12,6 +12,7 @@ public class MovementListener implements KeyListener {
 
     public boolean isKeyPressed = false;
     public String direction = "none";
+    public boolean isJumping = false;
 
 
     /**
@@ -34,6 +35,8 @@ public class MovementListener implements KeyListener {
                 direction = "right";
             }
             
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
+            isJumping = true;
         }
     }
     

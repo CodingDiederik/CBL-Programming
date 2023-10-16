@@ -204,6 +204,9 @@ public class Player extends JPanel {
     */
     void jump() {
         //TODO
+        verticalAcceleration = jumpCalculator(verticalSpeed);
+        verticalSpeed += verticalAcceleration;
+        move();
     }
 
     /**
@@ -211,6 +214,7 @@ public class Player extends JPanel {
     */
     void move() {
         x += horizontalSpeed;
+        y -= verticalSpeed;
     }
 
     void notMovingHorizontal() {
