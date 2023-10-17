@@ -1,7 +1,7 @@
 //import java.awt.*;
 //import java.awt.event.*;
 import javax.swing.*;
-//import java.lang.Math;
+import java.lang.Math;
 
 /**
  * Player class.
@@ -19,7 +19,7 @@ public class Player extends JPanel {
     int verticalAcceleration = 0; // acceleration of the player
     int horizontalAcceleration = 0;
 
-    int MAX_SPEED = 6; // maximum speed of the player
+    int MAX_SPEED = 10; // maximum speed of the player
 
     int change_x = 0;
     int change_y = 0;
@@ -27,7 +27,6 @@ public class Player extends JPanel {
     boolean isJumping = false;
     boolean isFalling = false;
 
-    String previousDirection;
     int jumpStep = 0;
     int gravityStep = 0;
 
@@ -35,12 +34,67 @@ public class Player extends JPanel {
      * Checks if the player is on the ground.
     */
     boolean isOnGround(int[][] level) {
-    
-        System.out.println("x: " + x + " y: " + y);
-        if (level[(x - spriteWidth) / 50][(y + spriteHeight + 1) / 50] == 1 || level[(x + spriteWidth) / 50][(y + spriteHeight + 1) / 50] == 1) {
+        if (isFalling) { // If the player is falling, check if the player can move down the gravity speed, if not, move as far as possible
+            for (int tryy = 0; tryy < 10; tryy++) { // check for which y coordinate the player can move
+                if (level[(x - spriteWidth + 10) / 50][(y + spriteHeight + tryy) / 50] == 1 || level[(x + spriteWidth - 10) / 50][(y + spriteHeight + tryy) / 50] == 1) {
+                    verticalSpeed = tryy;
+                    move();
+                    return true;
+                }
+            }
+            return false;
+        } else if (level[(x - spriteWidth + 10) / 50][(y + spriteHeight + 1) / 50] == 1 || level[(x + spriteWidth - 10) / 50][(y + spriteHeight + 1) / 50] == 1) {
             return true;
         } else {
             return false;
+        }
+    }
+
+
+    /**
+     * Checks if the player can move left or right.
+    */
+    boolean checkXLeft(int[][] level) {
+
+        for (int tryx = 7; tryx > change_x; tryx--) { // check for which x coordinate the player can move
+
+            if (level[(int)Math.floor((this.x - this.spriteWidth - tryx) / 50)][(this.y /*+ this.spriteHeight*/) / 50] == 1) {
+                // if a collision is detected
+                change_x = tryx + 1; // set the change in x coordinates to the x coordinate where the player can move
+
+                horizontalSpeed = 0; // set the horizontal speed to 0
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean checkXRight(int[][] level) {
+        for (int tryx = 1; tryx < change_x; tryx++) { // check for which x coordinate the player can move
+                
+            if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y /* + this.spriteHeight*/) / 50] == 1) {
+                // if a collision is detected
+                change_x = tryx - 1; // set the change in x coordinates to the x coordinate where the player can move
+
+                horizontalSpeed = 0; // set the horizontal speed to 0
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void checkYUp(int[][] level) {
+        for (int tryy = 1; tryy > change_y; tryy--) { // check for which y coordinate the player can move
+                
+            if (level[(this.x + spriteWidth) / 50][(this.y - this.spriteHeight - tryy) / 50] == 1 || level[(this.x - spriteWidth) / 50][(this.y - this.spriteHeight - tryy) / 50] == 1) {
+                // if a collision is detected
+                change_y = tryy - 1; // set the change in y coordinates to the y coordinate where the player can move
+
+                verticalSpeed = 0; // set the vertical speed to 0
+                isJumping = false;
+                isFalling = true;
+
+            }
         }
     }
 
@@ -50,45 +104,15 @@ public class Player extends JPanel {
     boolean isValidMove(int[][] level, String direction) {
 
         calculateChangeX(direction, level); // calculate the change in x and y coordinates
+
+        //checkYUp(level);
+            
  
         if ("left".equals(direction)) { 
-            // now we need to check if the player can move to the left
-            
-            for (int tryx = 0; tryx > change_x + 1; tryx--) { // check for which x coordinate the player can move
-                
-                if (level[((this.x - this.spriteWidth - tryx) / 50)][(this.y /*+ this.spriteHeight*/) / 50] == 1) {
-                    // if a collision is detected
-                    change_x = tryx - 1; // set the change in x coordinates to the x coordinate where the player can move
-
-                    if (tryx != 0) { // if the player can move, move the player
-                        move();
-                    } 
-
-                    horizontalSpeed = 0; // set the horizontal speed to 0
-                    return false;
-                }
-            }
-
-            return true;
+            return checkXLeft(level);
             
         } else { // direction == "right"
-            // now we need to check if the player can move to the right
-            
-            for (int tryx = 0; tryx < change_x + 1; tryx++) {
-                
-                if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight) / 50] == 1) {
-                    change_x = tryx - 1; // set the change in x coordinates to the c coordinate where the player can move
-
-                    if (tryx != 0) { // if the player can move, move the player
-                        move();
-                    }
-
-                    horizontalSpeed = 0; // set the horizontal speed to 0
-                    return false;
-                }
-            }
-
-            return true;
+            return checkXRight(level);
         }
     }
 
@@ -96,7 +120,9 @@ public class Player extends JPanel {
      * The method for calulating the jump.
     */
     void jump(int[][] level) {
-        verticalAcceleration = verticalAcceleration(level);
+        
+        checkYUp(level); // check if the player can move up
+        verticalAcceleration = verticalAcceleration(level); // calculate the vertical acceleration
 
         verticalSpeed = verticalAcceleration;
     }
@@ -116,8 +142,6 @@ public class Player extends JPanel {
         }
         change_x = horizontalSpeed;
     }
-
-    // TODO: More advanced? Functions to calculate the acceleration
 
     /**
      * Calculates the horizontal acceleration.
@@ -191,7 +215,6 @@ public class Player extends JPanel {
             return jumpCalculator(verticalSpeed);
 
         } else if (isFalling) { // if the player is falling calculate the speed
-            System.out.println("falling");
 
             if (isOnGround(level)) { // if the player is on the ground, stop falling
                 isFalling = false;
@@ -211,18 +234,17 @@ public class Player extends JPanel {
     */
     int jumpCalculator(int speed) {
         // make a counter
-        System.out.println("jumpStep: " + jumpStep);
-        if (jumpStep < 25) {
+        if (jumpStep < 25) { // use steps to determine the speed when jumping
             jumpStep++;
-            return 8;
+            return -8;
         } else if (jumpStep < 30) {
             jumpStep++;
-            return 4;
+            return -4;
         } else {
             isJumping = false;
             jumpStep = 0;
             isFalling = true;
-            return 0;
+            return -0;
         }
     }
 
@@ -232,9 +254,9 @@ public class Player extends JPanel {
     int gravityCalculator(int speed) {
         if (gravityStep < 10) {
             gravityStep++;
-            return -4;
+            return 4;
         } else {
-            return -8;
+            return 8;
         }
     }
 
@@ -243,7 +265,7 @@ public class Player extends JPanel {
     */
     void move() {
         x += horizontalSpeed;
-        y -= verticalSpeed;
+        y += verticalSpeed;
     }
 
     /**
@@ -252,6 +274,5 @@ public class Player extends JPanel {
     */
     void notMovingHorizontal() {
         horizontalSpeed = horizontalAcceleration("stop");
-        move();
     }
 }

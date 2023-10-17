@@ -40,32 +40,32 @@ public class Game extends JPanel {
                     movementListener.isJumping = false;
                 }
 
+                if (!player.isOnGround(level.level) && !player.isJumping) {
+                    player.isFalling = true;
+                }
+
                 if (player.isJumping || player.isFalling) { // if the player is jumping or falling
                     player.jump(level.level); // execute the jump method
                 }                
                 
                 if (!movementListener.isKeyPressed) {
                     player.notMovingHorizontal();
-                    
                 }
 
                 if ("left".equals(movementListener.direction)) {
                     System.out.println("left");
-                    if (player.isValidMove(level.level, "left")) {
-                        player.move();
-                    } else {
+                    if (!player.isValidMove(level.level, "left")) {
                         System.out.println("invalid move");
                     }
-
                 } else if ("right".equals(movementListener.direction)) {
                     System.out.println("right");
                     System.out.println(movementListener.direction);
-                    if (player.isValidMove(level.level, "right")) {
-                        player.move();
-                    } else {
-                        System.out.println("invalid move");
+                    if (!player.isValidMove(level.level, "right")) {
+                        System.out.println("invalid move");                        
                     }
                 }
+                
+                player.move();
                 
                 level.repaint();
             
