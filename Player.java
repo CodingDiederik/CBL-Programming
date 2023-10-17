@@ -49,14 +49,14 @@ public class Player extends JPanel {
     */
     boolean isValidMove(int[][] level, String direction) {
 
-        calculateChangeXAndY(direction, level); // calculate the change in x and y coordinates
+        calculateChangeX(direction, level); // calculate the change in x and y coordinates
  
         if ("left".equals(direction)) { 
             // now we need to check if the player can move to the left
             
             for (int tryx = 0; tryx > change_x + 1; tryx--) { // check for which x coordinate the player can move
                 
-                if (level[((this.x - this.spriteWidth - tryx) / 50)][(this.y + this.spriteHeight) / 50] == 1) {
+                if (level[((this.x - this.spriteWidth - tryx) / 50)][(this.y /*+ this.spriteHeight*/) / 50] == 1) {
                     // if a collision is detected
                     change_x = tryx - 1; // set the change in x coordinates to the x coordinate where the player can move
 
@@ -93,9 +93,18 @@ public class Player extends JPanel {
     }
 
     /**
+     * The method for calulating the jump.
+    */
+    void jump(int[][] level) {
+        verticalAcceleration = verticalAcceleration(level);
+
+        verticalSpeed = verticalAcceleration;
+    }
+
+    /**
      * Calculates the change in x and y coordinates.
     */
-    void calculateChangeXAndY(String direction, int[][] level) {
+    void calculateChangeX(String direction, int[][] level) {
 
         horizontalAcceleration = horizontalAcceleration(direction); // calculate the horizontal acceleration
         horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
@@ -105,52 +114,10 @@ public class Player extends JPanel {
         } else if (horizontalSpeed < -MAX_SPEED) {
             horizontalSpeed = -MAX_SPEED;
         }
-        
         change_x = horizontalSpeed;
-
-        verticalAcceleration = verticalAcceleration(level); // calculate the vertical acceleration
-        change_y = verticalAcceleration;
     }
 
     // TODO: More advanced? Functions to calculate the acceleration
-
-    /**
-     * Calculates the acceleration.
-    */
-    int accelerationCalculator(int speed, String direction) { // we take the positive site of parabole
-        // gently make the player move faster
-
-        if ("left".equals(direction)) { // if the player is moving left
-            if (speed < -10) { // if the player is moving faster than -10
-                return -5;
-            } else { // if the player is moving slower than -10
-                return -3;
-            }
-
-        } else { // player is moving right
-            if (speed > 10) { // if the player is moving faster than 10
-                return 5;
-            } else { // if the player is moving slower than 10
-                return 3;
-            }
-        }
-        
-    }
-
-    // TODO: More advanced? Functions to calculate the acceleration
-    /**
-     * Calculates the deceleration.
-    */
-    int decelerationCalculator(int speed) {
-        // gently make the player move slower
-        if (speed > -3 || speed < 3) { // if the player is moving slower than 3, make speed 0
-            return 0;
-        } else if (speed < 0) { // slowly make the player move slower
-            return 3;
-        } else {
-            return -3;
-        }
-    }
 
     /**
      * Calculates the horizontal acceleration.
@@ -178,31 +145,41 @@ public class Player extends JPanel {
         }
         
     }
-    
 
-    int jumpCalculator(int speed) {
-        // make a counter
-        System.out.println("jumpStep: " + jumpStep);
-        if (jumpStep < 30) {
-            jumpStep++;
-            return 5;
-        } else if (jumpStep < 40) {
-            jumpStep++;
-            return 3;
-        } else {
-            isJumping = false;
-            jumpStep = 0;
-            isFalling = true;
-            return 0;
+    /**
+     * Calculates the acceleration.
+    */
+    int accelerationCalculator(int speed, String direction) { // we take the positive site of parabole
+        // gently make the player move faster
+
+        if ("left".equals(direction)) { // if the player is moving left
+            if (speed < -10) { // if the player is moving faster than -10
+                return -5;
+            } else { // if the player is moving slower than -10
+                return -3;
+            }
+
+        } else { // player is moving right
+            if (speed > 10) { // if the player is moving faster than 10
+                return 5;
+            } else { // if the player is moving slower than 10
+                return 3;
+            }
         }
+        
     }
 
-    int gravityCalculator(int speed) {
-        if (gravityStep < 1) {
-            gravityStep++;
-            return -1;
+    /**
+     * Calculates the deceleration.
+    */
+    int decelerationCalculator(int speed) {
+        // gently make the player move slower
+        if (speed > -3 || speed < 3) { // if the player is moving slower than 3, make speed 0
+            return 0;
+        } else if (speed < 0) { // slowly make the player move slower
+            return 3;
         } else {
-            return -2;
+            return -3;
         }
     }
 
@@ -226,23 +203,43 @@ public class Player extends JPanel {
             }            
         } else {
             return 0;
-        }
-           
+        }   
     }
 
     /**
-     * Jump method.
+     * Calculates the jump.
     */
-    void jump(int[][] level) {
-        //TODO
-        verticalAcceleration = verticalAcceleration(level);
-
-        verticalSpeed = verticalAcceleration;
+    int jumpCalculator(int speed) {
+        // make a counter
+        System.out.println("jumpStep: " + jumpStep);
+        if (jumpStep < 25) {
+            jumpStep++;
+            return 8;
+        } else if (jumpStep < 30) {
+            jumpStep++;
+            return 4;
+        } else {
+            isJumping = false;
+            jumpStep = 0;
+            isFalling = true;
+            return 0;
+        }
     }
 
+    /**
+     * Calculates the gravity.
+    */
+    int gravityCalculator(int speed) {
+        if (gravityStep < 10) {
+            gravityStep++;
+            return -4;
+        } else {
+            return -8;
+        }
+    }
 
     /**
-     * Move method for moving.
+     * Move method for actually updating the coordinates.
     */
     void move() {
         x += horizontalSpeed;
@@ -251,6 +248,7 @@ public class Player extends JPanel {
 
     /**
      * Move method for when no input detected.
+     * TODO: THIS DOES MORE THAN THAT
     */
     void notMovingHorizontal() {
         horizontalSpeed = horizontalAcceleration("stop");
