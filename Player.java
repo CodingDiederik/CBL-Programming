@@ -28,13 +28,16 @@ public class Player extends JPanel {
     boolean isFalling = false;
 
     String previousDirection;
+    int jumpStep = 0;
+    int gravityStep = 0;
 
     /**
      * Checks if the player is on the ground.
     */
     boolean isOnGround(int[][] level) {
     
-        if (level[x - spriteWidth][y + spriteHeight - 1] == 1 || level[x + spriteWidth][y + spriteHeight - 1] == 1) {
+        System.out.println("x: " + x + " y: " + y);
+        if (level[(x - spriteWidth) / 50][(y + spriteHeight + 1) / 50] == 1 || level[(x + spriteWidth) / 50][(y + spriteHeight + 1) / 50] == 1) {
             return true;
         } else {
             return false;
@@ -46,7 +49,7 @@ public class Player extends JPanel {
     */
     boolean isValidMove(int[][] level, String direction) {
 
-        calculateChangeXAndY(direction); // calculate the change in x and y coordinates
+        calculateChangeXAndY(direction, level); // calculate the change in x and y coordinates
  
         if ("left".equals(direction)) { 
             // now we need to check if the player can move to the left
@@ -92,7 +95,7 @@ public class Player extends JPanel {
     /**
      * Calculates the change in x and y coordinates.
     */
-    void calculateChangeXAndY(String direction) {
+    void calculateChangeXAndY(String direction, int[][] level) {
 
         horizontalAcceleration = horizontalAcceleration(direction); // calculate the horizontal acceleration
         horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
@@ -105,8 +108,8 @@ public class Player extends JPanel {
         
         change_x = horizontalSpeed;
 
-        verticalAcceleration = verticalAcceleration(); // calculate the vertical acceleration
-        change_y += verticalAcceleration;
+        verticalAcceleration = verticalAcceleration(level); // calculate the vertical acceleration
+        change_y = verticalAcceleration;
     }
 
     // TODO: More advanced? Functions to calculate the acceleration
@@ -178,21 +181,49 @@ public class Player extends JPanel {
     
 
     int jumpCalculator(int speed) {
-        return 10;
+        // make a counter
+        System.out.println("jumpStep: " + jumpStep);
+        if (jumpStep < 30) {
+            jumpStep++;
+            return 5;
+        } else if (jumpStep < 40) {
+            jumpStep++;
+            return 3;
+        } else {
+            isJumping = false;
+            jumpStep = 0;
+            isFalling = true;
+            return 0;
+        }
     }
 
     int gravityCalculator(int speed) {
-        return -10; // Later: make it smooth
+        if (gravityStep < 1) {
+            gravityStep++;
+            return -1;
+        } else {
+            return -2;
+        }
     }
 
     /**
      * Calculates the vertical acceleration.
      */
-    int verticalAcceleration() {
-        if (isJumping) {
+    int verticalAcceleration(int[][] level) {
+        if (isJumping) { // if the player is jumping calculate the speed
             return jumpCalculator(verticalSpeed);
-        } else if (isFalling) {
-            return gravityCalculator(verticalSpeed);
+
+        } else if (isFalling) { // if the player is falling calculate the speed
+            System.out.println("falling");
+
+            if (isOnGround(level)) { // if the player is on the ground, stop falling
+                isFalling = false;
+                gravityStep = 0;
+                return 0;
+
+            } else {
+                return gravityCalculator(verticalSpeed);
+            }            
         } else {
             return 0;
         }
@@ -202,12 +233,13 @@ public class Player extends JPanel {
     /**
      * Jump method.
     */
-    void jump() {
+    void jump(int[][] level) {
         //TODO
-        verticalAcceleration = jumpCalculator(verticalSpeed);
-        verticalSpeed += verticalAcceleration;
-        move();
+        verticalAcceleration = verticalAcceleration(level);
+
+        verticalSpeed = verticalAcceleration;
     }
+
 
     /**
      * Move method for moving.
@@ -217,6 +249,9 @@ public class Player extends JPanel {
         y -= verticalSpeed;
     }
 
+    /**
+     * Move method for when no input detected.
+    */
     void notMovingHorizontal() {
         horizontalSpeed = horizontalAcceleration("stop");
         move();

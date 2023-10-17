@@ -24,14 +24,29 @@ public class Game extends JPanel {
 
     private boolean lose = false; // Boolean to check if the player has lost
     
-    public MovementListener movementListener = new MovementListener(); // Create a new listener for movement
+    public MovementListener movementListener = new MovementListener(); 
+    // Create a new listener for movement
 
     Timer timer = new Timer(120 / 1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) { // This method is called every 120/1000 seconds or gameloop
+            public void actionPerformed(ActionEvent e) { 
+                // This method is called every 120/1000 seconds or gameloop
 
+                if (movementListener.isJumping) { // if the player is jumping
+                    System.out.println("jumping");
+                    if (player.isOnGround(level.level)) { // check if the player is on the ground
+                        player.isJumping = true;
+                    }
+
+                    movementListener.isJumping = false;
+                }
+
+                if (player.isJumping || player.isFalling) { // if the player is jumping or falling
+                    player.jump(level.level); // execute the jump method
+                }                
+                
                 if (!movementListener.isKeyPressed) {
                     player.notMovingHorizontal();
-                    //System.out.println("not moving");
+                    
                 }
 
                 if ("left".equals(movementListener.direction)) {
@@ -50,12 +65,6 @@ public class Game extends JPanel {
                     } else {
                         System.out.println("invalid move");
                     }
-                }
-
-                if (movementListener.isJumping) {
-                    System.out.println("jumping");
-                    player.jump();
-                    movementListener.isJumping = false;
                 }
                 
                 level.repaint();
