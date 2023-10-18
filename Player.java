@@ -70,6 +70,9 @@ public class Player extends JPanel {
     }
 
     boolean checkXRight(int[][] level) {
+        if (y < 0) {
+            return true;
+        }
         for (int tryx = 1; tryx < change_x; tryx++) { // check for which x coordinate the player can move
                 
             if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y /* + this.spriteHeight*/) / 50] == 1) {
@@ -84,6 +87,9 @@ public class Player extends JPanel {
     }
 
     void checkYUp(int[][] level) {
+        if (y < 0) {
+            return;
+        }
         for (int tryy = 1; tryy > change_y; tryy--) { // check for which y coordinate the player can move
                 
             if (level[(this.x + spriteWidth) / 50][(this.y - this.spriteHeight - tryy) / 50] == 1 || level[(this.x - spriteWidth) / 50][(this.y - this.spriteHeight - tryy) / 50] == 1) {
