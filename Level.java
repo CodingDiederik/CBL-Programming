@@ -68,16 +68,16 @@ public class Level extends JPanel {
         super.paintComponent(g);
 
         // draw the level
-        for (int x = x0; x < level.length; x++) { 
+        for (int x = x0 / 50; x < level.length; x++) { 
             for (int y = 0; y < level[0].length; y++) { 
 
                 if (level[x][y] == 1) { // check if the coordinate is a block
                     // draw block the block in the JPanel
                     Block block = new Block(); //LATER: Is this nececary?
                     g.setColor(block.color); // set the color of the block LATER: use sprites
-                    g.fillRect((x - x0) * BL_WTH, y * BL_HGT, BL_WTH, 
+                    g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
                         BL_HGT); // draw the block: LATER: draw the sprite for the block
-                    
+                //System.out.println("x: " + x + " y: " + y);
                 }
 
                 // LATER: draw other objects in the level by checking if the coordinate 
@@ -88,7 +88,7 @@ public class Level extends JPanel {
         //g.drawImage(image.getImage(), (player.x - player.spriteWidth), 
         //(player.y - player.spriteHeight), null);
         g.setColor(Color.CYAN); //use a simple color for now.
-        g.fillRect((player.x - player.spriteWidth + x0*50), (player.y - player.spriteHeight), 50, 50);
+        g.fillRect((player.x - player.spriteWidth - x0), (player.y - player.spriteHeight), 50, 50);
         /*Draw the image of the player. Using the width and heigth of the player, 
         draw the center of the image to the corresponding center of the player. 
         Make it flush with the groud by adusting the y-position*/

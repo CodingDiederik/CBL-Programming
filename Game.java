@@ -67,10 +67,14 @@ public class Game extends JPanel {
                 
                 player.move();
 
-                if (player.x > level.x0 + width ) {
-                    level.x0 += width / 50;
-                    
+                if (player.x > level.x0 + width) {
+                    level.x0 += width;
+                    System.out.println("level.x0: " + level.x0);
                 } 
+                if (player.x < level.x0) {
+                    level.x0 -= width;
+                    System.out.println("level.x0: " + level.x0);
+                }
                 
                 level.repaint();
             
