@@ -56,9 +56,9 @@ public class Player extends JPanel {
     */
     boolean checkXLeft(int[][] level) {
 
-        for (int tryx = 7; tryx > change_x; tryx--) { // check for which x coordinate the player can move
+        for (int tryx = 1; tryx > change_x - 1; tryx--) { // check for which x coordinate the player can move
 
-            if (level[(int)Math.floor((this.x - this.spriteWidth - tryx) / 50)][(this.y /*+ this.spriteHeight*/) / 50] == 1) {
+            if (level[(this.x - this.spriteWidth - tryx) / 50][(this.y + this.spriteHeight - 1) / 50] == 1 || level[(this.x - this.spriteWidth - tryx) / 50][(this.y - this.spriteHeight) / 50] == 1) {
                 // if a collision is detected
                 change_x = tryx + 1; // set the change in x coordinates to the x coordinate where the player can move
 
@@ -73,9 +73,9 @@ public class Player extends JPanel {
         if (y < 0) {
             return true;
         }
-        for (int tryx = 1; tryx < change_x; tryx++) { // check for which x coordinate the player can move
+        for (int tryx = 1; tryx < change_x + 1; tryx++) { // check for which x coordinate the player can move
                 
-            if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y /* + this.spriteHeight*/) / 50] == 1) {
+            if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight - 1) / 50] == 1 || level[((this.x + this.spriteWidth + tryx) / 50)][(this.y - this.spriteHeight) / 50] == 1) {
                 // if a collision is detected
                 change_x = tryx - 1; // set the change in x coordinates to the x coordinate where the player can move
 
@@ -111,9 +111,6 @@ public class Player extends JPanel {
 
         calculateChangeX(direction, level); // calculate the change in x and y coordinates
 
-        //checkYUp(level);
-            
- 
         if ("left".equals(direction)) { 
             return checkXLeft(level);
             
