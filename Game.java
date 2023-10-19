@@ -1,9 +1,5 @@
-//import java.util.*;
-//import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-
 
 /**
  * The main class of the game.
@@ -61,7 +57,9 @@ public class Game extends JPanel {
                 }                
 
                 if ("none".equals(movementListener.direction)) {
-                    player.notMovingHorizontal();
+                    if (!player.isValidMove(level.level, "stop")) {
+                        //System.out.println("invalid move");
+                    }
                 }
 
                 if ("left".equals(movementListener.direction)) {
@@ -92,9 +90,6 @@ public class Game extends JPanel {
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
-
-                
-
 
                 if (lose) {
                     timer.stop();
