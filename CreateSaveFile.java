@@ -9,24 +9,18 @@ public class CreateSaveFile {
     private String fileName = "./save.txt"; // Replace with the path to your file
     private File file = new File(fileName);
 
-    public CreateSaveFile() {
+    public void createSaveFile(String content) {
         try {
-            // Read the file
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            System.out.println("Contents of the file:");
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line); // Print each line to the console
-            }
-            bufferedReader.close();
+            // Update the file by appending new content
+            String newContent = content;
+            FileWriter fileWriter = new FileWriter(fileName, false); // The 'true' parameter appends to the file.
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(newContent);
+            bufferedWriter.newLine(); // Add a newline for clarity
+            bufferedWriter.close();
             
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new CreateSaveFile();
     }
 }

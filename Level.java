@@ -11,15 +11,18 @@ public class Level extends JPanel {
     private int BL_WTH = 50; // Width of a block in pixels
     private int BL_HGT = 50; // Height of a block in pixels
 
+
     int x0 = 0; //var to scroll the level
 
     private Player player;
+    public int level_number;
     
     /**
      * Constructor for objects of class Level.
      */
-    public Level(Player player) {
+    public Level(Player player, int level_number) {
         this.player = player;
+        this.level_number = level_number;
         
         // determine dimentions of the level: 32 blocks wide, 12 blocks high
         // The screen is 16 blocks wide, 12 blocks high, so level 1 is 2 screens wide.

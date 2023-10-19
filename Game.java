@@ -16,8 +16,13 @@ import javax.swing.*;
 public class Game extends JPanel {
 
     public JFrame frame; // Create a new frame
+    public ReadSaveFile reader = new ReadSaveFile(); // Create a new reader
+    public int[] saveData = reader.readSaveFile(); // Read the save file
+    public CreateSaveFile writer = new CreateSaveFile(); // Create a new writer
+    public String newSaveData = "";
+    
     public Player player = new Player(); // Create a new player
-    public Level level = new Level(player); // Create a new level
+    public Level level = new Level(player, 1); // Create a new level 
 
     private int width = 1600; // Visible width of the game
     private int height = 600; // Visible height of the game
@@ -26,6 +31,7 @@ public class Game extends JPanel {
     
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
+
 
     Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
@@ -72,12 +78,16 @@ public class Game extends JPanel {
                 }
                 
                 player.move();
+                newSaveData = player.x + "\n" + player.y + "\n" + level.level_number;
+                writer.createSaveFile(newSaveData);
+                
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
                 
                 level.repaint();
+                
             
                 if (lose) {
                     timer.stop();
@@ -95,8 +105,18 @@ public class Game extends JPanel {
         frame.setSize(width, height);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        
+
+        player.x = saveData[0];
+        player.y = saveData[1];
+        
+        level.level_number = saveData[2];
+
         frame.add(level);
         frame.addKeyListener(movementListener);
+
+        
     }
 
     void run() {
