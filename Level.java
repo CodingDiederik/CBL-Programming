@@ -41,6 +41,8 @@ public class Level extends JPanel {
                 createCollumnBlocks(19, 6, 3);
                 createRowBlocks(20, 9, 5);
                 createEndLevelDoor(19, 10);
+
+                createEndLevelCollumn(this.level.length - 1, 0, this.level[0].length);
             }
         }
     }
@@ -66,9 +68,15 @@ public class Level extends JPanel {
     void createEndLevelDoor(int x, int y) {
         // create a door at the end of the level
         level[x][y] = 2;
-        //doorCoordinateY = y;
-        //doorCoordinateX = x;
+    }
 
+    /**
+     * Make a collumn row of blocks at the end of the level.
+     */
+    void createEndLevelCollumn(int x, int y, int length) {
+        for (int r = y; r < y + length; r++) {
+            this.level[x][r] = 1;
+        }
     }
 
 
