@@ -1,9 +1,8 @@
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class CreateSaveFile {
     private String fileName = "./save.txt"; // Replace with the path to your file
