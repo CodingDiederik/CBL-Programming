@@ -17,7 +17,6 @@ public class Level extends JPanel {
 
     private Player player;
     
-
     /**
      * Constructor for objects of class Level.
      */
@@ -26,13 +25,13 @@ public class Level extends JPanel {
         
         // determine dimentions of the level: 32 blocks wide, 12 blocks high
         // The screen is 16 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
-        this.level = new int[32][12];
+        this.level = new int[64][12];
         
         // fill the level with platforms and walls: 1 = block, 0 = no block
         for (int x = 0; x < this.level.length; x++) {
             for (int y = 0; y < this.level[0].length; y++) {
                 createCollumnBlocks(0, 11, 12);
-                createRowBlocks(0, 11, 32);
+                createRowBlocks(0, 11, 64);
                 createRowBlocks(5, 8, 6);
                 createRowBlocks(10, 7, 2);
                 createCollumnBlocks(1, 11, 6);

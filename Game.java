@@ -19,7 +19,7 @@ public class Game extends JPanel {
     public Player player = new Player(); // Create a new player
     public Level level = new Level(player); // Create a new level
 
-    private int width = 800; // Visible width of the game
+    private int width = 1600; // Visible width of the game
     private int height = 600; // Visible height of the game
 
     private boolean lose = false; // Boolean to check if the player has lost
@@ -27,12 +27,12 @@ public class Game extends JPanel {
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
 
-    Timer timer = new Timer(120 / 1000, new ActionListener() {
+    Timer timer = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 // This method is called every 120/1000 seconds or gameloop
 
                 if (movementListener.isJumping) { // if the player is jumping
-                    System.out.println("jumping");
+                    //System.out.println("jumping");
                     if (player.isOnGround(level.level)) { // check if the player is on the ground
                         player.isJumping = true;
                     }
@@ -48,32 +48,25 @@ public class Game extends JPanel {
                     player.jump(level.level); // execute the jump method
                 }                
                 
-                if (!movementListener.isKeyPressed) {
+                if ("none".equals(movementListener.direction)) {
                     player.notMovingHorizontal();
                 }
 
                 if ("left".equals(movementListener.direction)) {
-                    System.out.println("left");
+                    //System.out.println("left");
                     if (!player.isValidMove(level.level, "left")) {
-                        System.out.println("invalid move");
+                        //System.out.println("invalid move");
                     }
                 } else if ("right".equals(movementListener.direction)) {
-                    System.out.println("right");
-                    System.out.println(movementListener.direction);
+                    //System.out.println("right");
                     if (!player.isValidMove(level.level, "right")) {
-                        System.out.println("invalid move");                        
+                        //System.out.println("invalid move");                        
                     }
                 }
                 
                 player.move();
-
-                if (player.x > level.x0 + width) {
-                    level.x0 += width;
-                    System.out.println("level.x0: " + level.x0);
-                } 
-                if (player.x < level.x0) {
-                    level.x0 -= width;
-                    System.out.println("level.x0: " + level.x0);
+                if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
+                    level.x0 = player.x - 300;
                 }
                 
                 level.repaint();
