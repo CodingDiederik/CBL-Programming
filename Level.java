@@ -16,6 +16,7 @@ public class Level extends JPanel {
 
     private Player player;
     public int level_number;
+    public boolean isPaused = false;
     
     /**
      * Constructor for objects of class Level.
@@ -128,5 +129,11 @@ public class Level extends JPanel {
         /*Draw the image of the player. Using the width and heigth of the player, 
         draw the center of the image to the corresponding center of the player. 
         Make it flush with the groud by adusting the y-position*/
+
+        if (isPaused) {
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+            g.setColor(Color.BLUE);
+            g.drawString("PAUSED", 600, 300);
+        }
     }
 }

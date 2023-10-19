@@ -14,6 +14,7 @@ public class MovementListener implements KeyListener {
     public String direction = "none";
     public boolean isWKeyPressed = false;
     public boolean isJumping = false;
+    public boolean pause = false;
 
 
     /**
@@ -23,6 +24,10 @@ public class MovementListener implements KeyListener {
     * @var isKeyPressed is used to check if a key is pressed, to reset speeds if you repress a key.
     */
     public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            pause = !pause;
+        }
         
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             isKeyPressed = true;

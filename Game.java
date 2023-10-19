@@ -37,8 +37,11 @@ public class Game extends JPanel {
 
 
     Timer timer = new Timer(10, new ActionListener() {
-            public void actionPerformed(ActionEvent e) { 
-                // This method is called every 120/1000 seconds or gameloop
+        public void actionPerformed(ActionEvent e) { 
+            // This method is called every 120/1000 seconds or gameloop
+
+            if (!movementListener.pause) {
+                level.isPaused = false;
 
                 if (movementListener.isJumping) { // if the player is jumping
                     //System.out.println("jumping");
@@ -56,7 +59,7 @@ public class Game extends JPanel {
                 if (player.isJumping || player.isFalling) { // if the player is jumping or falling
                     player.jump(level.level); // execute the jump method
                 }                
-                
+
                 if ("none".equals(movementListener.direction)) {
                     player.notMovingHorizontal();
                 }
@@ -79,26 +82,32 @@ public class Game extends JPanel {
                         lose = true;
                     }
                 }
-                
+
                 //Update the save Data after every move
                 player.move();
                 newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
                 writer.createSaveFile(newSaveData);
-                
+
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
+
                 
-                level.repaint();
-                
-            
+
+
                 if (lose) {
                     timer.stop();
                     restart();
                     //LATER: restart game
                 }
+            } else {
+                level.isPaused = true;
             }
+
+            level.repaint();
+
+        }
         });
 
     /**
