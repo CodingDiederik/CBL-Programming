@@ -20,6 +20,9 @@ public class Game extends JPanel {
     public int[] saveData = reader.readSaveFile(); // Read the save file
     public CreateSaveFile writer = new CreateSaveFile(); // Create a new writer
     public String newSaveData = "";
+    public JButton button = new JButton("Restart");
+
+    //this.button.setPrefferedSize(new Dimension(100, 50));
     
     public Player player = new Player(); // Create a new player
     public Level level = new Level(player, 1); // Create a new level 
@@ -114,6 +117,7 @@ public class Game extends JPanel {
         level.level_number = saveData[2];
 
         frame.add(level);
+        //frame.add(button);
         frame.addKeyListener(movementListener);
 
         
