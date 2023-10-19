@@ -38,7 +38,6 @@ public class Player extends JPanel {
         if (isFalling) { // If the player is falling, check if the player can move down the gravity speed, if not, move as far as possible
             for (int tryy = 0; tryy < 10; tryy++) { // check for which y coordinate the player can move
                 if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1 || level[(x + spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1) {
-                    System.out.println("tryy: " + tryy);
                     verticalSpeed = tryy ;
                     move();
                     if (tryy == 0) { //if the player is on the ground, stop falling
