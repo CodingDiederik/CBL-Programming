@@ -67,6 +67,6 @@ This is because we implement the functionality of moving as far as you can go if
 
 
 Layout of save.txt:
-- first line: player x coordinate
-- second line: player y coordinate
-- third line: level number
+- first line: level number
+- second line: player x coordinate
+- third line: player y coordinate

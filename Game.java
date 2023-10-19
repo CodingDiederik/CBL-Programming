@@ -1,7 +1,9 @@
 //import java.util.*;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import java.awt.*;
+import javax.swing.JButton;
+
 
 
 /**
@@ -20,12 +22,11 @@ public class Game extends JPanel {
     public int[] saveData = reader.readSaveFile(); // Read the save file
     public CreateSaveFile writer = new CreateSaveFile(); // Create a new writer
     public String newSaveData = "";
-    public JButton button = new JButton("Restart");
 
-    //this.button.setPrefferedSize(new Dimension(100, 50));
+    public JButton button = new JButton("Restart");
     
     public Player player = new Player(); // Create a new player
-    public Level level = new Level(player, 1); // Create a new level 
+    public Level level = new Level(player, 0); // Create a new level 
 
     private int width = 1600; // Visible width of the game
     private int height = 600; // Visible height of the game
@@ -80,8 +81,9 @@ public class Game extends JPanel {
                     }
                 }
                 
+                //Update the save Data after every move
                 player.move();
-                newSaveData = player.x + "\n" + player.y + "\n" + level.level_number;
+                newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
                 writer.createSaveFile(newSaveData);
                 
 
@@ -109,15 +111,18 @@ public class Game extends JPanel {
         frame.setResizable(false);
         frame.setVisible(true);
 
+        // Set the player's position to the saved position. If the position is -1, the player will be placed at the default position.
+        if (saveData[1] != -1 && saveData[2] != -1) {
+            player.x = saveData[1];
+            player.y = saveData[2];
+        }
         
-
-        player.x = saveData[0];
-        player.y = saveData[1];
-        
-        level.level_number = saveData[2];
+        level.level_number = saveData[0];
 
         frame.add(level);
-        //frame.add(button);
+
+        //button.setPrefferedSize(new Dimension(100, 50));
+        //frame.add(button, BorderLayout.NORTH);
         frame.addKeyListener(movementListener);
 
         
