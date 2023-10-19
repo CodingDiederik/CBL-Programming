@@ -19,7 +19,7 @@ public class Player extends JPanel {
     int verticalAcceleration = 0; // acceleration of the player
     int horizontalAcceleration = 0;
 
-    int MAX_SPEED = 10; // maximum speed of the player
+    int MAX_SPEED = 7; // maximum speed of the player
 
     int change_x = 0;
     int change_y = 0;
@@ -36,7 +36,7 @@ public class Player extends JPanel {
     boolean isOnGround(int[][] level) {
         if (isFalling) { // If the player is falling, check if the player can move down the gravity speed, if not, move as far as possible
             for (int tryy = 0; tryy < 10; tryy++) { // check for which y coordinate the player can move
-                if (level[(x - spriteWidth + 10) / 50][(y + spriteHeight + tryy) / 50] == 1 || level[(x + spriteWidth - 10) / 50][(y + spriteHeight + tryy) / 50] == 1) {
+                if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1 || level[(x + spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1) {
                     verticalSpeed = tryy;
                     move();
                     return true;
@@ -55,10 +55,12 @@ public class Player extends JPanel {
      * Checks if the player can move left or right.
     */
     boolean checkXLeft(int[][] level) {
-
-        for (int tryx = 1; tryx > change_x - 1; tryx--) { // check for which x coordinate the player can move
-
-            if (level[(this.x - this.spriteWidth - tryx) / 50][(this.y + this.spriteHeight - 1) / 50] == 1 || level[(this.x - this.spriteWidth - tryx) / 50][(this.y - this.spriteHeight) / 50] == 1) {
+        if (y < 0) {
+            return true;
+        }
+        for (int tryx = -1; tryx >= change_x; tryx--) { // check for which x coordinate the player can move
+            if (level[(this.x - this.spriteWidth + tryx) / 50][(this.y + this.spriteHeight - 1) / 50] == 1 || level[(this.x - this.spriteWidth + tryx) / 50][(this.y - this.spriteHeight) / 50] == 1) {
+                
                 // if a collision is detected
                 change_x = tryx + 1; // set the change in x coordinates to the x coordinate where the player can move
 
@@ -73,12 +75,12 @@ public class Player extends JPanel {
         if (y < 0) {
             return true;
         }
-        for (int tryx = 1; tryx < change_x + 1; tryx++) { // check for which x coordinate the player can move
+
+        for (int tryx = 1; tryx <= change_x; tryx++) { // check for which x coordinate the player can move
                 
             if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight - 1) / 50] == 1 || level[((this.x + this.spriteWidth + tryx) / 50)][(this.y - this.spriteHeight) / 50] == 1) {
                 // if a collision is detected
                 change_x = tryx - 1; // set the change in x coordinates to the x coordinate where the player can move
-
                 horizontalSpeed = 0; // set the horizontal speed to 0
                 return false;
             }
