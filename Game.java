@@ -63,8 +63,16 @@ public class Game extends JPanel {
                         //System.out.println("invalid move");                        
                     }
                 }
+
+                if (movementListener.isWKeyPressed) {
+                    movementListener.isWKeyPressed = false;
+                    if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
+                        lose = true;
+                    }
+                }
                 
                 player.move();
+
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
