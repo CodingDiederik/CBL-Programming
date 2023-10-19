@@ -39,6 +39,7 @@ public class Level extends JPanel {
                 createRowBlocks(17, 5, 4);
                 createCollumnBlocks(19, 6, 3);
                 createRowBlocks(20, 9, 5);
+                createEndLevelDoor(19, 10);
             }
         }
     }
@@ -61,6 +62,14 @@ public class Level extends JPanel {
         }
     }
 
+    void createEndLevelDoor(int x, int y) {
+        // create a door at the end of the level
+        level[x][y] = 2;
+        //doorCoordinateY = y;
+        //doorCoordinateX = x;
+
+    }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -78,11 +87,30 @@ public class Level extends JPanel {
                         BL_HGT); // draw the block: LATER: draw the sprite for the block
                 //System.out.println("x: " + x + " y: " + y);
                 }
+                if (level[x][y] == 2) {
+                    
+                    g.setColor(Color.GREEN);
+                    g.fillRect((x * BL_WTH) - x0, y * BL_HGT , BL_WTH, BL_HGT);
+                    // draw the door
+                    //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
+                    //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
+//
+                    //g.drawImage(doorimage1.getImage(), x * BL_WTH, y * BL_HGT, null);
+                    //g.drawImage(doorimage2.getImage(), x * BL_WTH, y * BL_HGT + 20, null);
+                }
 
                 // LATER: draw other objects in the level by checking if the coordinate 
                 // is a different number.
             }
         }
+
+        //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
+        //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
+//
+        //g.drawImage(doorimage1.getImage(), doorCoordinateX, doorCoordinateY, null);
+        //g.drawImage(doorimage2.getImage(), doorCoordinateX, doorCoordinateY + 20, null);
+
+
         //ImageIcon image = new ImageIcon("Assets/sprite.png");
         //g.drawImage(image.getImage(), (player.x - player.spriteWidth), 
         //(player.y - player.spriteHeight), null);
