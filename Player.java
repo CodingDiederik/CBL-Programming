@@ -1,7 +1,4 @@
-//import java.awt.*;
-//import java.awt.event.*;
 import javax.swing.*;
-import java.lang.Math;
 
 /**
  * Player class.
@@ -280,7 +277,6 @@ public class Player extends JPanel {
 
     /**
      * Move method for when no input detected.
-     * TODO: THIS DOES MORE THAN THAT
     */
     void notMovingHorizontal() {
         horizontalSpeed = horizontalAcceleration("stop");

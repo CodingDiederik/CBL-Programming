@@ -1,12 +1,10 @@
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 
 public class CreateSaveFile {
     private String fileName = "./save.txt"; // Replace with the path to your file
-    private File file = new File(fileName);
 
     public void createSaveFile(String content) {
         try {
