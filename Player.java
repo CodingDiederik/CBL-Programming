@@ -25,7 +25,7 @@ public class Player extends JPanel {
     int change_y = 0;
 
     boolean isJumping = false;
-    boolean isFalling = false;
+    boolean isFalling = true;
 
     int jumpStep = 0;
     int gravityStep = 0;
