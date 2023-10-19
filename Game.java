@@ -2,7 +2,6 @@
 //import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.JButton;
 
 
 
@@ -96,6 +95,7 @@ public class Game extends JPanel {
             
                 if (lose) {
                     timer.stop();
+                    restart();
                     //LATER: restart game
                 }
             }
@@ -132,6 +132,21 @@ public class Game extends JPanel {
         timer.start();
     }
         
+    void restart(){
+        writer.createSaveFile(level.level_number + "");
+        frame.setVisible(false);
+        frame.dispose();
+        Game game = new Game();
+        game.run();
+    }
+
+    void nextLevel(){
+        writer.createSaveFile((level.level_number + 1) + "");
+        frame.setVisible(false);
+        frame.dispose();
+        Game game = new Game();
+        game.run();
+    }
 
     public static void main(String[] args) {
         Game game = new Game(); // Create a new game
