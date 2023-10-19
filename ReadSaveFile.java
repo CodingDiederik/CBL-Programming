@@ -8,9 +8,9 @@ import java.io.IOException;
  * Class to read the save file.
  */
 public class ReadSaveFile {
-    private String fileName = "./save.txt"; // Replace with the path to your file
+    private String fileName = "./save.txt";
     private File file = new File(fileName);
-    private int[] saveData = {-1, -1, -1};
+    private int[] saveData = {-1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
     
     int[] readSaveFile() {
         try {
@@ -20,17 +20,10 @@ public class ReadSaveFile {
             String line;
             System.out.println("Contents of the file:");
             int i = 0;
-            //while ((line = bufferedReader.readLine()) != null && i < 3) {
-            //    System.out.println(line); // Print each line to the console
-            //    saveData[i] = Integer.valueOf(line);
-            //    i++;
-            //}
-            //bufferedReader.close();
-            //return saveData;
             do {
                 line = bufferedReader.readLine();
                 System.out.println(line); // Print each line to the console
-                if (!"".equals(line) && line != null) {
+                if (!"".equals(line) && line != null) { // If the line is not empty
                     saveData[i] = Integer.valueOf(line);
                 }
                 i++;
