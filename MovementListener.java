@@ -47,9 +47,7 @@ public class MovementListener implements KeyListener {
      * Method to handle key releases.
     */
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            EscapeKeypressed = false;
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             LeftKeyPressed = false;
             direction = "none";
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
@@ -67,6 +65,7 @@ public class MovementListener implements KeyListener {
 
     public void checkKeyPress() {
         if (EscapeKeypressed) {
+            EscapeKeypressed = false;
             pause = !pause;
         }
 
