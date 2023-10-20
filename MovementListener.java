@@ -19,7 +19,7 @@ public class MovementListener implements KeyListener {
     private Timer timer;
 
     public MovementListener() {
-        timer = new Timer(5, e -> checkKeyPress());
+        timer = new Timer(10, e -> checkKeyPress());
         timer.start();
     }
 
@@ -90,6 +90,7 @@ public class MovementListener implements KeyListener {
         }
 
         if (WKeyPressed) {
+            System.out.println("W key pressed");
             isWKeyPressed = true;
         }
 

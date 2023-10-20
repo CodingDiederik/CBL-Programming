@@ -37,7 +37,7 @@ public class Game extends JPanel {
         public void actionPerformed(ActionEvent e) { 
             // This method is called every 120/1000 seconds or gameloop
             if (!movementListener.pause) {
-                level.isPaused = false;
+                level.gameState = "running";
 
                 if (movementListener.isJumping) { // if the player is jumping
                     //System.out.println("jumping");
@@ -76,7 +76,14 @@ public class Game extends JPanel {
 
                 if (movementListener.isWKeyPressed) {
                     movementListener.isWKeyPressed = false;
-                    if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
+                    
+                    if ("win".equals(level.gameState)) {
+                        win = true;
+                        System.out.println("next level");
+                    } else if ("lose".equals(level.gameState)) {
+                        lose = true;
+                    } else if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
+                        System.out.println("win");
                         level.gameState = "win";
                         level.repaint();
                         //win = true;
@@ -97,7 +104,6 @@ public class Game extends JPanel {
                 if (player.y > height) {
                     level.gameState = "lose";
                     level.repaint();
-                    //lose = true;
                 }
                 
                 if (win) {

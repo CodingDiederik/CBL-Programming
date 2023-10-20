@@ -92,7 +92,7 @@ public class Player extends JPanel {
     }
 
     void checkYUp(int[][] level) {
-        if (y < 0) {
+        if (y < 0 || y > level[0].length * 50 - 45) {
             return;
         }
         for (int tryy = 1; tryy > change_y; tryy--) { // check for which y coordinate the player can move

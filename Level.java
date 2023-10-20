@@ -90,48 +90,48 @@ public class Level extends JPanel {
         // draw the level
         if ("running".equals(gameState)) {
             for (int x = x0 / 50; x < level.length; x++) { 
-            for (int y = 0; y < level[0].length; y++) { 
+                for (int y = 0; y < level[0].length; y++) { 
 
-                if (level[x][y] == 1) { // check if the coordinate is a block
-                    // draw block the block in the JPanel
-                    Block block = new Block(); //LATER: Is this nececary?
-                    g.setColor(block.color); // set the color of the block LATER: use sprites
-                    g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
-                        BL_HGT); // draw the block: LATER: draw the sprite for the block
-                //System.out.println("x: " + x + " y: " + y);
-                }
-                if (level[x][y] == 2) {
-                    
-                    g.setColor(Color.GREEN);
-                    g.fillRect((x * BL_WTH) - x0, y * BL_HGT , BL_WTH, BL_HGT);
-                    // draw the door
-                    //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
-                    //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
-//
-                    //g.drawImage(doorimage1.getImage(), x * BL_WTH, y * BL_HGT, null);
-                    //g.drawImage(doorimage2.getImage(), x * BL_WTH, y * BL_HGT + 20, null);
-                }
+                    if (level[x][y] == 1) { // check if the coordinate is a block
+                        // draw block the block in the JPanel
+                        Block block = new Block(); //LATER: Is this nececary?
+                        g.setColor(block.color); // set the color of the block LATER: use sprites
+                        g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
+                            BL_HGT); // draw the block: LATER: draw the sprite for the block
+                    //System.out.println("x: " + x + " y: " + y);
+                    }
+                    if (level[x][y] == 2) {
 
-                // LATER: draw other objects in the level by checking if the coordinate 
-                // is a different number.
+                        g.setColor(Color.GREEN);
+                        g.fillRect((x * BL_WTH) - x0, y * BL_HGT , BL_WTH, BL_HGT);
+                        // draw the door
+                        //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
+                        //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
+//  
+                        //g.drawImage(doorimage1.getImage(), x * BL_WTH, y * BL_HGT, null);
+                        //g.drawImage(doorimage2.getImage(), x * BL_WTH, y * BL_HGT + 20, null);
+                    }
+
+                    // LATER: draw other objects in the level by checking if the coordinate 
+                    // is a different number.
+                }
             }
-        }
 
-        //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
-        //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
-//
-        //g.drawImage(doorimage1.getImage(), doorCoordinateX, doorCoordinateY, null);
-        //g.drawImage(doorimage2.getImage(), doorCoordinateX, doorCoordinateY + 20, null);
+            //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
+            //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
+//  
+            //g.drawImage(doorimage1.getImage(), doorCoordinateX, doorCoordinateY, null);
+            //g.drawImage(doorimage2.getImage(), doorCoordinateX, doorCoordinateY + 20, null);
 
 
-        //ImageIcon image = new ImageIcon("Assets/sprite.png");
-        //g.drawImage(image.getImage(), (player.x - player.spriteWidth), 
-        //(player.y - player.spriteHeight), null);
-        g.setColor(Color.CYAN); //use a simple color for now.
-        g.fillRect((player.x - player.spriteWidth - x0), (player.y - player.spriteHeight), 50, 50);
-        /*Draw the image of the player. Using the width and heigth of the player, 
-        draw the center of the image to the corresponding center of the player. 
-        Make it flush with the groud by adusting the y-position*/
+            //ImageIcon image = new ImageIcon("Assets/sprite.png");
+            //g.drawImage(image.getImage(), (player.x - player.spriteWidth), 
+            //(player.y - player.spriteHeight), null);
+            g.setColor(Color.CYAN); //use a simple color for now.
+            g.fillRect((player.x - player.spriteWidth - x0), (player.y - player.spriteHeight), 50, 50);
+            /*Draw the image of the player. Using the width and heigth of the player, 
+            draw the center of the image to the corresponding center of the player. 
+            Make it flush with the groud by adusting the y-position*/
         } else if ("paused".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
@@ -140,10 +140,15 @@ public class Level extends JPanel {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
             g.drawString("YOU WIN", 600, 300);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+            //if level is not last level
+            g.drawString("Press W for next level (make this work)", 200, 400);
         } else if ("lose".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
             g.drawString("YOU LOSE", 600, 300);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
+            g.drawString("Press W to restart", 200, 400);
         }
     }
 }
