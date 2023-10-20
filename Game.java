@@ -37,7 +37,9 @@ public class Game extends JPanel {
         public void actionPerformed(ActionEvent e) { 
             // This method is called every 120/1000 seconds or gameloop
             if (!movementListener.pause) {
-                level.gameState = "running";
+                if (!("lose".equals(level.gameState) || "win".equals(level.gameState))) {
+                    level.gameState = "running";
+                }
 
                 if (movementListener.isJumping) { // if the player is jumping
                     //System.out.println("jumping");
@@ -74,22 +76,6 @@ public class Game extends JPanel {
                     }
                 }
 
-                if (movementListener.isWKeyPressed) {
-                    movementListener.isWKeyPressed = false;
-                    
-                    if ("win".equals(level.gameState)) {
-                        win = true;
-                        System.out.println("next level");
-                    } else if ("lose".equals(level.gameState)) {
-                        lose = true;
-                    } else if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
-                        System.out.println("win");
-                        level.gameState = "win";
-                        level.repaint();
-                        //win = true;
-                    }
-                }
-
                 //Update the save Data after every move
                 player.move();
                 newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
@@ -100,7 +86,25 @@ public class Game extends JPanel {
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
-                
+
+                if (movementListener.isWKeyPressed) {
+                    if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
+                        level.gameState = "win";
+                        level.repaint();
+                    }
+                }
+
+                if (movementListener.isEnterKeypressed) {
+                    movementListener.isEnterKeypressed = false;
+                    if ("win".equals(level.gameState)) {
+                        System.out.println("win");
+                        win = true;
+                    } else if ("lose".equals(level.gameState)) {
+                        System.out.println("lose");
+                        lose = true;
+                    }
+                }
+    
                 if (player.y > height) {
                     level.gameState = "lose";
                     level.repaint();
@@ -147,8 +151,6 @@ public class Game extends JPanel {
         //button.setPrefferedSize(new Dimension(100, 50));
         //frame.add(button, BorderLayout.NORTH);
         frame.addKeyListener(movementListener);
-
-        
     }
 
     void run() {

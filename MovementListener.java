@@ -8,6 +8,7 @@ public class MovementListener implements KeyListener {
 
     public String direction = "none";
     public boolean isWKeyPressed = false;
+    public boolean isEnterKeypressed = false;
     public boolean isJumping = false;
     public boolean pause = false;
     private boolean LeftKeyPressed = false;
@@ -15,6 +16,7 @@ public class MovementListener implements KeyListener {
     private boolean UpKeyPressed = false;
     private boolean WKeyPressed = false;
     private boolean EscapeKeypressed = false;
+    private boolean EnterKeypressed = false;
 
     private Timer timer;
 
@@ -40,6 +42,8 @@ public class MovementListener implements KeyListener {
             UpKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
             WKeyPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            EnterKeypressed = true;
         }
     }
     
@@ -57,6 +61,8 @@ public class MovementListener implements KeyListener {
             UpKeyPressed = false;
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
             WKeyPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            EnterKeypressed = false;
         }
     }
 
@@ -90,10 +96,12 @@ public class MovementListener implements KeyListener {
         }
 
         if (WKeyPressed) {
-            System.out.println("W key pressed");
             isWKeyPressed = true;
         }
 
+        if (EnterKeypressed) {
+            isEnterKeypressed = true;
+        }
     }
     
 }

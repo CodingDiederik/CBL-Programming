@@ -142,13 +142,13 @@ public class Level extends JPanel {
             g.drawString("YOU WIN", 600, 300);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
             //if level is not last level
-            g.drawString("Press W for next level (make this work)", 200, 400);
+            g.drawString("Press ENTER for next level ", 200, 400);
         } else if ("lose".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
             g.drawString("YOU LOSE", 600, 300);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g.drawString("Press W to restart", 200, 400);
+            g.drawString("Press ENTER to restart (make this work)", 200, 400);
         }
     }
 }
