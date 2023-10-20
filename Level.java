@@ -17,6 +17,8 @@ public class Level extends JPanel {
     private Player player;
     public int level_number;
     public boolean isPaused = false;
+
+    String gameState = "running"; // The state of the game: running, paused, lost, won
     
     /**
      * Constructor for objects of class Level.
@@ -86,7 +88,8 @@ public class Level extends JPanel {
         super.paintComponent(g);
 
         // draw the level
-        for (int x = x0 / 50; x < level.length; x++) { 
+        if ("running".equals(gameState)) {
+            for (int x = x0 / 50; x < level.length; x++) { 
             for (int y = 0; y < level[0].length; y++) { 
 
                 if (level[x][y] == 1) { // check if the coordinate is a block
@@ -129,11 +132,18 @@ public class Level extends JPanel {
         /*Draw the image of the player. Using the width and heigth of the player, 
         draw the center of the image to the corresponding center of the player. 
         Make it flush with the groud by adusting the y-position*/
-
-        if (isPaused) {
+        } else if ("paused".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
             g.drawString("PAUSED", 600, 300);
+        } else if ("win".equals(gameState)) {
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+            g.setColor(Color.BLUE);
+            g.drawString("YOU WIN", 600, 300);
+        } else if ("lose".equals(gameState)) {
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+            g.setColor(Color.BLUE);
+            g.drawString("YOU LOSE", 600, 300);
         }
     }
 }

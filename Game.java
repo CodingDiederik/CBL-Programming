@@ -33,12 +33,9 @@ public class Game extends JPanel {
     // Create a new listener for movement
 
 
-    Timer timer = new Timer(5, new ActionListener() {
+    Timer timer = new Timer(10, new ActionListener() {
         public void actionPerformed(ActionEvent e) { 
             // This method is called every 120/1000 seconds or gameloop
-            if (player.y > height) {
-                    lose = true;
-                }
             if (!movementListener.pause) {
                 level.isPaused = false;
 
@@ -80,7 +77,9 @@ public class Game extends JPanel {
                 if (movementListener.isWKeyPressed) {
                     movementListener.isWKeyPressed = false;
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
-                        win = true;
+                        level.gameState = "win";
+                        level.repaint();
+                        //win = true;
                     }
                 }
 
@@ -88,15 +87,17 @@ public class Game extends JPanel {
                 player.move();
                 newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
                 writer.createSaveFile(newSaveData);
+                //TODO: SAVE IT LESS OFTEN TO REDUCE LAG ?????
 
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
                 
-                
                 if (player.y > height) {
-                    lose = true;
+                    level.gameState = "lose";
+                    level.repaint();
+                    //lose = true;
                 }
                 
                 if (win) {
@@ -109,7 +110,7 @@ public class Game extends JPanel {
                 }
 
             } else {
-                level.isPaused = true;
+                level.gameState = "paused";
             }
 
             level.repaint();
