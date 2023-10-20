@@ -33,7 +33,7 @@ public class Level extends JPanel {
         for (int x = 0; x < this.level.length; x++) {
             for (int y = 0; y < this.level[0].length; y++) {
                 createCollumnBlocks(0, 11, 12);
-                createRowBlocks(0, 11, 64);
+                createRowBlocks(0, 11, 30);
                 createRowBlocks(5, 8, 6);
                 createRowBlocks(10, 7, 2);
                 createCollumnBlocks(1, 11, 6);

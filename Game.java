@@ -27,15 +27,18 @@ public class Game extends JPanel {
     private int height = 600; // Visible height of the game
 
     private boolean lose = false; // Boolean to check if the player has lost
+    private boolean win = false; // Boolean to check if the player has won
     
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
 
 
-    Timer timer = new Timer(10, new ActionListener() {
+    Timer timer = new Timer(5, new ActionListener() {
         public void actionPerformed(ActionEvent e) { 
             // This method is called every 120/1000 seconds or gameloop
-
+            if (player.y > height) {
+                    lose = true;
+                }
             if (!movementListener.pause) {
                 level.isPaused = false;
 
@@ -77,7 +80,7 @@ public class Game extends JPanel {
                 if (movementListener.isWKeyPressed) {
                     movementListener.isWKeyPressed = false;
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
-                        lose = true;
+                        win = true;
                     }
                 }
 
@@ -90,12 +93,21 @@ public class Game extends JPanel {
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
-
+                
+                
+                if (player.y > height) {
+                    lose = true;
+                }
+                
+                if (win) {
+                    timer.stop();
+                    nextLevel();
+                }
                 if (lose) {
                     timer.stop();
                     restart();
-                    //LATER: restart game
                 }
+
             } else {
                 level.isPaused = true;
             }
