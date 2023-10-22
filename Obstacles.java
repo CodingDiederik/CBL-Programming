@@ -12,3 +12,6 @@ class Block extends Obstacles {
     Color color = Color.RED;
 }
 
+class Spike extends Obstacles {
+    Color color = Color.BLUE;
+}

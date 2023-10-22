@@ -106,8 +106,8 @@ public class Level extends JPanel {
 
                     if (level[x][y] == 1) { // check if the coordinate is a block
                         // draw block the block in the JPanel
-                        Block block = new Block(); //LATER: Is this nececary?
-                        g.setColor(block.color); // set the color of the block LATER: use sprites
+                        //Block block = new Block(); //LATER: Is this nececary?
+                        g.setColor(Color.RED); // set the color of the block LATER: use sprites
                         g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
                             BL_HGT); // draw the block: LATER: draw the sprite for the block
                     //System.out.println("x: " + x + " y: " + y);
@@ -127,7 +127,7 @@ public class Level extends JPanel {
                         // draw spikes
                         //ImageIcon spikesimage = new ImageIcon(".Assets/tiles/spikes.png");
                         //g.drawImage(spikesimage.getImage(), x * BL_WTH, y * BL_HGT, null);
-                        g.setColor(Color.BLUE);
+                        g.setColor(Color.BLACK);
                         g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, BL_HGT);
                     }
 

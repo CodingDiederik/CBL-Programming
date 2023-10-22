@@ -97,6 +97,12 @@ public class Game extends JPanel {
                     }
                 }
 
+                if (level.level[(player.x - player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x - player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3
+                    || level.level[(player.x + player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x + player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3) {
+                    level.gameState = "lose";
+                    level.repaint();
+                }
+
                 if (movementListener.isEnterKeypressed) {
                     movementListener.isEnterKeypressed = false;
                     if ("win".equals(level.gameState)) {
