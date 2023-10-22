@@ -17,6 +17,7 @@ public class Level extends JPanel {
     private Player player;
     public int level_number;
     public boolean isPaused = false;
+    public ReadLevelFile reader = new ReadLevelFile(level_number); // Create a new reader
 
     String gameState = "running"; // The state of the game: running, paused, lost, won
     
@@ -31,23 +32,31 @@ public class Level extends JPanel {
         // The screen is 16 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
         this.level = new int[64][12];
         
-        // fill the level with platforms and walls: 1 = block, 0 = no block
-        for (int x = 0; x < this.level.length; x++) {
-            for (int y = 0; y < this.level[0].length; y++) {
-                createCollumnBlocks(0, 11, 12);
-                createRowBlocks(0, 11, 30);
-                createRowBlocks(5, 8, 6);
-                createRowBlocks(10, 7, 2);
-                createCollumnBlocks(1, 11, 6);
-                createCollumnBlocks(10, 11, 6);
-                createRowBlocks(17, 5, 4);
-                createCollumnBlocks(19, 6, 3);
-                createRowBlocks(20, 9, 5);
-                createEndLevelDoor(19, 10);
+        // create the level
+        createLevel();
+    }
 
-                createEndLevelCollumn(this.level.length - 1, 0, this.level[0].length);
+
+    void createLevel() {
+        String[] levelConverter = reader.readSaveFile(level_number);
+        
+        for (int i = 0; i < levelConverter.length; i++) {
+            String line = levelConverter[i];
+            String data[] = line.split(" ");
+            if ("RB".equals(data[0])) {
+                createRowBlocks(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+            } else if ("CB".equals(data[0])) {
+                createCollumnBlocks(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+            } else if ("RS".equals(data[0])) {
+                createRowSpikes(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+            } else if ("CS".equals(data[0])) {
+                createCollumnSpikes(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+            } else if ("ED".equals(data[0])) {
+                createEndLevelDoor(Integer.valueOf(data[1]), Integer.valueOf(data[2]));
             }
         }
+
+        createCollumnBlocks(this.level.length - 1, this.level[0].length - 1, this.level[0].length);
     }
 
     /**
@@ -68,18 +77,21 @@ public class Level extends JPanel {
         }
     }
 
+    void createRowSpikes(int x, int y, int length) {
+        for (int r = x; r < x + length; r++) {
+            this.level[r][y] = 3;
+        }
+    }
+
+    void createCollumnSpikes(int x, int y, int height) {
+        for (int c = y; c > y - height; c--) {
+            this.level[x][c] = 3;
+        }
+    }
+
     void createEndLevelDoor(int x, int y) {
         // create a door at the end of the level
         level[x][y] = 2;
-    }
-
-    /**
-     * Make a collumn row of blocks at the end of the level.
-     */
-    void createEndLevelCollumn(int x, int y, int length) {
-        for (int r = y; r < y + length; r++) {
-            this.level[x][r] = 1;
-        }
     }
 
 
@@ -111,6 +123,13 @@ public class Level extends JPanel {
                         //g.drawImage(doorimage1.getImage(), x * BL_WTH, y * BL_HGT, null);
                         //g.drawImage(doorimage2.getImage(), x * BL_WTH, y * BL_HGT + 20, null);
                     }
+                    if (level[x][y] == 3) {
+                        // draw spikes
+                        //ImageIcon spikesimage = new ImageIcon(".Assets/tiles/spikes.png");
+                        //g.drawImage(spikesimage.getImage(), x * BL_WTH, y * BL_HGT, null);
+                        g.setColor(Color.BLUE);
+                        g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, BL_HGT);
+                    }
 
                     // LATER: draw other objects in the level by checking if the coordinate 
                     // is a different number.
@@ -136,6 +155,7 @@ public class Level extends JPanel {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
             g.drawString("PAUSED", 600, 300);
+
         } else if ("win".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
@@ -143,6 +163,7 @@ public class Level extends JPanel {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
             //if level is not last level
             g.drawString("Press ENTER for next level ", 200, 400);
+
         } else if ("lose".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);

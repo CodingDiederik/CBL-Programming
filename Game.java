@@ -19,9 +19,10 @@ public class Game extends JPanel {
     public String newSaveData = "";
 
     public JButton button = new JButton("Restart");
+    public int levelNumber = saveData[0]; // Get the level number from the save file
     
     public Player player = new Player(); // Create a new player
-    public Level level = new Level(player, 0); // Create a new level 
+    public Level level = new Level(player, levelNumber); // Create a new level 
 
     private int width = 1600; // Visible width of the game
     private int height = 600; // Visible height of the game
@@ -81,7 +82,9 @@ public class Game extends JPanel {
                 newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
                 writer.createSaveFile(newSaveData);
                 //TODO: SAVE IT LESS OFTEN TO REDUCE LAG ?????
-
+                // Is this causing the lag?
+                // In the first level, the lag isnt that bad
+                // is it because multiple game instances are running?
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
@@ -143,8 +146,6 @@ public class Game extends JPanel {
             player.x = saveData[1];
             player.y = saveData[2];
         }
-        
-        level.level_number = saveData[0];
 
         frame.add(level);
 
@@ -157,7 +158,7 @@ public class Game extends JPanel {
         timer.start();
     }
         
-    void restart(){
+    void restart() {
         writer.createSaveFile(level.level_number + "");
         frame.setVisible(false);
         frame.dispose();
@@ -165,7 +166,7 @@ public class Game extends JPanel {
         game.run();
     }
 
-    void nextLevel(){
+    void nextLevel() {
         writer.createSaveFile((level.level_number + 1) + "");
         frame.setVisible(false);
         frame.dispose();
