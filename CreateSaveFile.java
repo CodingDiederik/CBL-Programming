@@ -4,7 +4,7 @@ import java.io.IOException;
 
 
 public class CreateSaveFile {
-    private String fileName = "./save.txt"; // Replace with the path to your file
+    private String fileName = "./Assets/savadata/save.txt"; // Replace with the path to your file
 
     public void createSaveFile(String content) {
         try {

@@ -8,7 +8,7 @@ import java.io.IOException;
  * Class to read the save file.
  */
 public class ReadSaveFile {
-    private String fileName = "./save.txt";
+    private String fileName = "./Assets/savadata/save.txt";
     private File file = new File(fileName);
     private int[] saveData = {-1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
     
