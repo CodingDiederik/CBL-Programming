@@ -17,6 +17,7 @@ public class Game extends JPanel {
     public int[] saveData = reader.readSaveFile(); // Read the save file
     public CreateSaveFile writer = new CreateSaveFile(); // Create a new writer
     public String newSaveData = "";
+    private int counter = 0;
 
     public JButton button = new JButton("Restart");
     public int levelNumber = saveData[0]; // Get the level number from the save file
@@ -27,8 +28,8 @@ public class Game extends JPanel {
     private int width = 1600; // Visible width of the game
     private int height = 600; // Visible height of the game
 
-    private boolean lose = false; // Boolean to check if the player has lost
-    private boolean win = false; // Boolean to check if the player has won
+    boolean lose = false; // Boolean to check if the player has lost
+    boolean win = false; // Boolean to check if the player has won
     
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
@@ -118,15 +119,6 @@ public class Game extends JPanel {
                     level.gameState = "lose";
                     level.repaint();
                 }
-                
-                if (win) {
-                    timer.stop();
-                    nextLevel();
-                }
-                if (lose) {
-                    timer.stop();
-                    restart();
-                }
 
             } else {
                 level.gameState = "paused";
@@ -165,23 +157,24 @@ public class Game extends JPanel {
     }
         
     void restart() {
-        writer.createSaveFile(level.level_number + "");
-        frame.setVisible(false);
-        frame.dispose();
-        Game game = new Game();
-        game.run();
+        if (counter == 0){
+            writer.createSaveFile(level.level_number + "");
+            frame.setVisible(false);
+            frame.dispose();
+            Game game = new Game();
+            game.run();
+            counter++;
+        }
     }
 
     void nextLevel() {
-        writer.createSaveFile((level.level_number + 1) + "");
-        frame.setVisible(false);
-        frame.dispose();
-        Game game = new Game();
-        game.run();
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game(); // Create a new game
-        game.run(); // Run the game
+        if (counter == 0) {
+            writer.createSaveFile((level.level_number + 1) + "");
+            frame.setVisible(false);
+            frame.dispose();
+            Game game = new Game();
+            game.run();
+            counter++;
+        }
     }
 }

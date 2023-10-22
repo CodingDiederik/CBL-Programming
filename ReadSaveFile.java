@@ -18,11 +18,11 @@ public class ReadSaveFile {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
-            //System.out.println("Contents of the file:");
+            System.out.println("Contents of the file:");
             int i = 0;
             do {
                 line = bufferedReader.readLine();
-                //System.out.println(line); // Print each line to the console
+                System.out.println(line); // Print each line to the console
                 if (!"".equals(line) && line != null) { // If the line is not empty
                     saveData[i] = Integer.valueOf(line);
                 }

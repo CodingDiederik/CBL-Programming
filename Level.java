@@ -17,7 +17,7 @@ public class Level extends JPanel {
     private Player player;
     public int level_number;
     public boolean isPaused = false;
-    public ReadLevelFile reader = new ReadLevelFile(level_number); // Create a new reader
+    public ReadLevelFile reader = new ReadLevelFile(); // Create a new reader
 
     String gameState = "running"; // The state of the game: running, paused, lost, won
     
@@ -169,7 +169,7 @@ public class Level extends JPanel {
             g.setColor(Color.BLUE);
             g.drawString("YOU LOSE", 600, 300);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g.drawString("Press ENTER to restart (make this work)", 200, 400);
+            g.drawString("Press ENTER to restart", 200, 400);
         }
     }
 }
