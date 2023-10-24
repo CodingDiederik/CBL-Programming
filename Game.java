@@ -84,7 +84,7 @@ public class Game extends JPanel {
 
                 //Update the save Data after every move
                 player.move();
-                newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
+                newSaveData = level.level_number + "\n" + player.x + "\n" + player.y + "\n" + level.x0;
                 writer.createSaveFile(newSaveData);
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {

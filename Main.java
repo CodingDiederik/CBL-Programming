@@ -4,8 +4,14 @@ public class Main {
     
     Game game = new Game();
 
+    boolean forceReset = false;
+
     void restartGame() {
-        game.writer.createSaveFile(game.levelNumber + "");
+        if (forceReset) {
+            game.writer.createSaveFile(game.levelNumber + "");
+            forceReset = false;
+        }
+        
         
         game.frame.setVisible(false);
         
@@ -44,15 +50,18 @@ public class Main {
         game.win = false;
         game.lose = false;
 
-        if (game.saveData[1] != -1 && game.saveData[2] != -1) {
+        if (game.saveData[1] != -1 && game.saveData[2] != -1 && game.saveData[3] != -1) {
             game.player.x = game.saveData[1];
             game.player.y = game.saveData[2];
+            game.level.x0 = game.saveData[3];
+
         } else {
             game.player.x = 125;
             game.player.y = 524;
+            game.level.x0 = 0;
         }
 
-        game.level.x0 = 0;
+        
 
         game.frame.add(game.level);
 
@@ -73,6 +82,7 @@ public class Main {
 
         if (game.restartButtonPressed) {
             game.restartButtonPressed = false;
+            forceReset = true;
             System.out.println("game level number: " + game.levelNumber);
             game.writer.createSaveFile("1");
             restartGame();

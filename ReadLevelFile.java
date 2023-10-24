@@ -39,7 +39,7 @@ public class ReadLevelFile {
 
             do {
                 line = bufferedReader.readLine();
-                System.out.println(line); // Print each line to the console
+                //System.out.println(line); // Print each line to the console
                 if (!"".equals(line) && line != null) { // If the line is not empty
                     levelList.add(line); // Add the line to the array
                 }

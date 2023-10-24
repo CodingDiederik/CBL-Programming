@@ -10,7 +10,7 @@ import java.io.IOException;
 public class ReadSaveFile {
     private String fileName = "./Assets/savadata/save.txt";
     private File file = new File(fileName);
-    private int[] saveData = {-1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
+    private int[] saveData = {-1, -1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
     
     int[] readSaveFile() {
         try {
@@ -27,7 +27,7 @@ public class ReadSaveFile {
                     saveData[i] = Integer.valueOf(line);
                 }
                 i++;
-            } while (line != null && i < 3);
+            } while (line != null && i < 4);
             bufferedReader.close();
             return saveData;
 
