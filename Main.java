@@ -5,9 +5,11 @@ public class Main {
     void restartGame() {
         System.out.println("restart");
         game.writer.createSaveFile(game.level.level_number + "");
-        game.frame.setVisible(false);
-        game.frame.dispose();
-        game = null;
+        //game.frame.setVisible(false);
+        //game.frame.dispose();
+        //game = null;
+        game.level.gameState = "paused";
+        game.lose = false;
         initGame();
             
     }
@@ -15,9 +17,11 @@ public class Main {
     void nextLevel() {
         System.out.println("next level");
         game.writer.createSaveFile((game.level.level_number + 1) + "");
-        game.frame.setVisible(false);
-        game.frame.dispose();
-        game = null;
+        //game.frame.setVisible(false);
+        //game.frame.dispose();
+        //game = null;
+        game.level.gameState = "paused";
+        game.win = false;
         initGame();
     }
 
@@ -35,7 +39,6 @@ public class Main {
         }
         System.out.println("out of loop");
         if (game.lose) {
-
             restartGame();
         } else if (game.win) {
             nextLevel();

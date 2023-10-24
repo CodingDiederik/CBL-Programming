@@ -17,7 +17,7 @@ public class Game extends JPanel {
     public int[] saveData = reader.readSaveFile(); // Read the save file
     public CreateSaveFile writer = new CreateSaveFile(); // Create a new writer
     public String newSaveData = "";
-    private int counter = 0;
+    //private int counter = 0;
 
     public JButton button = new JButton("Restart");
     public int levelNumber = saveData[0]; // Get the level number from the save file
@@ -155,26 +155,26 @@ public class Game extends JPanel {
     void run() {
         timer.start();
     }
-        
-    void restart() {
-        if (counter == 0){
-            writer.createSaveFile(level.level_number + "");
-            frame.setVisible(false);
-            frame.dispose();
-            Game game = new Game();
-            game.run();
-            counter++;
-        }
-    }
-
-    void nextLevel() {
-        if (counter == 0) {
-            writer.createSaveFile((level.level_number + 1) + "");
-            frame.setVisible(false);
-            frame.dispose();
-            Game game = new Game();
-            game.run();
-            counter++;
-        }
-    }
+    //    
+    //void restart() {
+    //    if (counter == 0){
+    //        writer.createSaveFile(level.level_number + "");
+    //        frame.setVisible(false);
+    //        frame.dispose();
+    //        Game game = new Game();
+    //        game.run();
+    //        counter++;
+    //    }
+    //}
+//
+    //void nextLevel() {
+    //    if (counter == 0) {
+    //        writer.createSaveFile((level.level_number + 1) + "");
+    //        frame.setVisible(false);
+    //        frame.dispose();
+    //        Game game = new Game();
+    //        game.run();
+    //        counter++;
+    //    }
+    //}
 }
