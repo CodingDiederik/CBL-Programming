@@ -16,7 +16,7 @@ public class MovementListener implements KeyListener {
     private boolean UpKeyPressed = false;
     private boolean WKeyPressed = false;
     private boolean EscapeKeypressed = false;
-    private boolean EnterKeypressed = false;
+    public boolean EnterKeypressed = false;
 
     private Timer timer;
 

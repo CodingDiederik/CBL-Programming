@@ -35,11 +35,11 @@ public class ReadLevelFile {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
-            System.out.println("Contents of the file:");
+            //System.out.println("Contents of the file:");
 
             do {
                 line = bufferedReader.readLine();
-                System.out.println(line); // Print each line to the console
+                //System.out.println(line); // Print each line to the console
                 if (!"".equals(line) && line != null) { // If the line is not empty
                     levelList.add(line); // Add the line to the array
                 }
