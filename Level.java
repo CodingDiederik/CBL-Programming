@@ -60,7 +60,7 @@ public class Level extends JPanel {
             }
         }
 
-        createCollumnBlocks(this.level.length - 1, this.level[0].length - 1, this.level[0].length);
+        createCollumnBlocks(this.level.length - 2, this.level[0].length - 1, this.level[0].length);
     }
 
     /**
