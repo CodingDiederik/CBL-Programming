@@ -101,6 +101,11 @@ public class Game extends JPanel {
                     level.repaint();
                 }
 
+                if (player.y > height - 5) {
+                    level.gameState = "lose";
+                    level.repaint();
+                }
+
                 if (movementListener.isEnterKeypressed) {
                     movementListener.isEnterKeypressed = false;
                     movementListener.EnterKeypressed = false;
