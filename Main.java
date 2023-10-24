@@ -47,10 +47,10 @@ public class Main {
         if (game.saveData[1] != -1 && game.saveData[2] != -1) {
             game.player.x = game.saveData[1];
             game.player.y = game.saveData[2];
+        } else {
+            game.player.x = 125;
+            game.player.y = 524;
         }
-
-        game.player.x = 250;
-        game.player.y = 524;
 
         game.level.x0 = 0;
 
