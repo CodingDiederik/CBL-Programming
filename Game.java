@@ -99,10 +99,12 @@ public class Game extends JPanel {
                     }
                 }
 
-                if (level.level[(player.x - player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x - player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3
+                if (!(player.y - player.spriteHeight < 0)) {
+                    if (level.level[(player.x - player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x - player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3
                     || level.level[(player.x + player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x + player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3) {
                     level.gameState = "lose";
                     level.repaint();
+                    }
                 }
 
                 if (player.y > height - 40) {
