@@ -17,6 +17,7 @@ public class MovementListener implements KeyListener {
     private boolean WKeyPressed = false;
     private boolean EscapeKeypressed = false;
     public boolean EnterKeypressed = false;
+    public boolean BackspaceKeypressed = false;
 
     private Timer timer;
 
@@ -44,6 +45,8 @@ public class MovementListener implements KeyListener {
             WKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             EnterKeypressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            BackspaceKeypressed = true;
         }
     }
     

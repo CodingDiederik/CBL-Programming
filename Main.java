@@ -5,14 +5,12 @@ public class Main {
     Game game = new Game();
 
     void restartGame() {
-        //System.out.println("restart");
-        //game.writer.createSaveFile(game.level.level_number + "");
         game.writer.createSaveFile(game.levelNumber + "");
         
         game.frame.setVisible(false);
         
         game.frame.dispose();
-        //game = null;
+        
         initGame();
             
     }
@@ -30,9 +28,6 @@ public class Main {
     }
 
     void initGame() {
-        //game = new Game();
-        //game.frame.setVisible(false);
-
         
         game.frame = new JFrame("Game"); // Create a new frame
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,7 +60,7 @@ public class Main {
 
         game.run();
 
-        while (!game.lose && !game.win) {
+        while (!game.lose && !game.win && !game.restartButtonPressed) {
             //sleep
             try {
                 Thread.sleep(1);
@@ -78,11 +73,14 @@ public class Main {
 
         if (game.restartButtonPressed) {
             game.restartButtonPressed = false;
-            game.levelNumber = 1;
+            System.out.println("game level number: " + game.levelNumber);
+            game.writer.createSaveFile("1");
             restartGame();
+
         } else if (game.lose) {
             game.timer.stop();
             restartGame();
+
         } else if (game.win) {
             game.timer.stop();
             nextLevel();

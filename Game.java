@@ -19,7 +19,6 @@ public class Game extends JPanel {
     public String newSaveData = "";
     //private int counter = 0;
 
-    public JButton button = new JButton("Restart");
     public int levelNumber /*= saveData[0]*/; // Get the level number from the save file
     
     public Player player = new Player(); // Create a new player
@@ -30,7 +29,6 @@ public class Game extends JPanel {
 
     boolean lose /*= false*/; // Boolean to check if the player has lost
     boolean win /*= false*/; // Boolean to check if the player has won
-
     boolean restartButtonPressed = false; // Boolean to check if the restart button has been pressed
     
     public MovementListener movementListener = new MovementListener(); 
@@ -39,8 +37,13 @@ public class Game extends JPanel {
 
     Timer timer = new Timer(10, new ActionListener() {
         public void actionPerformed(ActionEvent e) { 
-            // This method is called every 120/1000 seconds or gameloop
-            if (!movementListener.pause) {
+            
+            if (movementListener.BackspaceKeypressed) {
+                movementListener.BackspaceKeypressed = false;
+                levelNumber = 1;
+                restartButtonPressed = true;
+
+            } else if (!movementListener.pause) {
                 if (!("lose".equals(level.gameState) || "win".equals(level.gameState))) {
                     level.gameState = "running";
                 }
@@ -64,19 +67,18 @@ public class Game extends JPanel {
 
                 if ("none".equals(movementListener.direction)) {
                     if (!player.isValidMove(level.level, "stop")) {
-                        //System.out.println("invalid move");
+                        ;
                     }
                 }
 
                 if ("left".equals(movementListener.direction)) {
-                    //System.out.println("left");
                     if (!player.isValidMove(level.level, "left")) {
-                        //System.out.println("invalid move");
+                        ;
                     }
+
                 } else if ("right".equals(movementListener.direction)) {
-                    //System.out.println("right");
                     if (!player.isValidMove(level.level, "right")) {
-                        //System.out.println("invalid move");                        
+                        ;
                     }
                 }
 
@@ -113,12 +115,10 @@ public class Game extends JPanel {
                 if (movementListener.isEnterKeypressed) {
                     movementListener.isEnterKeypressed = false;
                     movementListener.EnterKeypressed = false;
-                    //System.out.println("enter");
+
                     if ("win".equals(level.gameState)) {
-                        //System.out.println("win");
                         win = true;
                     } else if ("lose".equals(level.gameState)) {
-                        //System.out.println("lose");
                         lose = true;
                     }
                 }
@@ -137,54 +137,8 @@ public class Game extends JPanel {
         }
         });
 
-    /**
-     * Constructor for the game.
-    */
-    Game() {
-        //frame = new JFrame("Game"); // Create a new frame
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.setSize(width, height);
-        //frame.setResizable(false);
-        //frame.setVisible(true);
-
-
-        // Set the player's position to the saved position. If the position is -1, the player will be placed at the default position.
-        //if (saveData[1] != -1 && saveData[2] != -1) {
-        //    player.x = saveData[1];
-        //    player.y = saveData[2];
-        //}
-//
-        //frame.add(level);
-
-        //button.setPrefferedSize(new Dimension(100, 50));
-        //frame.add(button, BorderLayout.NORTH);
-        //frame.addKeyListener(movementListener);
-    }
-
     void run() {
         level.gameState = "running";
         timer.start();
     }
-    //    
-    //void restart() {
-    //    if (counter == 0){
-    //        writer.createSaveFile(level.level_number + "");
-    //        frame.setVisible(false);
-    //        frame.dispose();
-    //        Game game = new Game();
-    //        game.run();
-    //        counter++;
-    //    }
-    //}
-//
-    //void nextLevel() {
-    //    if (counter == 0) {
-    //        writer.createSaveFile((level.level_number + 1) + "");
-    //        frame.setVisible(false);
-    //        frame.dispose();
-    //        Game game = new Game();
-    //        game.run();
-    //        counter++;
-    //    }
-    //}
 }

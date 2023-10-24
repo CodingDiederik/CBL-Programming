@@ -13,6 +13,7 @@ public class CreateSaveFile {
             FileWriter fileWriter = new FileWriter(fileName, false); // The 'true' parameter appends to the file.
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(newContent);
+            //System.out.println("Saved: " + newContent);
             bufferedWriter.newLine(); // Add a newline for clarity
             bufferedWriter.close();
             
