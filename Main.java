@@ -5,7 +5,7 @@ public class Main {
     Game game = new Game();
 
     void restartGame() {
-        System.out.println("restart");
+        //System.out.println("restart");
         //game.writer.createSaveFile(game.level.level_number + "");
         game.writer.createSaveFile(game.levelNumber + "");
         
@@ -18,21 +18,21 @@ public class Main {
     }
 
     void nextLevel() {
-        System.out.println("next level");
+        //System.out.println("next level");
         //game.writer.createSaveFile((game.level.level_number + 1) + "");
         game.writer.createSaveFile((game.levelNumber + 1) + "");
         game.frame.setVisible(false);
         game.frame.dispose();
         //game = null;
-        System.out.println("game.level.gamestate" + game.level.gameState);
-        System.out.println("game.win" + game.win);
+        //System.out.println("game.level.gamestate" + game.level.gameState);
+        //System.out.println("game.win" + game.win);
         initGame();
     }
 
     void initGame() {
         //game = new Game();
         //game.frame.setVisible(false);
-        //game.frame.dispose();
+
         
         game.frame = new JFrame("Game"); // Create a new frame
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,7 +41,7 @@ public class Main {
         game.frame.setVisible(true);
 
 
-        game.saveData = game.reader.readSaveFile();
+        game.saveData = new ReadSaveFile().readSaveFile();
         game.levelNumber = game.saveData[0];
 
         game.level = new Level(game.player, game.levelNumber);
@@ -74,7 +74,8 @@ public class Main {
             }
         }
 
-        System.out.println("out of loop");
+        //System.out.println("out of loop");
+
         if (game.lose) {
             game.timer.stop();
             restartGame();

@@ -82,10 +82,6 @@ public class Game extends JPanel {
                 player.move();
                 newSaveData = level.level_number + "\n" + player.x + "\n" + player.y;
                 writer.createSaveFile(newSaveData);
-                //TODO: SAVE IT LESS OFTEN TO REDUCE LAG ?????
-                // Is this causing the lag?
-                // In the first level, the lag isnt that bad
-                // is it because multiple game instances are running?
 
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
@@ -107,11 +103,13 @@ public class Game extends JPanel {
 
                 if (movementListener.isEnterKeypressed) {
                     movementListener.isEnterKeypressed = false;
+                    movementListener.EnterKeypressed = false;
+                    //System.out.println("enter");
                     if ("win".equals(level.gameState)) {
-                        System.out.println("win");
+                        //System.out.println("win");
                         win = true;
                     } else if ("lose".equals(level.gameState)) {
-                        System.out.println("lose");
+                        //System.out.println("lose");
                         lose = true;
                     }
                 }
