@@ -20,16 +20,16 @@ public class Game extends JPanel {
     //private int counter = 0;
 
     public JButton button = new JButton("Restart");
-    public int levelNumber = saveData[0]; // Get the level number from the save file
+    public int levelNumber /*= saveData[0]*/; // Get the level number from the save file
     
     public Player player = new Player(); // Create a new player
-    public Level level = new Level(player, levelNumber); // Create a new level 
+    public Level level /*= new Level(player, levelNumber) */; // Create a new level 
 
-    private int width = 1600; // Visible width of the game
-    private int height = 600; // Visible height of the game
+    int width = 1600; // Visible width of the game
+    int height = 600; // Visible height of the game
 
-    boolean lose = false; // Boolean to check if the player has lost
-    boolean win = false; // Boolean to check if the player has won
+    boolean lose /*= false*/; // Boolean to check if the player has lost
+    boolean win /*= false*/; // Boolean to check if the player has won
     
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
@@ -92,6 +92,7 @@ public class Game extends JPanel {
                 }
 
                 if (movementListener.isWKeyPressed) {
+                    movementListener.isWKeyPressed = false;
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
                         level.gameState = "win";
                         level.repaint();
@@ -133,26 +134,28 @@ public class Game extends JPanel {
      * Constructor for the game.
     */
     Game() {
-        frame = new JFrame("Game"); // Create a new frame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(width, height);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        //frame = new JFrame("Game"); // Create a new frame
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setSize(width, height);
+        //frame.setResizable(false);
+        //frame.setVisible(true);
+
 
         // Set the player's position to the saved position. If the position is -1, the player will be placed at the default position.
-        if (saveData[1] != -1 && saveData[2] != -1) {
-            player.x = saveData[1];
-            player.y = saveData[2];
-        }
-
-        frame.add(level);
+        //if (saveData[1] != -1 && saveData[2] != -1) {
+        //    player.x = saveData[1];
+        //    player.y = saveData[2];
+        //}
+//
+        //frame.add(level);
 
         //button.setPrefferedSize(new Dimension(100, 50));
         //frame.add(button, BorderLayout.NORTH);
-        frame.addKeyListener(movementListener);
+        //frame.addKeyListener(movementListener);
     }
 
     void run() {
+        level.gameState = "running";
         timer.start();
     }
     //    
