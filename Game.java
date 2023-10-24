@@ -30,6 +30,8 @@ public class Game extends JPanel {
 
     boolean lose /*= false*/; // Boolean to check if the player has lost
     boolean win /*= false*/; // Boolean to check if the player has won
+
+    boolean restartButtonPressed = false; // Boolean to check if the restart button has been pressed
     
     public MovementListener movementListener = new MovementListener(); 
     // Create a new listener for movement
@@ -101,9 +103,11 @@ public class Game extends JPanel {
                     level.repaint();
                 }
 
-                if (player.y > height - 20) {
+                if (player.y > height - 40) {
                     level.gameState = "lose";
                     level.repaint();
+                    player.x = 250;
+                    player.y = 524;
                 }
 
                 if (movementListener.isEnterKeypressed) {

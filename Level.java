@@ -39,6 +39,10 @@ public class Level extends JPanel {
 
     void createLevel() {
         String[] levelConverter = reader.readSaveFile(level_number);
+        if (levelConverter == null) {
+            System.out.println("Level not found");
+            levelConverter = reader.readSaveFile(1);
+        }
         
         for (int i = 0; i < levelConverter.length; i++) {
             String line = levelConverter[i];

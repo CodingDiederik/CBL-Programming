@@ -76,7 +76,11 @@ public class Main {
 
         //System.out.println("out of loop");
 
-        if (game.lose) {
+        if (game.restartButtonPressed) {
+            game.restartButtonPressed = false;
+            game.levelNumber = 1;
+            restartGame();
+        } else if (game.lose) {
             game.timer.stop();
             restartGame();
         } else if (game.win) {
