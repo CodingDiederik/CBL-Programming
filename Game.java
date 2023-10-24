@@ -101,7 +101,7 @@ public class Game extends JPanel {
                     level.repaint();
                 }
 
-                if (player.y > height - 5) {
+                if (player.y > height - 20) {
                     level.gameState = "lose";
                     level.repaint();
                 }
