@@ -7,8 +7,10 @@ public class Main {
     boolean forceReset = false;
 
     void restartGame() {
-        if (forceReset) {
+        if (!forceReset) {
             game.writer.createSaveFile(game.levelNumber + "");
+        } else {
+            game.writer.createSaveFile("1");
             forceReset = false;
         }
         
@@ -30,7 +32,7 @@ public class Main {
         //game = null;
         //System.out.println("game.level.gamestate" + game.level.gameState);
         //System.out.println("game.win" + game.win);
-        initGame();
+        //initGame();
     }
 
     void initGame() {
@@ -54,14 +56,11 @@ public class Main {
             game.player.x = game.saveData[1];
             game.player.y = game.saveData[2];
             game.level.x0 = game.saveData[3];
-
         } else {
             game.player.x = 125;
             game.player.y = 524;
             game.level.x0 = 0;
         }
-
-        
 
         game.frame.add(game.level);
 
@@ -76,6 +75,7 @@ public class Main {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            
         }
 
         //System.out.println("out of loop");
@@ -84,7 +84,7 @@ public class Main {
             game.restartButtonPressed = false;
             forceReset = true;
             System.out.println("game level number: " + game.levelNumber);
-            game.writer.createSaveFile("1");
+            
             restartGame();
 
         } else if (game.lose) {

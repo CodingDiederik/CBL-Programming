@@ -104,7 +104,7 @@ public class Level extends JPanel {
         super.paintComponent(g);
 
         // draw the level
-        System.out.println("gamestate " + gameState);
+        //System.out.println("gamestate " + gameState);
         if ("running".equals(gameState)) {
             for (int x = x0 / 50; x < level.length; x++) { 
                 for (int y = 0; y < level[0].length; y++) { 

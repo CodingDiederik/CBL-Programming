@@ -10,9 +10,10 @@ import java.io.IOException;
 public class ReadSaveFile {
     private String fileName = "./Assets/savadata/save.txt";
     private File file = new File(fileName);
-    private int[] saveData = {-1, -1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
+    private int[] saveData = {1, -1, -1, -1}; //if the savedata is empty, the list stays as -1 -1 -1 (imposible to reach by normal save data)
     
     int[] readSaveFile() {
+        saveData = new int[]{1, -1, -1, -1};
         try {
             // Read the file
             FileReader fileReader = new FileReader(file);
