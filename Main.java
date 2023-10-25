@@ -10,7 +10,9 @@ public class Main {
         if (!forceReset) {
             game.writer.createSaveFile(game.levelNumber + "");
         } else {
-            game.writer.createSaveFile("1");
+            //game.writer.createSaveFile("1");
+            game.writer.createSaveFile("0");
+            game.levelNumber = 0;
             forceReset = false;
         }
         
