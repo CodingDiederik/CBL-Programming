@@ -14,13 +14,19 @@ public class Main {
             forceReset = false;
         }
         
-        
+        game.player.x = 125;
+        game.player.y = 524;
+        game.level.x0 = 0;
         game.frame.setVisible(false);
-        
         game.frame.dispose();
-        
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         initGame();
-            
     }
 
     void nextLevel() {
@@ -29,10 +35,11 @@ public class Main {
         game.writer.createSaveFile((game.levelNumber + 1) + "");
         game.frame.setVisible(false);
         game.frame.dispose();
-        //game = null;
-        //System.out.println("game.level.gamestate" + game.level.gameState);
-        //System.out.println("game.win" + game.win);
-        //initGame();
+        game.player.x = 125;
+        game.player.y = 524;
+        game.level.x0 = 0;
+
+        initGame();
     }
 
     void initGame() {
