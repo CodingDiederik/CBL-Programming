@@ -94,8 +94,14 @@ public class Game extends JPanel {
                 if (movementListener.isWKeyPressed) {
                     movementListener.isWKeyPressed = false;
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
-                        level.gameState = "win";
-                        level.repaint();
+                        if (levelNumber == 3) {
+                            level.gameState = "win";
+                            movementListener.EnterKeypressed = true;
+                            
+                        } else {
+                            level.gameState = "win";
+                            level.repaint();
+                        }
                     }
                 }
 
