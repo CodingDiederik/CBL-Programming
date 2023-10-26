@@ -353,32 +353,55 @@ public class Player extends JPanel {
      * Move method for actually updating the coordinates.
     */
     void move(int[][] level) {
-        //System.out.println("\nx: " + x + " y: " + y);
-        if (verticalSpeed != 0) {
+
+        if (verticalSpeed != 0 && y > 0) {
             for (int tryy = 1; tryy <= verticalSpeed; tryy++) {
-                if (!(y < 0)) {
-
-                    for (int tryx = 1; tryx <= changex; tryx++) {
-                        if (level[(x + spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
-                            System.out.println("bug");
-                            verticalSpeed = tryy - 1;
-                            horizontalSpeed = tryx - 1;
-                        }
-                    }
-
-                    for (int tryx = -1; tryx >= changex; tryx--) {
-                        if (level[(x - spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
-                            System.out.println("bug");
-                            verticalSpeed = tryy - 1;
-                            horizontalSpeed = tryx + 1;
-                        }
+                
+                for (int tryx = 1; tryx <= changex; tryx++) {
+                    if (level[(x + spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                        verticalSpeed = tryy - 1;
+                        horizontalSpeed = tryx - 1;
+                        break;
                     }
                 }
+
+                for (int tryx = -1; tryx >= changex; tryx--) {
+                    if (level[(x - spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                        verticalSpeed = tryy - 1;
+                        horizontalSpeed = tryx + 1;
+                        break;
+                    }
+                }
+                
             }
 
+            for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
+                    
+                for (int tryx = 1; tryx <= changex; tryx++) {
+                    if (level[(x + spriteWidth + tryx) / 50][(y - spriteHeight + tryy - 1) / 50] == 1) {
+                        verticalSpeed = tryy + 1;
+                        horizontalSpeed = tryx - 1;
+                        break;
+                    }
+                }
+    
+                for (int tryx = -1; tryx >= changex; tryx--) {
+                    if (level[(x - spriteWidth + tryx) / 50][(y - spriteHeight + tryy - 1) / 50] == 1) {
+                        verticalSpeed = tryy + 1;
+                        horizontalSpeed = tryx + 1;
+                        break;
+                    }
+                }
+
+                if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1
+                    || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
+                    verticalSpeed = 0;
+                    isJumping = false;
+                    isFalling = true;
+                }
+            }
         }
 
-        
         
         x += horizontalSpeed;
         y += verticalSpeed;
