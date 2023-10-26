@@ -43,7 +43,7 @@ public class Game extends JPanel {
                 levelNumber = 1;
                 restartButtonPressed = true;
 
-            } else if (!movementListener.pause) {
+            } else if (!movementListener.pause && !("lost".equals(level.gameState) || "won".equals(level.gameState) || "start".equals(level.gameState) || "end".equals(level.gameState))) {
                 if (!("lose".equals(level.gameState) || "win".equals(level.gameState))) {
                     level.gameState = "running";
                 }
@@ -83,7 +83,7 @@ public class Game extends JPanel {
                 }
 
                 //Update the save Data after every move
-                player.move();
+                player.move(level.level);
                 newSaveData = levelNumber + "\n" + player.x + "\n" + player.y + "\n" + level.x0;
                 writer.createSaveFile(newSaveData);
 

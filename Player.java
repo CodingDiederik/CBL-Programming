@@ -38,8 +38,8 @@ public class Player extends JPanel {
         if (isFalling) { // If the player is falling, check if the player can move down the gravity speed, if not, move as far as possible
             for (int tryy = 0; tryy < 10; tryy++) { // check for which y coordinate the player can move
                 if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1 || level[(x + spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1) {
-                    verticalSpeed = tryy ;
-                    move();
+                    verticalSpeed = tryy;
+                    move(level);
                     if (tryy == 0) { //if the player is on the ground, stop falling
                         this.isFalling = false;
                         return true;
@@ -80,6 +80,7 @@ public class Player extends JPanel {
         if (y < 0 || y > level[0].length * 50 - 45) {
             return true;
         }
+
         for (int tryx = 1; tryx <= change_x; tryx++) { // check for which x coordinate the player can move
                 
             if (level[((this.x + this.spriteWidth + tryx) / 50)][(this.y + this.spriteHeight - 1) / 50] == 1 || level[((this.x + this.spriteWidth + tryx) / 50)][(this.y - this.spriteHeight) / 50] == 1) {
@@ -287,10 +288,38 @@ public class Player extends JPanel {
     /**
      * Move method for actually updating the coordinates.
     */
-    void move() {
+    void move(int[][] level) {
         //System.out.println("\nx: " + x + " y: " + y);
+        if (verticalSpeed != 0) {
+            for (int tryy = 1; tryy <= verticalSpeed; tryy++) {
+                if (!(y < 0)) {
+
+                    for (int tryx = 1; tryx <= change_x; tryx++) {
+                        if (level[(x + spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                            System.out.println("bug");
+                            verticalSpeed = tryy - 1;
+                            horizontalSpeed = tryx - 1;
+                        }
+                    }
+
+                    for (int tryx = -1; tryx >= change_x; tryx--) {
+                        if (level[(x - spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                            System.out.println("bug");
+                            verticalSpeed = tryy - 1;
+                            horizontalSpeed = tryx + 1;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        
+        
         x += horizontalSpeed;
         y += verticalSpeed;
+
+
     }
 
 }
