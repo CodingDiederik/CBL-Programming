@@ -38,6 +38,11 @@ public class Level extends JPanel {
 
 
     void createLevel() {
+        if (level_number == 4) {
+            gameState = "end";
+            return;
+        }
+
         String[] levelConverter = reader.readSaveFile(level_number);
         if (levelConverter == null) {
             System.out.println("Level not found");
