@@ -143,20 +143,13 @@ public class Player extends JPanel {
             return;
         }
 
-        for (int tryy = 1; tryy > verticalSpeed; tryy--) { 
-            // check for which y coordinate the player can move
-                
-            if (level[(this.x + spriteWidth) / 50]
-                [(this.y - this.spriteHeight - tryy) / 50] == 1 
-                || level[(this.x - spriteWidth) / 50]
-                [(this.y - this.spriteHeight - tryy) / 50] == 1) {
-                // if a collision is detected
-                verticalSpeed = tryy - 1; // set the change in y coordinates to the
-                //  y coordinate where the player can move
-
-                verticalSpeed = 0; // set the vertical speed to 0
+        for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
+            if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1
+             || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
+                verticalSpeed = tryy + 1;
                 isJumping = false;
                 isFalling = true;
+                break;
             }
         }
     }
@@ -393,16 +386,11 @@ public class Player extends JPanel {
                     }
                 }
 
-                if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1
-                    || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
-                    verticalSpeed = 0;
-                    isJumping = false;
-                    isFalling = true;
-                }
+
             }
         }
 
-        
+        System.out.println("vertical speed: " + verticalSpeed);
         x += horizontalSpeed;
         y += verticalSpeed;
 
