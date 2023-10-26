@@ -105,8 +105,41 @@ public class Main {
             nextLevel();
         }
     }
+
+    /**
+     * Display the start screen for the game.
+    */
+    void startScreen() {
+        StartScreen startScreen = new StartScreen();
+        JFrame startframe = new JFrame();
+        MovementListener listener = new MovementListener();
+
+        startframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        startframe.setSize(1600, 600);
+        startframe.setResizable(false);
+        startframe.setVisible(true);
+        startframe.addKeyListener(listener);
+        startframe.add(startScreen);
+        startScreen.repaint();
+        
+
+        while (!listener.EnterKeypressed) {
+            //sleep
+            try {
+                Thread.sleep(1);
+                startScreen.repaint();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        startframe.setVisible(false);
+        startframe.dispose();
+
+        initGame();
+    }
     
     public static void main(String[] args) {
-        new Main().initGame();
+        new Main().startScreen();
     }
 }

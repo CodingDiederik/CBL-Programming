@@ -102,7 +102,6 @@ public class Level extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         // draw the level
         //System.out.println("gamestate " + gameState);
         if ("running".equals(gameState)) {
