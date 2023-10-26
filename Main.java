@@ -6,13 +6,22 @@ public class Main {
 
     boolean forceReset = false;
 
+    /**
+     * Restarts the game by resetting the players and cameras position,
+     *  disposing the current frame and re-initiating the game.
+     * If this function gets called from losing, forceReset is not set to true, 
+     *      so the level number is not reset.
+     *      Else, the function gets called from the pressing the backspace, for resetting the game,
+     *      and forceReset is true, then the level number is set to 1.
+     * 
+     * To prevent re-initiating the game before the new save file is correctly created,
+     *     the thread sleeps for 100 milliseconds.
+     */
     void restartGame() {
         if (!forceReset) {
             game.writer.createSaveFile(game.levelNumber + "");
         } else {
             game.writer.createSaveFile("1");
-            //game.writer.createSaveFile("0");
-            //game.levelNumber = 0;
             forceReset = false;
         }
         
@@ -31,9 +40,11 @@ public class Main {
         initGame();
     }
 
+    /**
+     * Creates a new save file for the next level, resets the players and cameras position,
+     * disposes of the old frame and re-initiates the game.
+     */
     void nextLevel() {
-        //System.out.println("next level");
-        //game.writer.createSaveFile((game.level.level_number + 1) + "");
         game.writer.createSaveFile((game.levelNumber + 1) + "");
         game.frame.setVisible(false);
         game.frame.dispose();
@@ -44,6 +55,19 @@ public class Main {
         initGame();
     }
 
+    /**
+     * Works as a sort constructor for the Game class. We prevent using a lot of new Game()s.
+     * Adds a frame to the game, reads the save file and creates a new level.
+     * If the save file is not empty on the lines for the player x, player y and level x0, 
+     *      it updates the players and cameras position. 
+     * Else it resets them to their default values.
+     * 
+     * Then start up the game by calling the run() function.
+     * 
+     * While the game is not won, lost or restarted, the thread sleeps for 1 millisecond.
+     * If one of these conditions is reached, it exits the loop, 
+     *      checks which of the conditions is true, and excutes the appropriate function.
+     */
     void initGame() {
         
         game.frame = new JFrame("Game"); // Create a new frame
@@ -86,8 +110,6 @@ public class Main {
             }
             
         }
-
-        //System.out.println("out of loop");
 
         if (game.restartButtonPressed) {
             game.restartButtonPressed = false;
