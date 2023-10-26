@@ -390,11 +390,8 @@ public class Player extends JPanel {
             }
         }
 
-        System.out.println("vertical speed: " + verticalSpeed);
         x += horizontalSpeed;
         y += verticalSpeed;
-
-
     }
 
 }
