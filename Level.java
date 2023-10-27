@@ -20,6 +20,8 @@ public class Level extends JPanel {
     public ReadLevelFile reader = new ReadLevelFile(); // Create a new reader
 
     String gameState = "start"; // The state of the game: running, paused, lost, won
+
+    int length;
     
     /**
      * Constructor for objects of class Level.
@@ -116,7 +118,7 @@ public class Level extends JPanel {
                     if (level[x][y] == 1) { // check if the coordinate is a block
                         // draw block the block in the JPanel
                         //Block block = new Block(); //LATER: Is this nececary?
-                        g.setColor(Color.RED); // set the color of the block LATER: use sprites
+                        g.setColor(Color.BLACK); // set the color of the block LATER: use sprites
                         g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
                             BL_HGT); // draw the block: LATER: draw the sprite for the block
                     //System.out.println("x: " + x + " y: " + y);
@@ -125,36 +127,15 @@ public class Level extends JPanel {
 
                         g.setColor(Color.GREEN);
                         g.fillRect((x * BL_WTH) - x0, y * BL_HGT , BL_WTH, BL_HGT);
-                        // draw the door
-                        //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
-                        //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
-//  
-                        //g.drawImage(doorimage1.getImage(), x * BL_WTH, y * BL_HGT, null);
-                        //g.drawImage(doorimage2.getImage(), x * BL_WTH, y * BL_HGT + 20, null);
                     }
                     if (level[x][y] == 3) {
-                        // draw spikes
-                        //ImageIcon spikesimage = new ImageIcon(".Assets/tiles/spikes.png");
-                        //g.drawImage(spikesimage.getImage(), x * BL_WTH, y * BL_HGT, null);
-                        g.setColor(Color.BLACK);
+                        g.setColor(Color.RED);
                         g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, BL_HGT);
                     }
 
-                    // LATER: draw other objects in the level by checking if the coordinate 
-                    // is a different number.
                 }
             }
 
-            //ImageIcon doorimage1 = new ImageIcon(".Assets/tiles/door1.png");
-            //ImageIcon doorimage2 = new ImageIcon(".Assets/tiles/door2.png");
-//  
-            //g.drawImage(doorimage1.getImage(), doorCoordinateX, doorCoordinateY, null);
-            //g.drawImage(doorimage2.getImage(), doorCoordinateX, doorCoordinateY + 20, null);
-
-
-            //ImageIcon image = new ImageIcon("Assets/sprite.png");
-            //g.drawImage(image.getImage(), (player.x - player.spriteWidth), 
-            //(player.y - player.spriteHeight), null);
             g.setColor(Color.CYAN); //use a simple color for now.
             g.fillRect((player.x - player.spriteWidth - x0), (player.y - player.spriteHeight), 50, 50);
             /*Draw the image of the player. Using the width and heigth of the player, 
@@ -163,33 +144,30 @@ public class Level extends JPanel {
         } else if ("paused".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
-            g.drawString("PAUSED", 600, 300);
+            length = stringLength("PAUSED", g);
+            g.drawString("PAUSED", 800 - length / 2, 300);
 
         } else if ("win".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
-            g.drawString("YOU WIN", 600, 300);
+            length = stringLength("YOU WIN", g);
+            g.drawString("YOU WIN", 800 - length / 2, 300);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            //if level is not last level
-            g.drawString("Press ENTER for next level ", 200, 400);
+            length = stringLength("Press ENTER for next level ", g);
+            g.drawString("Press ENTER for next level ", 800 - length / 2, 400);
 
         } else if ("lose".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);
-            g.drawString("YOU LOSE", 600, 300);
+            length = stringLength("YOU LOSE", g);
+            g.drawString("YOU LOSE", 800 - length / 2, 300);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g.drawString("Press ENTER to restart", 200, 400);
-        } else if ("start".equals(gameState)) {
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-            g.setColor(Color.BLUE);
-            g.drawString("Press ENTER to start", 200, 400);
-        } else if ("end".equals(gameState)) {
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-            g.setColor(Color.BLUE);
-            g.drawString("THE END", 600, 300);
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
-            g.drawString("Thanks for playing!", 200, 400);
-            g.drawString("Press ENTER to restart", 200, 400);
-        }
+            length = stringLength("Press ENTER to restart", g);
+            g.drawString("Press ENTER to restart", 800 - length / 2, 400);
+        } 
+    }
+    
+    int stringLength(String s, Graphics g) {
+        return (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
     }
 }
