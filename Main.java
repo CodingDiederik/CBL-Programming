@@ -82,6 +82,7 @@ public class Main {
         game.frame.setResizable(false);
         game.frame.setVisible(true);
 
+        game.movementListener = new MovementListener();
 
         game.saveData = new ReadSaveFile().readSaveFile();
         game.levelNumber = game.saveData[0];

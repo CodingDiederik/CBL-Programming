@@ -92,7 +92,6 @@ public class Game extends JPanel {
                 }
 
                 if (movementListener.isWKeyPressed) {
-                    System.out.println("w key pressed");
                     movementListener.isWKeyPressed = false;
                     
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {

@@ -43,10 +43,8 @@ public class MovementListener implements KeyListener {
             UpKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
             WKeyPressed = true;
-            System.out.println("W pressed");
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             EnterKeypressed = true;
-            System.out.println("Enter pressed");
         } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             BackspaceKeypressed = true;
         }
