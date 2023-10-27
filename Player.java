@@ -16,7 +16,7 @@ public class Player extends JPanel {
     int verticalAcceleration = 0; // acceleration of the player
     int horizontalAcceleration = 0;
 
-    int maximumVelocity = 7; // maximum speed of the player
+    int maximumVelocity = 8; // maximum speed of the player
 
     int changex = 0; // the amount the player is going to move in 1 step
 
@@ -49,7 +49,7 @@ public class Player extends JPanel {
                 return true;
 
             } else {
-                for (int tryy = 1; tryy < 10; tryy++) {
+                for (int tryy = 1; tryy < 18; tryy++) {
                     if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1 
                         || level[(x + spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1) {
 
@@ -149,6 +149,8 @@ public class Player extends JPanel {
                 verticalSpeed = tryy + 1;
                 isJumping = false;
                 isFalling = true;
+                gravityStep = 0;
+                jumpStep = 0;
                 break;
             }
         }
@@ -257,17 +259,17 @@ public class Player extends JPanel {
         // to gently make the player move faster.
 
         if ("left".equals(direction)) { // if the player is moving left
-            if (speed < -10) { // if the player is moving faster than -10
+            if (speed < -5) { // if the player is moving faster than -10
                 return -5;
             } else { // if the player is moving slower than -10
-                return -3;
+                return -1;
             }
 
         } else { // player is moving right
-            if (speed > 10) { // if the player is moving faster than 10
+            if (speed > 5) { // if the player is moving faster than 10
                 return 5;
             } else { // if the player is moving slower than 10
-                return 3;
+                return 1;
             }
         }
         
@@ -279,13 +281,13 @@ public class Player extends JPanel {
     */
     int decelerationCalculator(int speed) {
         // gently make the player move slower
-        if (speed > -3 || speed < 3) { // if the player is moving slower than 3, make speed 0
+        if (speed > -3 && speed < 3) { // if the player is moving slower than 3, make speed 0
             horizontalSpeed = 0;
             return 0;
         } else if (speed < 0) { // slowly make the player move slower
-            return 3;
+            return 2;
         } else {
-            return -3;
+            return -2;
         }
     }
 
@@ -316,17 +318,17 @@ public class Player extends JPanel {
     */
     int jumpCalculator(int speed) {
         // make a counter
-        if (jumpStep < 10) { // use steps to determine the speed when jumping
+        if (jumpStep < 9) { // use steps to determine the speed when jumping
             jumpStep++;
             return -16;
-        } else if (jumpStep < 15) {
+        } else if (jumpStep < 17) {
             jumpStep++;
             return -8;
         } else {
             isJumping = false;
             jumpStep = 0;
             isFalling = true;
-            return -0;
+            return 0;
         }
     }
 
@@ -338,7 +340,7 @@ public class Player extends JPanel {
             gravityStep++;
             return 8;
         } else {
-            return 10;
+            return 16;
         }
     }
 
@@ -346,7 +348,6 @@ public class Player extends JPanel {
      * Move method for actually updating the coordinates.
     */
     void move(int[][] level) {
-
         if (verticalSpeed != 0 && y > 0) {
             for (int tryy = 1; tryy <= verticalSpeed; tryy++) {
                 
