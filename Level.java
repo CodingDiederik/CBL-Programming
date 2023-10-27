@@ -30,8 +30,8 @@ public class Level extends JPanel {
         this.player = player;
         this.level_number = level_number;
         
-        // determine dimentions of the level: 32 blocks wide, 12 blocks high
-        // The screen is 16 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
+        // determine dimentions of the level: 64 blocks wide, 12 blocks high
+        // The screen is 32 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
         this.level = new int[64][12];
         
         // create the level
@@ -110,23 +110,20 @@ public class Level extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // draw the level
-        //System.out.println("gamestate " + gameState);
         if ("running".equals(gameState)) {
             for (int x = x0 / 50; x < level.length; x++) { 
                 for (int y = 0; y < level[0].length; y++) { 
 
                     if (level[x][y] == 1) { // check if the coordinate is a block
                         // draw block the block in the JPanel
-                        //Block block = new Block(); //LATER: Is this nececary?
-                        g.setColor(Color.BLACK); // set the color of the block LATER: use sprites
+                        g.setColor(Color.BLACK); // set the color of the block 
                         g.fillRect((x  * BL_WTH) - x0, y * BL_HGT, BL_WTH, 
                             BL_HGT); // draw the block: LATER: draw the sprite for the block
-                    //System.out.println("x: " + x + " y: " + y);
                     }
                     if (level[x][y] == 2) {
 
                         g.setColor(Color.GREEN);
-                        g.fillRect((x * BL_WTH) - x0, y * BL_HGT , BL_WTH, BL_HGT);
+                        g.fillRect((x * BL_WTH) - x0, y * BL_HGT, BL_WTH, BL_HGT);
                     }
                     if (level[x][y] == 3) {
                         g.setColor(Color.RED);
