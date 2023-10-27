@@ -108,6 +108,14 @@ public class Game extends JPanel {
                     }
                 }
 
+                if (player.y + player.spriteHeight > height - 40) {
+                    level.gameState = "lose";
+                    movementListener.pause = true;
+                    level.repaint();
+                    player.x = 250;
+                    player.y = 524;
+                }
+
                 if (!(player.y - player.spriteHeight < 0)) {
                     if (level.level[(player.x - player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x - player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3
                     || level.level[(player.x + player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x + player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3) {
@@ -115,14 +123,6 @@ public class Game extends JPanel {
                         movementListener.pause = true;
                         level.repaint();
                     }
-                }
-
-                if (player.y > height - 40) {
-                    level.gameState = "lose";
-                    movementListener.pause = true;
-                    level.repaint();
-                    player.x = 250;
-                    player.y = 524;
                 }
 
                 
