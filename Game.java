@@ -43,7 +43,7 @@ public class Game extends JPanel {
                 levelNumber = 1;
                 restartButtonPressed = true;
 
-            } else if (!movementListener.pause && !("lost".equals(level.gameState) || "won".equals(level.gameState) || "start".equals(level.gameState) || "end".equals(level.gameState))) {
+            } else if (!movementListener.pause) {
                 if (!("lose".equals(level.gameState) || "win".equals(level.gameState))) {
                     level.gameState = "running";
                 }
@@ -92,14 +92,18 @@ public class Game extends JPanel {
                 }
 
                 if (movementListener.isWKeyPressed) {
+                    System.out.println("w key pressed");
                     movementListener.isWKeyPressed = false;
+                    
                     if (level.level[(player.x / 50)][(player.y / 50)] == 2) {
                         if (levelNumber == 3) {
                             level.gameState = "win";
+                            movementListener.pause = true;
                             movementListener.EnterKeypressed = true;
                             
                         } else {
                             level.gameState = "win";
+                            movementListener.pause = true;
                             level.repaint();
                         }
                     }
@@ -108,17 +112,28 @@ public class Game extends JPanel {
                 if (!(player.y - player.spriteHeight < 0)) {
                     if (level.level[(player.x - player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x - player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3
                     || level.level[(player.x + player.spriteWidth) / 50][(player.y + player.spriteHeight) / 50] == 3 || level.level[(player.x + player.spriteWidth) / 50][(player.y - player.spriteHeight) / 50] == 3) {
-                    level.gameState = "lose";
-                    level.repaint();
+                        level.gameState = "lose";
+                        movementListener.pause = true;
+                        level.repaint();
                     }
                 }
 
                 if (player.y > height - 40) {
                     level.gameState = "lose";
+                    movementListener.pause = true;
                     level.repaint();
                     player.x = 250;
                     player.y = 524;
                 }
+
+                
+    
+                //if (player.y > height) {
+                //    level.gameState = "lose";
+                //    level.repaint();
+                //}
+
+            } else if ("lose".equals(level.gameState) || "win".equals(level.gameState)) {
 
                 if (movementListener.isEnterKeypressed) {
                     movementListener.isEnterKeypressed = false;
@@ -129,15 +144,12 @@ public class Game extends JPanel {
                     } else if ("lose".equals(level.gameState)) {
                         lose = true;
                     }
+                    movementListener.pause = false;
                 }
-    
-                if (player.y > height) {
-                    level.gameState = "lose";
-                    level.repaint();
-                }
-
+                
             } else {
                 level.gameState = "paused";
+            
             }
 
             level.repaint();
