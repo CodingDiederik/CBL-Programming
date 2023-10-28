@@ -2,20 +2,27 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Display the startscreen for the game.
+ * Display the start or end screen for the game.
+ * Extends JPanel to be able to draw the start or end screen.
 */
-public class StartScreen extends JPanel {
+public class MainScreen extends JPanel {
 
-    public String state;
-    int length;
+    public String state; // The state of the game: start or end.
+    int length; // Length of a string in pixels
 
-    StartScreen(String state) {
+    MainScreen(String state) {
         this.state = state;
     }
 
+    /**
+     * Paint the start or end screen.
+     * 
+     * Calculate the length of a string, and draw the string centered on the screen.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         if ("start".equals(state)) {
             g.setColor(Color.BLUE);
 
@@ -62,6 +69,12 @@ public class StartScreen extends JPanel {
         }
     }
 
+    /** 
+     * Calculate the length of a string for use in paintComponent.
+     * @param s The string to calculate the length of.
+     * @param g The graphics object.
+     * @return The length of the string.
+     */
     int stringLength(String s, Graphics g) {
         return (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
     }
