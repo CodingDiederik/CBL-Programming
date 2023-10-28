@@ -57,8 +57,8 @@ public class StartScreen extends JPanel {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 50));
             length = stringLength("Thanks for playing!", g);
             g.drawString("Thanks for playing!", 800 - length / 2, 300);
-            length = stringLength("Press ENTER to restart", g);
-            g.drawString("Press ENTER to restart", 800 - length / 2, 400);
+            length = stringLength("Press BACKSPACE to restart", g);
+            g.drawString("Press BACKSPACE to restart", 800 - length / 2, 400);
         }
     }
 

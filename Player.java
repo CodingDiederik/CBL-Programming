@@ -207,7 +207,7 @@ public class Player extends JPanel {
         // calculate the horizontal acceleration
         
         horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
-        //System.out.println("horizontal speed: " + horizontalSpeed);
+        //System.out.println("horizontal speed: " + horizontalSpeed); // TODO: remove, of laten staan???
         //System.out.println("horizontal acceleration: " + horizontalAcceleration);
 
         if (horizontalSpeed > maximumVelocity) { // check if the speed is not too high
@@ -227,7 +227,6 @@ public class Player extends JPanel {
     int horizontalAcceleration(String direction) { 
 
         if ("stop".equals(direction)) {
-            //System.out.println("stop");
             return decelerationCalculator(horizontalSpeed); // always decelerate
         }
         if (horizontalSpeed == 0) { // if the player is not moving, accelerate

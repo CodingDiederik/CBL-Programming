@@ -136,7 +136,11 @@ public class Main {
     }
 
     /**
-     * Display the start screen for the game.
+     * When the game is intialized for the first time, 
+     * it shows the startscreen. It creates a new frame,
+     * adds a keylistener and the startscreen to the frame.
+     * After that when the Enter key is pressed, it closes the frame and disposes it.
+     * And then intializes the game.
     */
     void startScreen() {
         StartScreen startScreen = new StartScreen("start");
@@ -174,6 +178,12 @@ public class Main {
         initGame();
     }
 
+    /**
+     * When the game is won or lost, it shows the endscreen. It creates a new frame,
+     * adds a keylistener and the endscreen to the frame.
+     * After that when the Enter key is pressed, it closes the frame and disposes it.
+     * And then intializes the game again.
+    */
     void endScreen() {
         StartScreen startScreen = new StartScreen("end");
         JFrame startframe = new JFrame();
@@ -188,7 +198,7 @@ public class Main {
         startScreen.repaint();
         
 
-        while (!listener.EnterKeypressed) {
+        while (!listener.BackspaceKeypressed || !listener.EnterKeypressed) {
             //sleep
             try {
                 Thread.sleep(1);
