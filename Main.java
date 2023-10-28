@@ -1,5 +1,14 @@
 import javax.swing.JFrame;
 
+/**
+ * The main class of the game.
+ * @author Diederik Webster
+ * @studentnumber 1957880
+ * 
+ * @author Matthijs Smulders
+ * @studentnumber 1973169
+ * 
+*/
 public class Main {
     
     Game game = new Game();
@@ -52,8 +61,9 @@ public class Main {
         game.player.y = 524;
         game.level.x0 = 0;
 
+        // also a check after level 3
         if (game.levelNumber == 3) {
-            game.levelNumber = 1;
+            game.levelNumber = 1; // then the game is reset to the first level
             game.writer.createSaveFile("1");
             endScreen();
         } else {
@@ -85,13 +95,16 @@ public class Main {
         game.movementListener = new MovementListener();
 
         game.saveData = new ReadSaveFile().readSaveFile();
-        game.levelNumber = game.saveData[0];
+
+        // level number is saved on the first line of the save file
+        game.levelNumber = game.saveData[0]; 
 
         game.level = new Level(game.player, game.levelNumber);
         
         game.win = false;
         game.lose = false;
 
+        // if the rest of the savefile is not empty, take the default values
         if (game.saveData[1] != -1 && game.saveData[2] != -1 && game.saveData[3] != -1) {
             game.player.x = game.saveData[1];
             game.player.y = game.saveData[2];
@@ -106,8 +119,9 @@ public class Main {
 
         game.frame.addKeyListener(game.movementListener);
 
-        game.run();
+        game.run(); // run the game
 
+        // as long as the game is not over, do nothing
         while (!game.lose && !game.win && !game.restartButtonPressed) {
             //sleep
             try {
@@ -119,17 +133,18 @@ public class Main {
         }
 
         if (game.restartButtonPressed) {
+            // force reset the game to the default state
             game.restartButtonPressed = false;
             forceReset = true;
             System.out.println("game level number: " + game.levelNumber);
             
-            restartGame();
+            restartGame(); 
 
-        } else if (game.lose) {
+        } else if (game.lose) { // if the game is lost, restart the game
             game.timer.stop();
             restartGame();
 
-        } else if (game.win) {
+        } else if (game.win) { // if the game is won, go to the next level
             game.timer.stop();
             nextLevel();
         }
@@ -137,13 +152,13 @@ public class Main {
 
     /**
      * When the game is intialized for the first time, 
-     * it shows the startscreen. It creates a new frame,
-     * adds a keylistener and the startscreen to the frame.
+     * it shows the mainScreen. It creates a new frame,
+     * adds a keylistener and the mainScreen to the frame.
      * After that when the Enter key is pressed, it closes the frame and disposes it.
      * And then intializes the game.
     */
-    void startScreen() {
-        StartScreen startScreen = new StartScreen("start");
+    void mainScreen() {
+        MainScreen mainScreen = new MainScreen("start");
         JFrame startframe = new JFrame();
         MovementListener listener = new MovementListener();
 
@@ -152,15 +167,15 @@ public class Main {
         startframe.setResizable(false);
         startframe.setVisible(true);
         startframe.addKeyListener(listener);
-        startframe.add(startScreen);
-        startScreen.repaint();
+        startframe.add(mainScreen);
+        mainScreen.repaint();
         
 
-        while (!listener.EnterKeypressed) {
+        while (!listener.EnterKeypressed) { // while not the enterkey is pressed do nothing
             //sleep
             try {
                 Thread.sleep(1);
-                startScreen.repaint();
+                mainScreen.repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -169,6 +184,8 @@ public class Main {
         startframe.setVisible(false);
         startframe.dispose();
 
+        // we do this to prevent an error where the frame is not fully disposed yet
+        // and a new frame is created before the old one is disposed
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -185,7 +202,7 @@ public class Main {
      * And then intializes the game again.
     */
     void endScreen() {
-        StartScreen startScreen = new StartScreen("end");
+        MainScreen mainScreen = new MainScreen("end");
         JFrame startframe = new JFrame();
         MovementListener listener = new MovementListener();
 
@@ -194,15 +211,15 @@ public class Main {
         startframe.setResizable(false);
         startframe.setVisible(true);
         startframe.addKeyListener(listener);
-        startframe.add(startScreen);
-        startScreen.repaint();
+        startframe.add(mainScreen);
+        mainScreen.repaint();
         
-
-        while (!listener.BackspaceKeypressed || !listener.EnterKeypressed) {
+        // while not the enterkey is pressed do nothing
+        while (!listener.BackspaceKeypressed || !listener.EnterKeypressed) { 
             //sleep
             try {
                 Thread.sleep(1);
-                startScreen.repaint();
+                mainScreen.repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -211,10 +228,18 @@ public class Main {
         startframe.setVisible(false);
         startframe.dispose();
     
+        // we do this to prevent an error where the frame is not fully disposed yet
+        // and a new frame is created before the old one is disposed
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         initGame();
     }
     
     public static void main(String[] args) {
-        new Main().startScreen();
+        new Main().mainScreen(); // start the game, by showing the mainScreen
     }
 }

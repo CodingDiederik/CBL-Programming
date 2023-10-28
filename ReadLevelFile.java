@@ -10,38 +10,31 @@ import java.util.ArrayList;
  */
 public class ReadLevelFile {
 
-    //private int x;
-//
-    ///**
-    // * Constructor for objects of class ReadSaveFile.
-    // * @param x
-    // */
-    //public ReadLevelFile(int x) {
-    //    this.x = x;
-    //}
-    
-    private ArrayList<String> levelList = new ArrayList<>(); // Create a new array to store the level data
-    // the function with values are stored
-    
+    // Create a new array to store the level data
+    private ArrayList<String> levelList = new ArrayList<>(); 
+    private File file;
 
-    //String fileName = "./Assets/levels/level" + x + ".txt";
-    
-    private File file /* = new File(fileName)*/;
-
-    String[] readSaveFile(int level_number) {
+    /**
+     * Read the level file.
+     * 
+     * Use a do-while loop to be able to check if the line is null.
+     *     If the line in not null, and not a blank line, save the value in the levelList array.
+     *   If the line is null, the loop will exit, because the file ended.
+     * 
+     * @param levelNumber The level number to read.
+     * @return The level data as an array of strings.
+     */
+    String[] readLevelFile(int levelNumber) {
         try {
-            file = new File("./Assets/levels/level" + level_number + ".txt");
-            // Read the file
+            file = new File("./Assets/levels/level" + levelNumber + ".txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
-            //System.out.println("Contents of the file:");
 
             do {
                 line = bufferedReader.readLine();
-                //System.out.println(line); // Print each line to the console
-                if (!"".equals(line) && line != null) { // If the line is not empty
-                    levelList.add(line); // Add the line to the array
+                if (!"".equals(line) && line != null) {
+                    levelList.add(line); 
                 }
 
             } while (line != null);
