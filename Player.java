@@ -165,22 +165,20 @@ public class Player {
      * and calls the corresponding method.
      * 
     */
-    boolean isValidMove(int[][] level, String direction) {
+    void isValidMove(int[][] level, String direction) {
 
         calculateChangeX(direction, level); 
 
         if ("left".equals(direction)) { 
-            return checkXLeft(level);
+            checkXLeft(level);
             
         } else if ("right".equals(direction)) { 
-            return checkXRight(level);
+            checkXRight(level);
         } else { 
             if (horizontalSpeed < 0) { 
-                return checkXLeft(level);
+                checkXLeft(level);
             } else if (horizontalSpeed > 0) { 
-                return checkXRight(level);
-            } else { 
-                return true;
+                checkXRight(level);
             }
         }
     }

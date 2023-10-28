@@ -3,24 +3,32 @@ import javax.swing.Timer;
 
 /**
  * The listener class of the game.
+ * It check for the Escape, Left, Right, Up, W, Enter and Backspace keys.
+ * It also check if the player is jumping or not.
+ * It does this by checking every 10 milliseconds if a key is pressed.
  */
 public class MovementListener implements KeyListener {
 
     public String direction = "none";
+
+    // booleans to check if a key is pressed
     public boolean isWKeyPressed = false;
-    public boolean isEnterKeypressed = false;
+    public boolean isEnterKeyPressed = false;
     public boolean isJumping = false;
     public boolean pause = false;
-    private boolean LeftKeyPressed = false;
-    private boolean RightKeyPressed = false;
-    private boolean UpKeyPressed = false;
-    private boolean WKeyPressed = false;
-    private boolean EscapeKeypressed = false;
-    public boolean EnterKeypressed = false;
-    public boolean BackspaceKeypressed = false;
+    private boolean leftKeyPressed = false;
+    private boolean rightKeyPressed = false;
+    private boolean upKeyPressed = false;
+    private boolean wKeyPressed = false;
+    private boolean escapeKeyPressed = false;
+    public boolean enterKeyPressed = false;
+    public boolean backspaceKeyPressed = false;
 
     private Timer timer;
 
+    /**
+     * The timer is intiated in the constructor.
+    */
     public MovementListener() {
         timer = new Timer(10, e -> checkKeyPress());
         timer.start();
@@ -34,19 +42,19 @@ public class MovementListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            EscapeKeypressed = true;
+            escapeKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-            LeftKeyPressed = true;
+            leftKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-            RightKeyPressed = true;
+            rightKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-            UpKeyPressed = true;
+            upKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            WKeyPressed = true;
+            wKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            EnterKeypressed = true;
+            enterKeyPressed = true;
         } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            BackspaceKeypressed = true;
+            backspaceKeyPressed = true;
         }
     }
     
@@ -55,57 +63,60 @@ public class MovementListener implements KeyListener {
     */
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-            LeftKeyPressed = false;
+            leftKeyPressed = false;
             direction = "none";
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-            RightKeyPressed = false;
+            rightKeyPressed = false;
             direction = "none";
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-            UpKeyPressed = false;
+            upKeyPressed = false;
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            WKeyPressed = false;
+            wKeyPressed = false;
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            EnterKeypressed = false;
+            enterKeyPressed = false;
         }
     }
 
     public void keyTyped(KeyEvent e) { // not used
     }
 
+    /**
+     * Check which key's are pressed and set the direction accordingly.
+    */
     public void checkKeyPress() {
-        if (EscapeKeypressed) {
-            EscapeKeypressed = false;
-            pause = !pause;
+        if (escapeKeyPressed) {
+            escapeKeyPressed = false;
+            pause = !pause; // toggle pause
         }
 
-        if (LeftKeyPressed) {
+        if (leftKeyPressed) {
             if (!"right".equals(direction)) {
-                direction = "left";
+                direction = "left"; // set direction to left
             }
         }
 
-        if (RightKeyPressed) {
+        if (rightKeyPressed) {
             if (!"left".equals(direction)) {
-                direction = "right";
+                direction = "right"; // set direction to right
             }
         }
 
-        if (LeftKeyPressed && RightKeyPressed) {
-            direction = "none";
+        if (leftKeyPressed && rightKeyPressed) { // if both left and right are pressed
+            direction = "none"; // set direction to none
         }
 
-        if (UpKeyPressed) {
+        if (upKeyPressed) {
             isJumping = true;
         }
 
-        if (WKeyPressed) {
+        if (wKeyPressed) {
             isWKeyPressed = true;
         } else {
             isWKeyPressed = false;
         }
 
-        if (EnterKeypressed) {
-            isEnterKeypressed = true;
+        if (enterKeyPressed) {
+            isEnterKeyPressed = true;
         }
     }
     

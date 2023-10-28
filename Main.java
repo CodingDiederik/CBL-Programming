@@ -171,7 +171,7 @@ public class Main {
         mainScreen.repaint();
         
 
-        while (!listener.EnterKeypressed) { // while not the enterkey is pressed do nothing
+        while (!listener.enterKeyPressed) { // while not the enterkey is pressed do nothing
             //sleep
             try {
                 Thread.sleep(1);
@@ -215,7 +215,7 @@ public class Main {
         mainScreen.repaint();
         
         // while not the enterkey is pressed do nothing
-        while (!listener.BackspaceKeypressed || !listener.EnterKeypressed) { 
+        while (!listener.backspaceKeyPressed || !listener.enterKeyPressed) { 
             //sleep
             try {
                 Thread.sleep(1);

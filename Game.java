@@ -33,10 +33,10 @@ public class Game {
     Timer timer = new Timer(20, new ActionListener() {
         public void actionPerformed(ActionEvent e) { 
             
-            if (movementListener.BackspaceKeypressed) { // if the backspace key is pressed
-                movementListener.BackspaceKeypressed = false;
-                levelNumber = 1; // set the level number to 1
-                restartButtonPressed = true; // now in the main class the game will restart 
+            if (movementListener.backspaceKeyPressed) { // if the backspace key is pressed.
+                movementListener.backspaceKeyPressed = false;
+                levelNumber = 1; // set the level number to 1.
+                restartButtonPressed = true; // now in the main class the game will restart.
 
             } else if (!movementListener.pause) { // if the game is not paused
 
@@ -62,27 +62,22 @@ public class Game {
                     player.jump(level.level); // execute the jump method
                 }                
 
-                // if no input is given
+                // if no input is given, or the player moves in a direction and holds the key to the other side
+                
                 if ("none".equals(movementListener.direction)) {
-
                     // make the player decelerate
-                    if (!player.isValidMove(level.level, "stop")) {
-                        ;
-                    }
+                    player.isValidMove(level.level, "stop");
                 }
 
                 // if the player is moving left or right
                 // check if it is a valid move, in this function the player will only move
                 // as far as it can
                 if ("left".equals(movementListener.direction)) {
-                    if (!player.isValidMove(level.level, "left")) {
-                        ;
-                    }
-
+                    player.isValidMove(level.level, "left");
+            
                 } else if ("right".equals(movementListener.direction)) {
-                    if (!player.isValidMove(level.level, "right")) {
-                        ;
-                    }
+                    player.isValidMove(level.level, "right");
+                    
                 }
 
                 //Update the save Data after every move
@@ -90,10 +85,12 @@ public class Game {
                 newSaveData = levelNumber + "\n" + player.x + "\n" + player.y + "\n" + level.x0;
                 writer.createSaveFile(newSaveData);
 
-                // if the playercoordinates are about to levave the screen
-                // set the x0 coordinate to the player x coordinate
-                // this will make the player stay in the middle of the screen
-                // and make the level move around the player
+                /**
+                 * if the playercoordinates are about to levave the screen
+                 * set the x0 coordinate to the player x coordinate
+                 * this will make the player stay in the middle of the screen
+                 * and make the level move around the player
+                 */
                 if (!(player.x - 300 < 0 || player.x - 300 + width > level.level.length * 50)) {
                     level.x0 = player.x - 300;
                 }
@@ -106,7 +103,7 @@ public class Game {
                         if (levelNumber == 3) {
                             level.gameState = "win"; // the player has won
                             movementListener.pause = true; // the game is paused
-                            movementListener.EnterKeypressed = true; // the enter key is pressed
+                            movementListener.enterKeyPressed = true; // the enter key is pressed
                             // the game will now show the end endscreen
                             
                         } else {
@@ -147,9 +144,9 @@ public class Game {
             // if the game is paused and the player has won or lost
             } else if ("lose".equals(level.gameState) || "win".equals(level.gameState)) { 
 
-                if (movementListener.isEnterKeypressed) {
-                    movementListener.isEnterKeypressed = false;
-                    movementListener.EnterKeypressed = false;
+                if (movementListener.isEnterKeyPressed) {
+                    movementListener.isEnterKeyPressed = false;
+                    movementListener.enterKeyPressed = false;
 
                     if ("win".equals(level.gameState)) { 
                         win = true; // the player has won
