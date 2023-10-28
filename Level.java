@@ -3,6 +3,7 @@ import javax.swing.*;
 
 /**
  * The level class of the game.
+ * Extends JPanel to be able to draw the level.
 */
 public class Level extends JPanel {
     
@@ -11,15 +12,13 @@ public class Level extends JPanel {
     private int blWdth = 50; // Width of a block in pixels
     private int blHgth = 50; // Height of a block in pixels
 
-
     int x0 = 0; //var to scroll the level
 
     private Player player;
-    public int lvlNum;
-    public boolean isPaused = false;
-    public ReadLevelFile reader = new ReadLevelFile(); // Create a new reader
+    int lvlNum;
+    ReadLevelFile reader = new ReadLevelFile(); // Create a new reader.
 
-    String gameState = "start"; // The state of the game: running, paused, lost, won
+    String gameState = "start"; // The state of the game: running, paused, lost or won.
 
     int length;
     
@@ -36,14 +35,24 @@ public class Level extends JPanel {
     public Level(Player player, int lvlNum) {
         this.player = player;
         this.lvlNum = lvlNum;
-        
-        // determine dimentions of the level: 64 blocks wide, 12 blocks high
-        // The screen is 32 blocks wide, 12 blocks high, so level 1 is 2 screens wide.
         this.level = new int[64][12];
         createLevel();
     }
 
 
+    /**
+     * Creates the level by reading the level file.
+     * 
+     * If the level number is 4, the game is won.
+     * If the level number is not found, the first level is loaded.
+     * 
+     * Levelconverter is an array of strings, each string is a line in the level file.
+     *     Each line is split into an array of strings, which are saved in data[].
+     *     The first string is the type of function, the others are parameters.
+     *              (See documentation for more info).
+     *      Check which funtion is called, and execute the corresponding method.
+     * Always create a wall at the end of the level.
+     */
     void createLevel() {
         if (lvlNum == 4) {
             gameState = "end";
@@ -51,6 +60,7 @@ public class Level extends JPanel {
         }
 
         String[] levelConverter = reader.readSaveFile(lvlNum);
+
         if (levelConverter == null) {
             System.out.println("Level not found");
             levelConverter = reader.readSaveFile(1);
@@ -58,15 +68,19 @@ public class Level extends JPanel {
         
         for (int i = 0; i < levelConverter.length; i++) {
             String line = levelConverter[i];
-            String data[] = line.split(" ");
+            String[] data = line.split(" ");
             if ("RB".equals(data[0])) {
-                createRowBlocks(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+                createRowBlocks(Integer.valueOf(data[1]), 
+                    Integer.valueOf(data[2]), Integer.valueOf(data[3]));
             } else if ("CB".equals(data[0])) {
-                createCollumnBlocks(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+                createCollumnBlocks(Integer.valueOf(data[1]), 
+                    Integer.valueOf(data[2]), Integer.valueOf(data[3]));
             } else if ("RS".equals(data[0])) {
-                createRowSpikes(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+                createRowSpikes(Integer.valueOf(data[1]),
+                    Integer.valueOf(data[2]), Integer.valueOf(data[3]));
             } else if ("CS".equals(data[0])) {
-                createCollumnSpikes(Integer.valueOf(data[1]),Integer.valueOf(data[2]), Integer.valueOf(data[3]));
+                createCollumnSpikes(Integer.valueOf(data[1]),
+                    Integer.valueOf(data[2]), Integer.valueOf(data[3]));
             } else if ("ED".equals(data[0])) {
                 createEndLevelDoor(Integer.valueOf(data[1]), Integer.valueOf(data[2]));
             }
@@ -76,7 +90,7 @@ public class Level extends JPanel {
     }
 
     /**
-     * Easily create a row of blocks (platform) in the level.
+     * Easily create a row of blocks (platform) in the level. 
      */
     void createRowBlocks(int x, int y, int length) {
         for (int r = x; r < x + length; r++) {
@@ -93,20 +107,28 @@ public class Level extends JPanel {
         }
     }
 
+    /**
+     * Easily create row of spikes in the level.
+     */
     void createRowSpikes(int x, int y, int length) {
         for (int r = x; r < x + length; r++) {
             this.level[r][y] = 3;
         }
     }
 
+    /**
+     * Easily create a column of spikes in the level.
+     */
     void createCollumnSpikes(int x, int y, int height) {
         for (int c = y; c > y - height; c--) {
             this.level[x][c] = 3;
         }
     }
 
+    /**
+     * Easily create a door in the level.
+     */
     void createEndLevelDoor(int x, int y) {
-        // create a door at the end of the level
         level[x][y] = 2;
     }
 
@@ -118,12 +140,15 @@ public class Level extends JPanel {
      *      Use a for loop to draw the level in a grid of 50x50 pixels.
      *          Use the x0 variable to scroll the level. 
      *      Then draw the player outside the for loop,
-     *           so it is drawn without constraints of the level grid
+     *           so it is drawn without constraints of the level grid.
+     *          Using the width and heigth of the player, 
+     *              draw the center of the rectagle to the corresponding center of the player.
+     *          Use the x0 variable to scroll the player.
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // draw the level
+
         if ("running".equals(gameState)) {
             for (int x = x0 / 50; x < level.length; x++) { 
                 for (int y = 0; y < level[0].length; y++) { 
@@ -140,15 +165,12 @@ public class Level extends JPanel {
                         g.setColor(Color.RED);
                         g.fillRect((x  * blWdth) - x0, y * blHgth, blWdth, blHgth);
                     }
-
                 }
             }
+            g.setColor(Color.CYAN); 
+            g.fillRect((player.x - player.spriteWidth - x0), 
+                (player.y - player.spriteHeight), 50, 50);
 
-            g.setColor(Color.CYAN); //use a simple color for now.
-            g.fillRect((player.x - player.spriteWidth - x0), (player.y - player.spriteHeight), 50, 50);
-            /*Draw the image of the player. Using the width and heigth of the player, 
-            draw the center of the image to the corresponding center of the player. 
-            Make it flush with the groud by adusting the y-position*/
         } else if ("paused".equals(gameState)) {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
             g.setColor(Color.BLUE);

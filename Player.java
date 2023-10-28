@@ -1,9 +1,7 @@
-import javax.swing.*;
-
 /**
  * Player class.
 */
-public class Player extends JPanel {
+public class Player {
     int x = 125; // start coordiantes for the player
     int y = 524;
 
@@ -145,7 +143,7 @@ public class Player extends JPanel {
 
         for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
             if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1
-             || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
+                || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
                 verticalSpeed = tryy + 1;
                 isJumping = false;
                 isFalling = true;
@@ -207,8 +205,6 @@ public class Player extends JPanel {
         // calculate the horizontal acceleration
         
         horizontalSpeed += horizontalAcceleration; // calculate the horizontal speed
-        //System.out.println("horizontal speed: " + horizontalSpeed); // TODO: remove, of laten staan???
-        //System.out.println("horizontal acceleration: " + horizontalAcceleration);
 
         if (horizontalSpeed > maximumVelocity) { // check if the speed is not too high
             horizontalSpeed = maximumVelocity;
@@ -229,23 +225,27 @@ public class Player extends JPanel {
         if ("stop".equals(direction)) {
             return decelerationCalculator(horizontalSpeed); // always decelerate
         }
+
         if (horizontalSpeed == 0) { // if the player is not moving, accelerate
             return accelerationCalculator(horizontalSpeed, direction);
         }
 
-        if (horizontalSpeed > 0) { // if the action is wanted: accelerate else decelerate
-            if ("right".equals(direction)) {
-                return accelerationCalculator(horizontalSpeed, direction);
-            } else {
-                return decelerationCalculator(horizontalSpeed);
-            }
-            
-        //speed < 0: action is wanted: decelerate else accelerate
-        } else if ("left".equals(direction)) {
+        // if the action is wanted: accelerate else decelerate
+        if ("right".equals(direction) && horizontalSpeed > 0) {
             return accelerationCalculator(horizontalSpeed, direction);
-        } else {
+        } 
+        
+        if (horizontalSpeed > 0) {
             return decelerationCalculator(horizontalSpeed);
         }
+        
+        //speed < 0: action is wanted: decelerate else accelerate
+        if ("left".equals(direction)) {
+            return accelerationCalculator(horizontalSpeed, direction);
+        }
+
+        return decelerationCalculator(horizontalSpeed);
+        
         
     }
 
@@ -351,7 +351,9 @@ public class Player extends JPanel {
             for (int tryy = 1; tryy <= verticalSpeed; tryy++) {
                 
                 for (int tryx = 1; tryx <= changex; tryx++) {
-                    if (level[(x + spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                    if (level[(x + spriteWidth + tryx) / 50]
+                        [(y + spriteHeight + tryy - 1) / 50] == 1) {
+
                         verticalSpeed = tryy - 1;
                         horizontalSpeed = tryx - 1;
                         break;
@@ -359,7 +361,9 @@ public class Player extends JPanel {
                 }
 
                 for (int tryx = -1; tryx >= changex; tryx--) {
-                    if (level[(x - spriteWidth + tryx) / 50][(y + spriteHeight + tryy - 1) / 50] == 1) {
+                    if (level[(x - spriteWidth + tryx) / 50]
+                        [(y + spriteHeight + tryy - 1) / 50] == 1) {
+
                         verticalSpeed = tryy - 1;
                         horizontalSpeed = tryx + 1;
                         break;
@@ -371,7 +375,9 @@ public class Player extends JPanel {
             for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
                     
                 for (int tryx = 1; tryx <= changex; tryx++) {
-                    if (level[(x + spriteWidth + tryx) / 50][(y - spriteHeight + tryy - 1) / 50] == 1) {
+                    if (level[(x + spriteWidth + tryx) / 50]
+                        [(y - spriteHeight + tryy - 1) / 50] == 1) {
+
                         verticalSpeed = tryy + 1;
                         horizontalSpeed = tryx - 1;
                         break;
@@ -379,7 +385,8 @@ public class Player extends JPanel {
                 }
     
                 for (int tryx = -1; tryx >= changex; tryx--) {
-                    if (level[(x - spriteWidth + tryx) / 50][(y - spriteHeight + tryy - 1) / 50] == 1) {
+                    if (level[(x - spriteWidth + tryx) / 50]
+                        [(y - spriteHeight + tryy - 1) / 50] == 1) {
                         verticalSpeed = tryy + 1;
                         horizontalSpeed = tryx + 1;
                         break;
