@@ -73,6 +73,7 @@ public class Main {
 
     /**
      * Works as a sort constructor for the Game class. We prevent using a lot of new Game()s.
+     *      (see documentation for more info on why we use the Main class)
      * Adds a frame to the game, reads the save file and creates a new level.
      * If the save file is not empty on the lines for the player x, player y and level x0, 
      *      it updates the players and cameras position. 
@@ -96,7 +97,6 @@ public class Main {
 
         game.saveData = new ReadSaveFile().readSaveFile();
 
-        // level number is saved on the first line of the save file
         game.levelNumber = game.saveData[0]; 
 
         game.level = new Level(game.player, game.levelNumber);
@@ -119,7 +119,7 @@ public class Main {
 
         game.frame.addKeyListener(game.movementListener);
 
-        game.run(); // run the game
+        game.run();
 
         // as long as the game is not over, do nothing
         while (!game.lose && !game.win && !game.restartButtonPressed) {
@@ -152,8 +152,8 @@ public class Main {
 
     /**
      * When the game is intialized for the first time, 
-     * it shows the mainScreen. It creates a new frame,
-     * adds a keylistener and the mainScreen to the frame.
+     *      it shows the mainScreen. It creates a new frame,
+     *      adds a keylistener and the mainScreen to the frame.
      * After that when the Enter key is pressed, it closes the frame and disposes it.
      * And then intializes the game.
     */
@@ -172,7 +172,6 @@ public class Main {
         
 
         while (!listener.enterKeyPressed) { // while not the enterkey is pressed do nothing
-            //sleep
             try {
                 Thread.sleep(1);
                 mainScreen.repaint();
@@ -184,8 +183,8 @@ public class Main {
         startframe.setVisible(false);
         startframe.dispose();
 
-        // we do this to prevent an error where the frame is not fully disposed yet
-        // and a new frame is created before the old one is disposed
+        // We sleep the thread to prevent an error where the frame is not fully disposed yet
+        //      and a new frame is created before the old one is disposed.
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -197,7 +196,7 @@ public class Main {
 
     /**
      * When the game is won or lost, it shows the endscreen. It creates a new frame,
-     * adds a keylistener and the endscreen to the frame.
+     *      adds a keylistener and the endscreen to the frame.
      * After that when the Enter key is pressed, it closes the frame and disposes it.
      * And then intializes the game again.
     */
@@ -216,7 +215,6 @@ public class Main {
         
         // while not the enterkey is pressed do nothing
         while (!listener.backspaceKeyPressed || !listener.enterKeyPressed) { 
-            //sleep
             try {
                 Thread.sleep(1);
                 mainScreen.repaint();
@@ -228,8 +226,8 @@ public class Main {
         startframe.setVisible(false);
         startframe.dispose();
     
-        // we do this to prevent an error where the frame is not fully disposed yet
-        // and a new frame is created before the old one is disposed
+        // we sleep the tread to prevent an error where the frame is not fully disposed yet
+        //      and a new frame is created before the old one is disposed.
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

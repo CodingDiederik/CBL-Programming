@@ -14,7 +14,7 @@ public class Player {
     int verticalAcceleration = 0; // acceleration of the player
     int horizontalAcceleration = 0;
 
-    int maximumVelocity = 8; // maximum speed of the player
+    int maximumVelocity = 9; // maximum speed of the player
 
     int changex = 0; // the amount the player is going to move in 1 step
 
@@ -31,6 +31,7 @@ public class Player {
      *        if not, move as far as possible.
      *        If the player is not falling, check if the player can move down 5 pixels, 
      *              if not, the player is on the ground.
+     * (see documentation for more information)
     */
     boolean isOnGround(int[][] level) {
         
@@ -47,11 +48,11 @@ public class Player {
                 return true;
 
             } else {
-                for (int tryy = 1; tryy < 18; tryy++) {
-                    if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1 
-                        || level[(x + spriteWidth) / 50][(y + spriteHeight + tryy) / 50] == 1) {
+                for (int tryY = 1; tryY < 18; tryY++) {
+                    if (level[(x - spriteWidth) / 50][(y + spriteHeight + tryY) / 50] == 1 
+                        || level[(x + spriteWidth) / 50][(y + spriteHeight + tryY) / 50] == 1) {
 
-                        verticalSpeed = tryy;
+                        verticalSpeed = tryY;
                         move(level);
 
                         return true;
@@ -72,23 +73,24 @@ public class Player {
      * Checks if the player can move left.
      * First: If the player is below the level or above the level, don't check for collisions.
      * Second: Check for which x coordinate the player can move.
-     * Third: If a collision is detected make the player only move as far as it is allowed to go
+     * Third: If a collision is detected make the player only move as far as it is allowed to go.
+     * (see documentation for more information)
     */
     boolean checkXLeft(int[][] level) {
         if (y < 0 || y > level[0].length * 50 - 45) {
             return true;
         }
 
-        for (int tryx = -1; tryx >= changex; tryx--) { 
+        for (int tryX = -1; tryX >= changex; tryX--) { 
             // check for which x coordinate the player can move
 
-            if (level[(this.x - this.spriteWidth + tryx) / 50]
+            if (level[(this.x - this.spriteWidth + tryX) / 50]
                 [(this.y + this.spriteHeight - 1) / 50] == 1 
-                || level[(this.x - this.spriteWidth + tryx) / 50]
+                || level[(this.x - this.spriteWidth + tryX) / 50]
                 [(this.y - this.spriteHeight) / 50] == 1) {
                 // if a collision is detected
 
-                changex = tryx + 1; // set the change in x coordinates to the 
+                changex = tryX + 1; // set the change in x coordinates to the 
                 // x coordinate where the player can move
 
                 horizontalSpeed = 0; // set the horizontal speed to 0
@@ -103,23 +105,24 @@ public class Player {
      * Checks if the player can move right.
      * First: If the player is below the level or above the level, don't check for collisions.
      * Second: Check for which x coordinate the player can move.
-     * Third: If a collision is detected make the player only move as far as it is allowed to go
+     * Third: If a collision is detected make the player only move as far as it is allowed to go.
+     * (see documentation for more information)
     */
     boolean checkXRight(int[][] level) {
         if (y < 0 || y > level[0].length * 50 - 45) {
             return true;
         }
 
-        for (int tryx = 1; tryx <= changex; tryx++) { 
+        for (int tryX = 1; tryX <= changex; tryX++) { 
             // check for which x coordinate the player can move
                 
-            if (level[((this.x + this.spriteWidth + tryx) / 50)]
+            if (level[((this.x + this.spriteWidth + tryX) / 50)]
                 [(this.y + this.spriteHeight - 1) / 50] == 1 
-                || level[((this.x + this.spriteWidth + tryx) / 50)]
+                || level[((this.x + this.spriteWidth + tryX) / 50)]
                 [(this.y - this.spriteHeight) / 50] == 1) {
                 // if a collision is detected
 
-                changex = tryx - 1; // set the change in x coordinates to the
+                changex = tryX - 1; // set the change in x coordinates to the
                 // x coordinate where the player can move
 
                 horizontalSpeed = 0; // set the horizontal speed to 0
@@ -134,17 +137,18 @@ public class Player {
      * Checks if the player can move up.
      * First: If the player is below the level or above the level, don't check for collisions.
      * Second: Check for which y coordinate the player can move.
-     * Third: 
+     * Third: if a collision is detected make the player only move as far as it is allowed to go.
+     * (see documentation for more information)
      */
     void calculateChangeY(int[][] level) {
         if (y < 0 || y > level[0].length * 50 - 45) {
             return;
         }
 
-        for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
-            if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1
-                || level[(x + spriteWidth) / 50][(y - spriteHeight + tryy) / 50] == 1) {
-                verticalSpeed = tryy + 1;
+        for (int tryY = 1; tryY >= verticalSpeed; tryY--) {
+            if (level[(x - spriteWidth) / 50][(y - spriteHeight + tryY) / 50] == 1
+                || level[(x + spriteWidth) / 50][(y - spriteHeight + tryY) / 50] == 1) {
+                verticalSpeed = tryY + 1;
                 isJumping = false;
                 isFalling = true;
                 gravityStep = 0;
@@ -257,14 +261,14 @@ public class Player {
 
         if ("left".equals(direction)) { // if the player is moving left
             if (speed < -5) { // if the player is moving faster than -10
-                return -5;
+                return -2;
             } else { // if the player is moving slower than -10
                 return -1;
             }
 
         } else { // player is moving right
             if (speed > 5) { // if the player is moving faster than 10
-                return 5;
+                return 2;
             } else { // if the player is moving slower than 10
                 return 1;
             }
@@ -346,47 +350,47 @@ public class Player {
     */
     void move(int[][] level) {
         if (verticalSpeed != 0 && y > 0) {
-            for (int tryy = 1; tryy <= verticalSpeed; tryy++) {
+            for (int tryY = 1; tryY <= verticalSpeed; tryY++) {
                 
-                for (int tryx = 1; tryx <= changex; tryx++) {
-                    if (level[(x + spriteWidth + tryx) / 50]
-                        [(y + spriteHeight + tryy - 1) / 50] == 1) {
+                for (int tryX = 1; tryX <= changex; tryX++) {
+                    if (level[(x + spriteWidth + tryX) / 50]
+                        [(y + spriteHeight + tryY - 1) / 50] == 1) {
 
-                        verticalSpeed = tryy - 1;
-                        horizontalSpeed = tryx - 1;
+                        verticalSpeed = tryY - 1;
+                        horizontalSpeed = tryX - 1;
                         break;
                     }
                 }
 
-                for (int tryx = -1; tryx >= changex; tryx--) {
-                    if (level[(x - spriteWidth + tryx) / 50]
-                        [(y + spriteHeight + tryy - 1) / 50] == 1) {
+                for (int tryX = -1; tryX >= changex; tryX--) {
+                    if (level[(x - spriteWidth + tryX) / 50]
+                        [(y + spriteHeight + tryY - 1) / 50] == 1) {
 
-                        verticalSpeed = tryy - 1;
-                        horizontalSpeed = tryx + 1;
+                        verticalSpeed = tryY - 1;
+                        horizontalSpeed = tryX + 1;
                         break;
                     }
                 }
                 
             }
 
-            for (int tryy = 1; tryy >= verticalSpeed; tryy--) {
+            for (int tryY = 1; tryY >= verticalSpeed; tryY--) {
                     
-                for (int tryx = 1; tryx <= changex; tryx++) {
-                    if (level[(x + spriteWidth + tryx) / 50]
-                        [(y - spriteHeight + tryy - 1) / 50] == 1) {
+                for (int tryX = 1; tryX <= changex; tryX++) {
+                    if (level[(x + spriteWidth + tryX) / 50]
+                        [(y - spriteHeight + tryY - 1) / 50] == 1) {
 
-                        verticalSpeed = tryy + 1;
-                        horizontalSpeed = tryx - 1;
+                        verticalSpeed = tryY + 1;
+                        horizontalSpeed = tryX - 1;
                         break;
                     }
                 }
     
-                for (int tryx = -1; tryx >= changex; tryx--) {
-                    if (level[(x - spriteWidth + tryx) / 50]
-                        [(y - spriteHeight + tryy - 1) / 50] == 1) {
-                        verticalSpeed = tryy + 1;
-                        horizontalSpeed = tryx + 1;
+                for (int tryX = -1; tryX >= changex; tryX--) {
+                    if (level[(x - spriteWidth + tryX) / 50]
+                        [(y - spriteHeight + tryY - 1) / 50] == 1) {
+                        verticalSpeed = tryY + 1;
+                        horizontalSpeed = tryX + 1;
                         break;
                     }
                 }
